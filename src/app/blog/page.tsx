@@ -18,11 +18,11 @@ const FoodPost: React.Component<{ item: FoodItem }> = ({ item }) => {
           <div className="flex items-center gap-2">
             {!item.isNonVeg ? (
               <>
-                <div className="w-3 h-3 rounded-full bg-green-300"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
               </>
             ) : (
               <>
-                <div className="w-3 h-3 rounded-full bg-red-300"></div>
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
               </>
             )}
             <h3 className="text-md font-extrabold">{item.title}</h3>
@@ -59,6 +59,15 @@ export default function Blog() {
   const [timelineFilter, setTimelineFilter] = useState("");
 
   useEffect(() => {
+    function filterByCategory(data) {
+      console.log(data);
+    }
+    window.addEventListener("category-filter", filterByCategory);
+
+    return () => window.removeEventListener("category-filter", filterByCategory);
+  }, []);
+
+  useEffect(() => {
     const years = [...new Set(foodPosts.map((i) => i.datePosted.split("-")[0]))]
       .sort()
       .reverse();
@@ -79,42 +88,44 @@ export default function Blog() {
   return (
     <>
       <div className="h-full rounded-2xl w-2/5">
-        <div id="new-post" className="sticky top-0 z-30">
-          <form
-            action="/"
-            className="flex flex-col my-4 bg-amber-500 relative rounded-xl p-3"
-          >
-            <input
-              type="text"
-              placeholder="Post Title"
-              className="focus:outline-0 resize-none h-8 mb-2 py-2 px-4 bg-white rounded-md"
-            />
-            <textarea
-              placeholder="Write a new blog post..."
-              className="focus:outline-0 resize-none h-25 py-2 px-4 bg-white rounded-md mb-2"
-            ></textarea>
-            <input
-              type="file"
-              name=""
-              className="bg-white file:bg-amber-200 rounded-md"
-            />
-            <div className="flex justify-end py-2">
-              <button
-                onClick={() => setShowNewBlogEditor(false)}
-                type="button"
-                className="bg-white text-gray-600 text-sm px-4 py-1 rounded-md cursor-pointer mr-3"
-              >
-                Discard
-              </button>
-              <button
-                type="button"
-                className="bg-amber-400 hover:bg-amber-600 text-white text-sm px-4 py-1 rounded-md cursor-pointer "
-              >
-                Submit
-              </button>
-            </div>
-          </form>
-        </div>
+        {showNewBlogEditor && (
+          <div id="new-post" className="sticky top-0 z-30">
+            <form
+              action="/"
+              className="flex flex-col my-4 bg-amber-500 relative rounded-xl p-3"
+            >
+              <input
+                type="text"
+                placeholder="Post Title"
+                className="focus:outline-0 resize-none h-8 mb-2 py-2 px-4 bg-white rounded-md"
+              />
+              <textarea
+                placeholder="Write a new blog post..."
+                className="focus:outline-0 resize-none h-25 py-2 px-4 bg-white rounded-md mb-2"
+              ></textarea>
+              <input
+                type="file"
+                name=""
+                className="bg-white file:bg-amber-200 rounded-md"
+              />
+              <div className="flex justify-end py-2">
+                <button
+                  onClick={() => setShowNewBlogEditor(false)}
+                  type="button"
+                  className="bg-white text-gray-600 text-sm px-4 py-1 rounded-md cursor-pointer mr-3"
+                >
+                  Discard
+                </button>
+                <button
+                  type="button"
+                  className="bg-amber-400 hover:bg-amber-600 text-white text-sm px-4 py-1 rounded-md cursor-pointer "
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
 
         <div id="food-posts">
           {!showNewBlogEditor && (

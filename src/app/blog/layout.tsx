@@ -53,7 +53,9 @@ export default function BlogLayout({
               <li>
                 <button
                   type="button"
-                  onClick={() => {}}
+                  onClick={() => {
+                    new CustomEvent("show-editor");
+                  }}
                   className="bg-amber-400 px-2 h-10 w-full cursor-pointer hover:bg-amber-500 rounded-md"
                 >
                   Write New Blog
@@ -62,13 +64,17 @@ export default function BlogLayout({
               <li>
                 <CategoryFilter
                   currentSelection={category}
-                  onChangeCategory={(v) => {}}
+                  onChangeCategory={(v) => {
+                    new CustomEvent("category-filter", { key: "foodCategory", item: v });
+                  }}
                   data={[...new Set(foodPosts.map((i) => i.foodCategory))]}
                   heading={"Filter By Category"}
                 />
                 <CategoryFilter
                   currentSelection={foodAuther}
-                  onChangeCategory={(v) => {}}
+                  onChangeCategory={(v) => {
+                    new CustomEvent("category-filter", { key: "postedBy", item: v });
+                  }}
                   data={[...new Set(foodPosts.map((i) => i.postedBy))]}
                   heading={" Filter By Food Auther"}
                 />
