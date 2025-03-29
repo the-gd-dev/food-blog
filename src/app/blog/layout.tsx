@@ -1,13 +1,12 @@
 "use client";
-
 import { useState } from "react";
 import { foodPosts } from "./data/food-blogs";
 
-const CategoryFilter: React.Component<{
+const CategoryFilter: React.FC<{
   data: string[];
   heading: string;
   currentSelection: string;
-  onChangeCategory: () => void;
+  onChangeCategory: (fc: string) => void;
 }> = ({ data, heading, currentSelection, onChangeCategory }) => {
   return (
     <div className="mt-4 border-1 border-gray-200 rounded-xl px-4 h-100 pb-2 overflow-y-scroll relative">
@@ -64,17 +63,13 @@ export default function BlogLayout({
               <li>
                 <CategoryFilter
                   currentSelection={category}
-                  onChangeCategory={(v) => {
-                    new CustomEvent("category-filter", { key: "foodCategory", item: v });
-                  }}
+                  onChangeCategory={setFoodAuther}
                   data={[...new Set(foodPosts.map((i) => i.foodCategory))]}
                   heading={"Filter By Category"}
                 />
                 <CategoryFilter
                   currentSelection={foodAuther}
-                  onChangeCategory={(v) => {
-                    new CustomEvent("category-filter", { key: "postedBy", item: v });
-                  }}
+                  onChangeCategory={setCategory}
                   data={[...new Set(foodPosts.map((i) => i.postedBy))]}
                   heading={" Filter By Food Auther"}
                 />

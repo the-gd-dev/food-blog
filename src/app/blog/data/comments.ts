@@ -1,11 +1,21 @@
-export const comments = [
+export interface CommentType {
+  id: number;
+  user: {
+    name: string;
+    profile_pic?: string;
+  };
+  text?: string;
+  createdAt?: string;
+  likes?: number;
+}
+
+export const comments: CommentType[] = [
   {
     id: 1,
     user: {
       name: "John Doe",
       profile_pic: "https://randomuser.me/api/portraits/men/1.jpg",
     },
-
     text: "This is an amazing post! Really loved the insights.",
     createdAt: "2025-03-21T10:15:30Z",
     likes: 12,

@@ -1,14 +1,15 @@
 "use client";
-
-import Image from "next/image";
 import { foodPosts } from "./data/food-blogs";
 import { useEffect, useState } from "react";
 import { months } from "./constants/months";
 import moment from "moment";
 import Link from "next/link";
 import { FoodItem } from "./data/food-blogs";
-
-const FoodPost: React.Component<{ item: FoodItem }> = ({ item }) => {
+import Image from "next/image";
+interface TimelineType {
+  [y: string]: string[];
+}
+const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
   return (
     <div
       className={`w-full border-1 border-gray-200 mb-4 rounded-2xl overflow-hidden shadow-md cursor-pointer hover:bg-gray-100`}
@@ -27,7 +28,7 @@ const FoodPost: React.Component<{ item: FoodItem }> = ({ item }) => {
             )}
             <h3 className="text-md font-extrabold">{item.title}</h3>
           </div>
-          <p className="w-full w-100 text-sm">{item.description}</p>
+          <p className="w-full text-sm">{item.description}</p>
           <div>
             <div className="flex items-center gap-1 text-gray-500">
               <small>{moment(item.datePosted).format("ddd, D MMM YYYY")}</small>
@@ -41,7 +42,9 @@ const FoodPost: React.Component<{ item: FoodItem }> = ({ item }) => {
           </div>
         </div>
         <div className="w-3/4 h-50">
-          <img
+          <Image
+            width={100}
+            height={100}
             src={item.imageUrl}
             alt={item.title}
             className="h-full w-full object-cover z-0 relative"
@@ -54,35 +57,30 @@ const FoodPost: React.Component<{ item: FoodItem }> = ({ item }) => {
 
 export default function Blog() {
   const [showNewBlogEditor, setShowNewBlogEditor] = useState(false);
-  const [timeline, setTimeline] = useState({});
-  const [blogPosts, setBlogPosts] = useState(foodPosts);
+  const [timeline, setTimeline] = useState<TimelineType>({});
+  const [blogPosts, setBlogPosts] = useState<FoodItem[]>([]);
   const [timelineFilter, setTimelineFilter] = useState("");
-
-  useEffect(() => {
-    function filterByCategory(data) {
-      console.log(data);
-    }
-    window.addEventListener("category-filter", filterByCategory);
-
-    return () => window.removeEventListener("category-filter", filterByCategory);
-  }, []);
 
   useEffect(() => {
     const years = [...new Set(foodPosts.map((i) => i.datePosted.split("-")[0]))]
       .sort()
       .reverse();
-    const blogTimelines = {};
-    years.map((y) => {
+    const blogTimelines: TimelineType = {};
+
+    years.forEach((y) => {
       const months = [
         ...new Set(
-          foodPosts.map(
-            (m) => m.datePosted.split("-")[0] === y && m.datePosted.split("-")[1]
-          )
+          foodPosts
+            .filter((m) => m.datePosted.split("-")[0] === String(y))
+            .map((m) => m.datePosted.split("-")[1])
         ),
       ].sort();
+
       blogTimelines[y] = months;
     });
+
     setTimeline(blogTimelines);
+    setBlogPosts(foodPosts);
   }, []);
 
   return (
@@ -145,15 +143,15 @@ export default function Blog() {
             <li className="mt-2" key={key}>
               <h1 className="font-bold text-gray-700">{key}</h1>
               <ul className="list-none flex flex-col flex-wrap">
-                {timeline[key].map((m) => (
-                  <li key={m} className="text-gray-500">
+                {timeline[key]?.map((m: string) => (
+                  <li key={`${key}-${m}`} className="text-gray-500">
                     <div
                       className={`cursor-pointer max-w-fit hover:text-amber-500 ${
                         `${key}-${m}` === timelineFilter ? "text-amber-500" : ""
                       }`}
                       onClick={() => setTimelineFilter(`${key}-${m}`)}
                     >
-                      {months[parseInt(m)]}
+                      {months[parseInt(m, 10) - 1] || m}
                     </div>
                   </li>
                 ))}

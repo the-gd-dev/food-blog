@@ -1,4 +1,4 @@
-export interface foodItem {
+export interface FoodItem {
   id: number;
   title: string;
   imageUrl: string;
@@ -11,11 +11,12 @@ export interface foodItem {
   isNonVeg: boolean;
 }
 
-export const foodPosts: foodItem[] = [
+export const foodPosts: FoodItem[] = [
   {
     id: 1,
     title: "Chicken Biryani",
-    imageUrl: "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
     description: "Aromatic rice cooked with spiced chicken and herbs.",
     likes: 450,
     comments: 35,
@@ -27,7 +28,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 2,
     title: "Paneer Butter Masala",
-    imageUrl: "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
     description: "Paneer cooked in rich tomato-based gravy with butter.",
     likes: 380,
     comments: 28,
@@ -39,7 +41,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 3,
     title: "Margherita Pizza",
-    imageUrl: "https://images.pexels.com/photos/8256611/pexels-photo-8256611.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/8256611/pexels-photo-8256611.jpeg",
     description: "Classic pizza topped with tomatoes, mozzarella, and basil.",
     likes: 510,
     comments: 40,
@@ -51,7 +54,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 4,
     title: "Grilled Chicken Sandwich",
-    imageUrl: "https://images.pexels.com/photos/1600711/pexels-photo-1600711.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/1600711/pexels-photo-1600711.jpeg",
     description: "Grilled chicken breast with lettuce, tomato, and mayo.",
     likes: 340,
     comments: 25,
@@ -63,7 +67,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 5,
     title: "Vegetable Spring Rolls",
-    imageUrl: "https://images.pexels.com/photos/6602829/pexels-photo-6602829.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/6602829/pexels-photo-6602829.jpeg",
     description: "Crispy spring rolls filled with mixed vegetables.",
     likes: 290,
     comments: 20,
@@ -75,7 +80,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 6,
     title: "Lamb Kebab",
-    imageUrl: "https://images.pexels.com/photos/2290070/pexels-photo-2290070.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/2290070/pexels-photo-2290070.jpeg",
     description: "Grilled lamb skewers with aromatic spices.",
     likes: 420,
     comments: 32,
@@ -87,7 +93,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 7,
     title: "Caprese Salad",
-    imageUrl: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
     description: "Tomatoes, fresh mozzarella, and basil with olive oil.",
     likes: 280,
     comments: 18,
@@ -99,7 +106,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 8,
     title: "Fish and Chips",
-    imageUrl: "https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/262959/pexels-photo-262959.jpeg",
     description: "Crispy battered fish served with fries and tartar sauce.",
     likes: 460,
     comments: 38,
@@ -111,7 +119,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 9,
     title: "Tom Yum Soup",
-    imageUrl: "https://images.pexels.com/photos/4110271/pexels-photo-4110271.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/4110271/pexels-photo-4110271.jpeg",
     description: "Spicy Thai soup with shrimp, mushrooms, and lemongrass.",
     likes: 380,
     comments: 29,
@@ -123,7 +132,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 10,
     title: "Chole Bhature",
-    imageUrl: "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
     description: "Spicy chickpea curry served with fried bread.",
     likes: 500,
     comments: 42,
@@ -135,7 +145,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 11,
     title: "Butter Chicken",
-    imageUrl: "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
     description: "Chicken cooked in a creamy tomato-based sauce.",
     likes: 650,
     comments: 55,
@@ -147,7 +158,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 12,
     title: "Pasta Alfredo",
-    imageUrl: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
     description: "Pasta with a rich, creamy Alfredo sauce.",
     likes: 410,
     comments: 33,
@@ -159,8 +171,10 @@ export const foodPosts: foodItem[] = [
   {
     id: 13,
     title: "Tandoori Chicken",
-    imageUrl: "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
-    description: "Chicken marinated with yogurt and spices, cooked in a tandoor.",
+    imageUrl:
+      "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
+    description:
+      "Chicken marinated with yogurt and spices, cooked in a tandoor.",
     likes: 620,
     comments: 50,
     postedBy: "TandooriMaster",
@@ -171,7 +185,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 14,
     title: "Sushi Rolls",
-    imageUrl: "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg",
     description: "Assorted sushi rolls with fish and vegetables.",
     likes: 480,
     comments: 39,
@@ -183,7 +198,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 15,
     title: "Chocolate Cake",
-    imageUrl: "https://images.pexels.com/photos/134356/pexels-photo-134356.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/134356/pexels-photo-134356.jpeg",
     description: "Rich chocolate cake with frosting.",
     likes: 520,
     comments: 45,
@@ -196,7 +212,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 16,
     title: "Prawn Curry",
-    imageUrl: "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
     description: "Spicy prawn curry cooked with coconut milk and spices.",
     likes: 410,
     comments: 28,
@@ -208,7 +225,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 17,
     title: "Mango Lassi",
-    imageUrl: "https://images.pexels.com/photos/209371/pexels-photo-209371.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/209371/pexels-photo-209371.jpeg",
     description: "Sweet yogurt-based drink with mango pulp.",
     likes: 350,
     comments: 22,
@@ -220,7 +238,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 18,
     title: "BBQ Ribs",
-    imageUrl: "https://images.pexels.com/photos/4911834/pexels-photo-4911834.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/4911834/pexels-photo-4911834.jpeg",
     description: "Slow-cooked pork ribs with BBQ sauce.",
     likes: 520,
     comments: 41,
@@ -232,7 +251,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 19,
     title: "Pav Bhaji",
-    imageUrl: "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg",
     description: "Spicy mashed vegetables served with buttered bread.",
     likes: 470,
     comments: 36,
@@ -244,7 +264,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 20,
     title: "Chicken Tikka",
-    imageUrl: "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/769289/pexels-photo-769289.jpeg",
     description: "Grilled chicken marinated in yogurt and spices.",
     likes: 600,
     comments: 50,
@@ -268,7 +289,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 22,
     title: "Egg Curry",
-    imageUrl: "https://images.pexels.com/photos/7192433/pexels-photo-7192433.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/7192433/pexels-photo-7192433.jpeg",
     description: "Boiled eggs cooked in spiced tomato-based curry.",
     likes: 390,
     comments: 28,
@@ -280,7 +302,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 23,
     title: "Ramen Bowl",
-    imageUrl: "https://images.pexels.com/photos/3298649/pexels-photo-3298649.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/3298649/pexels-photo-3298649.jpeg",
     description: "Japanese noodle soup with pork, egg, and vegetables.",
     likes: 540,
     comments: 48,
@@ -292,8 +315,10 @@ export const foodPosts: foodItem[] = [
   {
     id: 24,
     title: "Falafel Wrap",
-    imageUrl: "https://images.pexels.com/photos/1055058/pexels-photo-1055058.jpeg",
-    description: "Pita wrap stuffed with falafel, vegetables, and tahini sauce.",
+    imageUrl:
+      "https://images.pexels.com/photos/1055058/pexels-photo-1055058.jpeg",
+    description:
+      "Pita wrap stuffed with falafel, vegetables, and tahini sauce.",
     likes: 410,
     comments: 30,
     postedBy: "WrapMaster",
@@ -304,7 +329,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 25,
     title: "Samosa Chaat",
-    imageUrl: "https://images.pexels.com/photos/5769734/pexels-photo-5769734.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/5769734/pexels-photo-5769734.jpeg",
     description: "Crispy samosas topped with yogurt, chutneys, and spices.",
     likes: 480,
     comments: 35,
@@ -316,7 +342,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 26,
     title: "Croissant",
-    imageUrl: "https://images.pexels.com/photos/3654603/pexels-photo-3654603.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/3654603/pexels-photo-3654603.jpeg",
     description: "Buttery and flaky French pastry.",
     likes: 420,
     comments: 28,
@@ -328,7 +355,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 27,
     title: "BBQ Chicken Pizza",
-    imageUrl: "https://images.pexels.com/photos/8256611/pexels-photo-8256611.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/8256611/pexels-photo-8256611.jpeg",
     description: "Pizza topped with BBQ chicken and mozzarella.",
     likes: 550,
     comments: 45,
@@ -340,7 +368,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 28,
     title: "Bruschetta",
-    imageUrl: "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg",
     description: "Grilled bread topped with tomatoes, basil, and olive oil.",
     likes: 430,
     comments: 32,
@@ -352,7 +381,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 29,
     title: "Cheeseburger",
-    imageUrl: "https://images.pexels.com/photos/134356/pexels-photo-134356.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/134356/pexels-photo-134356.jpeg",
     description: "Juicy beef patty with cheese, lettuce, and tomato.",
     likes: 600,
     comments: 50,
@@ -364,7 +394,8 @@ export const foodPosts: foodItem[] = [
   {
     id: 30,
     title: "Tuna Sushi",
-    imageUrl: "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg",
+    imageUrl:
+      "https://images.pexels.com/photos/357756/pexels-photo-357756.jpeg",
     description: "Sushi rolls filled with fresh tuna and avocado.",
     likes: 530,
     comments: 44,
@@ -373,5 +404,4 @@ export const foodPosts: foodItem[] = [
     foodCategory: "Japanese",
     isNonVeg: true,
   },
-  
 ];
