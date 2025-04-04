@@ -1,7 +1,8 @@
-import { CommentType } from "@/app/blog/data/comments";
+import { CommentType } from "@/data/comments";
 import moment from "moment";
 import Image from "next/image";
 import { useState } from "react";
+import { UserDetails } from "./UserDetails";
 
 export const SingleComment = ({ comment }: { comment: CommentType }) => {
   const [showOptions, setShowOptions] = useState(false);
@@ -9,16 +10,13 @@ export const SingleComment = ({ comment }: { comment: CommentType }) => {
     <div className="border border-gray-200 p-3 rounded-lg mb-4 shadow-sm">
       <div className="flex flex-col">
         <div className="w-full flex justify-between">
-          <div className="flex items-center gap-3">
-            <Image
-              height={100}
-              width={100}
-              src={comment.user.profile_pic ?? ""}
-              alt={comment.user.name}
-              className="h-8 w-8 rounded-full object-cover"
-            />
-            <div className="text-gray-800 font-bold">{comment.user.name}</div>
-          </div>
+          <UserDetails
+            profile={{
+              profile_pic: comment.user.profile_pic || "",
+              username: comment?.user.name,
+            }}
+            classes="h-8 w-8"
+          />
           <div className="relative">
             <button
               onClick={() => setShowOptions(!showOptions)}

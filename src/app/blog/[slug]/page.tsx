@@ -4,18 +4,24 @@ import { SingleComment } from "@/components/SingleComment";
 import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { comments } from "../data/comments";
-import { foodPosts } from "../data/food-blogs";
+import { comments } from "../../../data/comments";
+import { foodPosts } from "../../../data/food-blogs";
+import { FoodPreference } from "@/components/FoodPreference";
+import { UserDetails } from "@/components/UserDetails";
+import { useEffect } from "react";
 
-// Page Component
 export default function Page() {
   const route = useRouter();
-  const { slug } = useParams();
-  const post = foodPosts.find((fp) => fp.id === Number(slug)) ?? null;
+  const params = useParams();
+  const post = foodPosts.find((fp) => fp.id === Number(params?.slug)) ?? null;
 
   if (!post) {
     return <p className="text-center text-red-500 mt-5">Post not found!</p>;
   }
+
+  useEffect(() => {
+    document.title = `${post.title} | Food App`;
+  }, []);
 
   return (
     <div className="max-w-3xl mx-auto p-4 w-4/7">
@@ -43,12 +49,7 @@ export default function Page() {
 
         <div className="p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div
-              className={`w-3 h-3 rounded-full ${
-                post.isNonVeg ? "bg-red-500" : "bg-green-500"
-              }`}
-            ></div>
-            <span>{post.isNonVeg ? "Non-Veg" : "Veg"}</span>
+            <FoodPreference isNonVeg={post.isNonVeg} textVisibility="visible" />
           </div>
 
           <div className="flex justify-between">
@@ -56,7 +57,14 @@ export default function Page() {
               {post.title}{" "}
               <span className="text-gray-500">({post.foodCategory})</span>
             </h1>
-            <p className="text-gray-700">Posted By: {post.postedBy}</p>
+            <UserDetails
+              profile={{
+                profile_pic: `https://randomuser.me/api/portraits/men/1.jpg`,
+                username: post.postedBy,
+              }}
+              textClasses="font-normal text-sm text-slate-800"
+              classes="w-5 h-5"
+            />
           </div>
 
           <p className="py-3">{post.description}</p>

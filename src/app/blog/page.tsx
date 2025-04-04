@@ -2,8 +2,9 @@
 import { FoodPost } from "@/components/FoodItem";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { months } from "./constants/months";
-import { FoodItem, foodPosts } from "./data/food-blogs";
+import { months } from "../../constants/months";
+import { FoodItem, foodPosts } from "../../data/food-blogs";
+import { useStore } from "@/store";
 
 interface TimelineType {
   [y: string]: string[];
@@ -14,6 +15,7 @@ export default function Blog() {
   const [timeline, setTimeline] = useState<TimelineType>({});
   const [blogPosts, setBlogPosts] = useState<FoodItem[]>([]);
   const [timelineFilter, setTimelineFilter] = useState("");
+  const { createPost } = useStore();
 
   useEffect(() => {
     const years = [...new Set(foodPosts.map((i) => i.datePosted.split("-")[0]))]
@@ -35,12 +37,13 @@ export default function Blog() {
 
     setTimeline(blogTimelines);
     setBlogPosts(foodPosts);
+    document.title = `Food App`;
   }, []);
 
   return (
     <>
       <div className="h-full rounded-2xl w-4/9">
-        {showNewBlogEditor && (
+        {createPost && (
           <div id="new-post" className="sticky top-0 z-30">
             <form
               action="/"
