@@ -1,24 +1,34 @@
 "use client";
 import { FoodPost } from "@/components/FoodItem";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { months } from "../../constants/months";
-import { FoodItem, foodPosts } from "../../data/food-blogs";
 import { useStore } from "@/store";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { months } from "../../constants/months";
+import { FoodItem } from "../../data/food-blogs";
 
 interface TimelineType {
   [y: string]: string[];
 }
 
 export default function Blog() {
-  const [showNewBlogEditor, setShowNewBlogEditor] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   const [timeline, setTimeline] = useState<TimelineType>({});
-  const [blogPosts, setBlogPosts] = useState<FoodItem[]>([]);
   const [timelineFilter, setTimelineFilter] = useState("");
-  const { createPost } = useStore();
+  const [newFoodItem, setNewFoodItem] = useState<{
+    title: string;
+    description: string;
+    fileUpload?: string;
+  }>({
+    title: "",
+    description: "",
+    fileUpload: "",
+  });
+
+  const { createPost, foodItems, toggleCreatePost, createFoodItem } =
+    useStore();
 
   useEffect(() => {
-    const years = [...new Set(foodPosts.map((i) => i.datePosted.split("-")[0]))]
+    const years = [...new Set(foodItems.map((i) => i.datePosted.split("-")[0]))]
       .sort()
       .reverse();
     const blogTimelines: TimelineType = {};
@@ -26,7 +36,7 @@ export default function Blog() {
     years.forEach((y) => {
       const months = [
         ...new Set(
-          foodPosts
+          foodItems
             .filter((m) => m.datePosted.split("-")[0] === String(y))
             .map((m) => m.datePosted.split("-")[1])
         ),
@@ -36,9 +46,42 @@ export default function Blog() {
     });
 
     setTimeline(blogTimelines);
-    setBlogPosts(foodPosts);
     document.title = `Food App`;
-  }, []);
+  }, [foodItems]);
+
+  const createNewFoodItem = () => {
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+      const title = formData.get("title") as string;
+      const description = formData.get("description") as string;
+      const file = formData.get("fileUpload") as File;
+
+      fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          createFoodItem({
+            id: foodItems.length + 1,
+            title: title || "",
+            imageUrl: data.fileName || "",
+            description: description || "",
+            likes: 100,
+            comments: 100,
+            postedBy: "John Doe",
+            datePosted: new Date().toISOString(),
+            foodCategory: "Some Food Category",
+            isNonVeg: false,
+          });
+          formRef?.current?.reset();
+          toggleCreatePost();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <>
@@ -46,32 +89,35 @@ export default function Blog() {
         {createPost && (
           <div id="new-post" className="sticky top-0 z-30">
             <form
-              action="/"
+              ref={formRef}
               className="flex flex-col my-4 bg-amber-500 relative rounded-xl p-3"
             >
               <input
                 type="text"
+                name="title"
                 placeholder="Post Title"
                 className="focus:outline-0 resize-none h-8 mb-2 py-2 px-4 bg-white rounded-md"
               />
               <textarea
+                name="description"
                 placeholder="Write a new blog post..."
                 className="focus:outline-0 resize-none h-25 py-2 px-4 bg-white rounded-md mb-2"
               ></textarea>
               <input
+                name="fileUpload"
                 type="file"
-                name=""
                 className="bg-white file:bg-amber-200 rounded-md"
               />
               <div className="flex justify-end py-2">
                 <button
-                  onClick={() => setShowNewBlogEditor(false)}
+                  onClick={toggleCreatePost}
                   type="button"
                   className="bg-white text-gray-600 text-sm px-4 py-1 rounded-md cursor-pointer mr-3"
                 >
                   Discard
                 </button>
                 <button
+                  onClick={createNewFoodItem}
                   type="button"
                   className="bg-amber-400 hover:bg-amber-600 text-white text-sm px-4 py-1 rounded-md cursor-pointer "
                 >
@@ -83,10 +129,7 @@ export default function Blog() {
         )}
 
         <div id="food-posts">
-          {!showNewBlogEditor && (
-            <h2 className="text-xl font-extrabold p-2 text-gray-800">Posts</h2>
-          )}
-          {blogPosts.map((fp, key) => (
+          {foodItems.map((fp, key) => (
             <Link href={`/blog/${fp.id}`} key={`food_item_${key}`}>
               <FoodPost item={fp} />
             </Link>

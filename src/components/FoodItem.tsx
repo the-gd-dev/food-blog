@@ -7,15 +7,27 @@ import { FoodPreference } from "./FoodPreference";
 export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
   return (
     <div
-      className={`w-full border-1 border-gray-200 mb-4 rounded-2xl overflow-hidden cursor-pointer hover:shadow-md hover:scale-105 transition-all`}
+      className={`w-full border-1 border-gray-200 mb-4 rounded-2xl overflow-hidden cursor-pointer hover:shadow-md transition-all`}
     >
       <div className="flex">
-        <div className="w-1/2 p-3 flex flex-col justify-between">
+        <div
+          className={`${
+            !item.imageUrl ? "w-full" : "w-1/2"
+          } p-3 flex flex-col justify-between`}
+        >
           <div className="flex items-center gap-2">
             <FoodPreference isNonVeg={item.isNonVeg} textVisibility="hidden" />
             <h3 className="text-lg font-extrabold">{item.title}</h3>
           </div>
-          <p className="w-full text-md">{item.description}</p>
+          <div
+            className={`w-full text-md ${
+              !item.imageUrl
+                ? "bg-slate-100 h-30 my-4 rounded-lg flex flex-col items-center justify-center text-xl font-medium"
+                : ""
+            }`}
+          >
+            <p>{item.description}</p>
+          </div>
           <div>
             <div className="flex items-center gap-1 text-gray-500">
               <small>{moment(item.datePosted).format("ddd, D MMM YYYY")}</small>
@@ -35,15 +47,17 @@ export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
             </ul>
           </div>
         </div>
-        <div className="w-1/2 h-50 relative">
-          <Image
-            fill
-            sizes="100vw 100vh"
-            src={item.imageUrl}
-            alt={item.title || "Image"}
-            style={{ objectFit: "cover" }}
-          />
-        </div>
+        {item.imageUrl && (
+          <div className="w-1/2 h-50 relative">
+            <Image
+              fill
+              sizes="100vw 100vh"
+              src={`/upload/${item.imageUrl}`}
+              alt={item.title || "Image"}
+              style={{ objectFit: "cover" }}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
