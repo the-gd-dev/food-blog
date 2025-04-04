@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { foodPosts } from "../../data/food-blogs";
 import { CategoryFilter } from "@/components/CategoryFilter";
 import { useStore } from "@/store";
 
@@ -9,7 +8,7 @@ export default function BlogLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { toggleCreatePost } = useStore();
+  const { toggleCreatePost, foodItems } = useStore();
   const [category, setCategory] = useState("American");
   const [foodAuther, setFoodAuther] = useState("");
 
@@ -36,13 +35,13 @@ export default function BlogLayout({
                 <CategoryFilter
                   currentSelection={category}
                   onChangeCategory={setFoodAuther}
-                  data={[...new Set(foodPosts.map((i) => i.foodCategory))]}
+                  data={[...new Set(foodItems.map((i) => i.foodCategory))]}
                   heading={"Filter By Category"}
                 />
                 <CategoryFilter
                   currentSelection={foodAuther}
                   onChangeCategory={setCategory}
-                  data={[...new Set(foodPosts.map((i) => i.postedBy))]}
+                  data={[...new Set(foodItems.map((i) => i.postedBy))]}
                   heading={" Filter By Food Auther"}
                 />
               </li>

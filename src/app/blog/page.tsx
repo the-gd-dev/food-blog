@@ -4,7 +4,6 @@ import { useStore } from "@/store";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { months } from "../../constants/months";
-import { FoodItem } from "../../data/food-blogs";
 
 interface TimelineType {
   [y: string]: string[];
