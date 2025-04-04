@@ -25,8 +25,6 @@ A beautiful, responsive **Food Blog** built with **Next.js**, where you can expl
 | Tailwind CSS       | Utility-first CSS styling |
 | Zustand (optional) | Lightweight global state  |
 | API Routes         | Backend file handling     |
-| FormData           | File uploads              |
-
 ---
 
 ## 📷 Screenshots
@@ -70,10 +68,10 @@ http://localhost:3000
 app/
 │
 ├── page.tsx                # Home page
-├── recipe/[slug]/page.tsx # Dynamic recipe pages
-├── upload/page.tsx        # File upload page
-├── layout.tsx             # Root layout
-├── api/upload/route.ts    # API route for file uploads
+├── recipes/[slug]/page.tsx # Dynamic recipe pages
+├── upload/page.tsx         # File upload page
+├── layout.tsx              # Root layout
+├── api/upload/route.ts     # API route for file uploads
 ```
 
 ---
