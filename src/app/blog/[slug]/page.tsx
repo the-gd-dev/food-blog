@@ -4,9 +4,10 @@ import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { comments } from "../../../data/comments";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useStore } from "@/store";
 import { SingleComment, FoodPreference, UserDetails } from "@/components";
+import { foodCategories } from "@/data/categories";
 
 export default function Page() {
   const route = useRouter();
@@ -17,6 +18,11 @@ export default function Page() {
   if (!post) {
     return <p className="text-center text-red-500 mt-5">Post not found!</p>;
   }
+
+  const category = useMemo(
+    () => foodCategories.find((i) => i.value === post.foodCategory)?.label,
+    [post]
+  );
 
   useEffect(() => {
     document.title = `${post.title} | Food App`;
@@ -56,8 +62,7 @@ export default function Page() {
 
           <div className="flex justify-between">
             <h1 className="text-xl font-bold">
-              {post.title}{" "}
-              <span className="text-gray-500">({post.foodCategory})</span>
+              {post.title} <span className="text-gray-500">({category})</span>
             </h1>
             <UserDetails
               profile={{

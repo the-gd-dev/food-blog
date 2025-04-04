@@ -39,7 +39,7 @@ export default function BlogLayout({
                 <CategoryFilter
                   currentSelection={category}
                   onChangeCategory={setFoodAuther}
-                  data={foodCategories.sort()}
+                  data={foodCategories.map((i) => i.label)}
                   heading={"Filter By Category"}
                 />
                 {foodAuthors.length > 0 && (

@@ -13,8 +13,9 @@ export default function Blog() {
 
   return (
     <>
+      {createPost && <div className="overlay" />}
       <div className="h-full rounded-2xl w-4/9">
-        {!createPost && <NewFoodPost />}
+        {createPost && <NewFoodPost />}
 
         <div id="food-posts">
           {foodItems.map((fp, key) => (

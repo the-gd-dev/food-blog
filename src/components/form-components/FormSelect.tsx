@@ -7,11 +7,16 @@ interface SelectOptionItem {
 }
 
 interface FormSelectType {
+  required?: boolean;
   name?: string;
   data?: SelectOptionItem[] | string[] | number[];
 }
 
-export const FormSelect: React.FC<FormSelectType> = ({ name, data = [] }) => {
+export const FormSelect: React.FC<FormSelectType> = ({
+  name,
+  data = [],
+  required = false,
+}) => {
   const [items, setItems] = useState<SelectOptionItem[]>([]);
   useEffect(() => {
     if (data) {
@@ -30,8 +35,9 @@ export const FormSelect: React.FC<FormSelectType> = ({ name, data = [] }) => {
   }, [data]);
   return (
     <select
+      required={required}
       name={name}
-      className="focus:outline-0 resize-none h-8 w-full px-4 bg-white rounded-md"
+      className="focus:outline-0 resize-none h-8 w-full px-2 bg-white rounded-md"
     >
       {items.map((item, idx) => (
         <option value={item.value} key={`${item.label}-${idx}`}>

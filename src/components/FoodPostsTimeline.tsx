@@ -34,7 +34,9 @@ export const FoodPostsTimeline = () => {
 
   return (
     <div>
-      <h1 className="text-lg font-bold ">Blog Timeline</h1>
+      {Object.keys(timeline).length > 0 && (
+        <h1 className="text-lg font-bold ">Blog Timeline</h1>
+      )}
       <ul className="mt-4">
         {Object.keys(timeline).map((key) => (
           <li className="mt-2" key={key}>
