@@ -1,36 +1,117 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🍽️ Food Blog
 
-## Getting Started
+A beautiful, responsive **Food Blog** built with **Next.js**, where you can explore delicious recipes, upload food images, and learn more about your favorite dishes. This project is part of my journey learning modern web development with **Next.js App Router**, **TypeScript**, and more!
 
-First, run the development server:
+---
+
+## 🔥 Features
+
+- ✅ Built with **Next.js 14 (App Router)**
+- 🍱 Upload and share food images
+- 📖 Dynamic routing for individual recipe pages
+- 🎨 TailwindCSS for modern, responsive UI
+- ☁️ File upload using `formData` and API Routes
+- 💡 Server Components + Client Components
+- 🧠 Dynamic metadata for SEO
+
+---
+
+## 🚀 Tech Stack
+
+| Technology         | Purpose                   |
+| ------------------ | ------------------------- |
+| Next.js            | React framework & SSR/SSG |
+| TypeScript         | Static typing             |
+| Tailwind CSS       | Utility-first CSS styling |
+| Zustand (optional) | Lightweight global state  |
+| API Routes         | Backend file handling     |
+| FormData           | File uploads              |
+
+---
+
+## 📷 Screenshots
+
+Coming soon... 👨‍🍳📸
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Clone the repo
+
+```bash
+git clone https://github.com/your-username/food-blog.git
+cd food-blog
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 4. Open in browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📁 Project Structure (App Router)
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+│
+├── page.tsx                # Home page
+├── recipe/[slug]/page.tsx # Dynamic recipe pages
+├── upload/page.tsx        # File upload page
+├── layout.tsx             # Root layout
+├── api/upload/route.ts    # API route for file uploads
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💡 Learnings
 
-## Deploy on Vercel
+This project helped me learn:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- How to structure an app with the new **App Router**
+- How to use **dynamic metadata** for SEO
+- File uploads using `formData` and `API Routes`
+- Component-level state management with **Zustand**
+- Clean and responsive design with **Tailwind CSS**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 📌 Todo
+
+- [ ] Add user authentication (NextAuth or Clerk)
+- [ ] Store uploaded files in cloud (S3/Cloudinary)
+- [ ] Add recipe creation form
+- [ ] Save and fetch recipes from a database (Prisma + PostgreSQL)
+- [ ] Responsive design tweaks for mobile
+
+---
+
+## 📄 License
+
+MIT License — feel free to fork and build your own food app!
+
+---
+
+## 🙌 Acknowledgements
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [Zustand](https://github.com/pmndrs/zustand)
+
+---
+
+## ✨ Made with love and curiosity
