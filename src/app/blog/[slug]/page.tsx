@@ -5,15 +5,16 @@ import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { comments } from "../../../data/comments";
-import { foodPosts } from "../../../data/food-blogs";
 import { FoodPreference } from "@/components/FoodPreference";
 import { UserDetails } from "@/components/UserDetails";
 import { useEffect } from "react";
+import { useStore } from "@/store";
 
 export default function Page() {
   const route = useRouter();
   const params = useParams();
-  const post = foodPosts.find((fp) => fp.id === Number(params?.slug)) ?? null;
+  const { foodItems } = useStore();
+  const post = foodItems.find((fp) => fp.id === Number(params?.slug)) ?? null;
 
   if (!post) {
     return <p className="text-center text-red-500 mt-5">Post not found!</p>;
