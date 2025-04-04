@@ -16,7 +16,7 @@ export const useStore = create<StoreState>((set) => ({
   createPost: false,
   createFoodItem: (foodItem: FoodItem) =>
     set((state) => ({
-      foodItems: [...state.foodItems, foodItem],
+      foodItems: [foodItem, ...state.foodItems],
     })),
   deleteFoodItem: (food_id: number) =>
     set((state) => ({
