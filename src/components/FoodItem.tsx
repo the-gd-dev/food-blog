@@ -16,7 +16,10 @@ export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
           } p-3 flex flex-col justify-between`}
         >
           <div className="flex items-center gap-2">
-            <FoodPreference isNonVeg={item.isNonVeg} textVisibility="hidden" />
+            <FoodPreference
+              foodPreference={item.food_preference}
+              textVisibility="hidden"
+            />
             <h3 className="text-lg font-extrabold">{item.title}</h3>
           </div>
           <div

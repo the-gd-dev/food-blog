@@ -1,7 +1,8 @@
 "use client";
-import { useState } from "react";
-import { CategoryFilter } from "@/components/CategoryFilter";
+import { useMemo, useState } from "react";
+import { CategoryFilter } from "@/components";
 import { useStore } from "@/store";
+import { foodCategories } from "@/data/categories";
 
 export default function BlogLayout({
   children,
@@ -11,7 +12,10 @@ export default function BlogLayout({
   const { toggleCreatePost, foodItems } = useStore();
   const [category, setCategory] = useState("American");
   const [foodAuther, setFoodAuther] = useState("");
-
+  const foodAuthors = useMemo(
+    () => [...new Set(foodItems.map((i) => i.postedBy))],
+    [foodItems]
+  );
   return (
     <div className="flex flex-col items-center">
       <div className="flex w-4/5 justify-between py-1 relative">
@@ -35,15 +39,17 @@ export default function BlogLayout({
                 <CategoryFilter
                   currentSelection={category}
                   onChangeCategory={setFoodAuther}
-                  data={[...new Set(foodItems.map((i) => i.foodCategory))]}
+                  data={foodCategories.sort()}
                   heading={"Filter By Category"}
                 />
-                <CategoryFilter
-                  currentSelection={foodAuther}
-                  onChangeCategory={setCategory}
-                  data={[...new Set(foodItems.map((i) => i.postedBy))]}
-                  heading={" Filter By Food Auther"}
-                />
+                {foodAuthors.length > 0 && (
+                  <CategoryFilter
+                    currentSelection={foodAuther}
+                    onChangeCategory={setCategory}
+                    data={foodAuthors.sort()}
+                    heading={" Filter By Food Auther"}
+                  />
+                )}
               </li>
             </ul>
           </div>

@@ -1,14 +1,12 @@
 "use client";
 
-import { SingleComment } from "@/components/SingleComment";
 import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { comments } from "../../../data/comments";
-import { FoodPreference } from "@/components/FoodPreference";
-import { UserDetails } from "@/components/UserDetails";
 import { useEffect } from "react";
 import { useStore } from "@/store";
+import { SingleComment, FoodPreference, UserDetails } from "@/components";
 
 export default function Page() {
   const route = useRouter();
@@ -42,7 +40,7 @@ export default function Page() {
           <Image
             fill
             sizes="100vw 100vh"
-            src={post.imageUrl}
+            src={`/upload/${post.imageUrl}`}
             alt={post.title}
             className="object-cover"
           />
@@ -50,7 +48,10 @@ export default function Page() {
 
         <div className="p-4">
           <div className="flex items-center gap-2 mb-2">
-            <FoodPreference isNonVeg={post.isNonVeg} textVisibility="visible" />
+            <FoodPreference
+              foodPreference={post.food_preference}
+              textVisibility="visible"
+            />
           </div>
 
           <div className="flex justify-between">

@@ -8,5 +8,5 @@ export interface FoodItem {
   postedBy: string;
   datePosted: string;
   foodCategory: string;
-  isNonVeg: boolean;
+  food_preference: string;
 }
