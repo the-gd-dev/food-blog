@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
   return (
-    <Link href={`/blog/${item.id}`} key={`food_item_${item.id}`}>
+    <Link href={`/blog/${item.id}`}>
       <div
         className={`w-full border-1 border-gray-200 mb-4 rounded-2xl overflow-hidden cursor-pointer hover:shadow-md transition-all`}
       >

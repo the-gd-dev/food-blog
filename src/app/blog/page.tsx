@@ -1,10 +1,12 @@
 "use client";
 import { useStore } from "@/store";
-import Link from "next/link";
 import { useEffect } from "react";
 import { FoodPostsTimeline, NewFoodPost, FoodPost } from "@/components";
 
 export default function Blog() {
+  const isHydrated = (
+    useStore as typeof useStore & { persist: { hasHydrated: () => boolean } }
+  ).persist.hasHydrated();
   const { createPost, foodItems, toggleCreatePost } = useStore();
 
   useEffect(() => {
@@ -19,9 +21,9 @@ export default function Blog() {
 
         <div id="food-posts">
           {foodItems.map((fp, key) => (
-            <FoodPost item={fp} />
+            <FoodPost item={fp} key={`food_item_${key}`} />
           ))}
-          {foodItems.length === 0 && (
+          {foodItems.length === 0 && !isHydrated && (
             <div className="bg-gradient-to-br from-amber-400 to-amber-500 rounded-xl mt-26 h-40  w-full flex flex-col items-center justify-center">
               <h1 className="text-3xl font-medium text-white">
                 No New Posts Found.
