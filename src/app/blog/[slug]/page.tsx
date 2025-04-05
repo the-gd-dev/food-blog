@@ -4,7 +4,7 @@ import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import { comments } from "../../../data/comments";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useStore } from "@/store";
 import { UserComment, FoodPreference, UserDetails, Button } from "@/components";
 import { foodCategories } from "@/data/categories";
@@ -13,6 +13,7 @@ import { TrashIcon } from "@/assets/icons";
 export default function Page() {
   const route = useRouter();
   const params = useParams();
+  const [showMore, setShowMore] = useState<boolean>(false);
   const { foodItems, deleteFoodItem } = useStore();
   const post = foodItems.find((fp) => fp.id === Number(params?.slug)) ?? null;
 
@@ -67,7 +68,7 @@ export default function Page() {
               </div>
               <div className="border relative border-gray-300 overflow-hidden rounded-2xl shadow-md">
                 {/* Ensure parent has height */}
-                <div className="relative w-full h-100">
+                <div className="relative w-full h-75">
                   <Image
                     fill
                     sizes="100vw 100vh"
@@ -100,7 +101,7 @@ export default function Page() {
                     />
                   </div>
 
-                  <p className="py-3">{post?.description}</p>
+                  <p className="py-3">{post.description}</p>
                   <div className="flex w-full justify-between items-center">
                     <ul className="flex gap-2 text-sm">
                       <li>{post?.likes} likes</li>

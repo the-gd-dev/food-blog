@@ -75,6 +75,7 @@ export const NewFoodPost = () => {
 
         <textarea
           required
+          maxLength={300}
           name="description"
           placeholder="Post Description"
           className="focus:outline-0 resize-none h-20 p-2 bg-white rounded-md mb-5"

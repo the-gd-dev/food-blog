@@ -29,7 +29,11 @@ export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
               <h3 className="text-lg font-extrabold">{item.title}</h3>
             </div>
             <div className={`w-full text-md my-4`}>
-              <p>{item.description}</p>
+              <p>
+                {item.description.length > 50
+                  ? item.description.substring(0, 50) + "..."
+                  : item.description}
+              </p>
             </div>
             <div>
               <div className="flex items-center gap-2">
