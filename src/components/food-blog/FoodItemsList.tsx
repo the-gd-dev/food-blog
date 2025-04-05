@@ -38,14 +38,10 @@ export const FoodItemsList = () => {
   }
   return (
     <div id="food-posts">
-      {foodItems.length > 0 && (
-        <>
-          <h1 className="font-semibold text-xl py-4">Food Posts</h1>
-          {foodItems.map((fp) => (
-            <FoodPost item={fp} key={fp.id} /> // Use a unique identifier for the key
-          ))}
-        </>
-      )}
+      <h1 className="font-semibold text-xl py-4">Food Posts</h1>
+      {foodItems.map((fp) => (
+        <FoodPost item={fp} key={fp.id} /> // Use a unique identifier for the key
+      ))}
     </div>
   );
 };
