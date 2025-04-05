@@ -1,7 +1,8 @@
 import React from "react";
-import { FoodPost, FoodItemSkeleton } from "@/components";
+import { FoodPost, FoodItemSkeleton, Button } from "@/components";
 import { useHyderation } from "@/hooks";
 import { useStore } from "@/store";
+import { FilterIcon, GridIcon, ListIcon } from "@/assets/icons";
 
 export const FoodItemsList = () => {
   const { foodItems, toggleCreatePost } = useStore();
@@ -9,11 +10,11 @@ export const FoodItemsList = () => {
 
   if (!hydrated) {
     return (
-      <>
-        <FoodItemSkeleton />
-        <FoodItemSkeleton />
-        <FoodItemSkeleton />
-      </>
+      <div className="flex gap-2 flex-wrap">
+        {Array.from({ length: 5 }).map((_, idx) => (
+          <FoodItemSkeleton key={idx} />
+        ))}
+      </div>
     );
   }
 
@@ -37,11 +38,38 @@ export const FoodItemsList = () => {
     );
   }
   return (
-    <div id="food-posts">
-      <h1 className="font-semibold text-xl py-4">Food Posts</h1>
-      {foodItems.map((fp) => (
-        <FoodPost item={fp} key={fp.id} /> // Use a unique identifier for the key
-      ))}
+    <div>
+      <div className="flex items-center justify-between">
+        <h1 className="font-semibold text-xl py-4">Food Posts</h1>
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            height="w-9 h-9 flex justify-center items-center px-0"
+          >
+            <GridIcon height={24} width={24} />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            height="w-9 h-9 flex justify-center items-center px-0"
+          >
+            <ListIcon height={24} width={24} />
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            height="w-9 h-9 flex justify-center items-center px-0"
+          >
+            <FilterIcon height={24} width={24} />
+          </Button>
+        </div>
+      </div>
+      <div id="food-items" className="flex w-full gap-2 flex-wrap">
+        {foodItems.map((fp) => (
+          <FoodPost item={fp} key={fp.id} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -13,11 +13,11 @@ export default function Blog() {
   return (
     <>
       {createPost && <div className="overlay" onClick={toggleCreatePost} />}
-      <div className="h-full rounded-2xl w-4/9">
+      <div className="h-full rounded-2xl w-3/6 px-4">
         {createPost && <NewFoodPost />}
         <FoodItemsList />
       </div>
-      <div className="w-1/5 h-full py-1 sticky top-0">
+      <div className="w-1/6 h-full py-1 sticky top-0">
         <FoodPostsTimeline />
       </div>
     </>

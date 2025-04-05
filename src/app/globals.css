@@ -34,3 +34,7 @@ body {
   align-items: center;
   z-index: 10;
 }
+
+.food-link:hover .food-bg-image {
+  transform: scale(1.2);
+}

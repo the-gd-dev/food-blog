@@ -18,38 +18,47 @@ export default function BlogLayout({
   );
   return (
     <div className="flex flex-col items-center">
-      <div className="flex w-4/5 justify-between py-1 relative">
+      <div className="flex w-full xl:w-4/5 justify-between pt-2 relative">
         <div className="w-1/5 sticky top-0 h-full">
           <div className="flex justify-center flex-col py-4">
             <p className="text-gray-800 text-sm">Write . Publish . Share</p>
-            <h3 className="text-amber-500 text-4xl font-semibold">Food Blog</h3>
+            <h3 className="text-amber-500 text-4xl font-semibold mb-4">
+              Food Blog
+            </h3>
+            <Button
+              height="h-10 w-full"
+              text="Write New Blog"
+              onClick={toggleCreatePost}
+            />
           </div>
-          <div className="action-list">
+          <div className="rounded-xl p-4 bg-gray-100 shadow border-1 border-gray-200">
             <ul className="list-none">
-              <li>
-                <Button
-                  height="h-10 w-full"
-                  text="Write New Blog"
-                  onClick={toggleCreatePost}
-                />
-              </li>
-              <li>
-                <CategoryFilter
-                  currentSelection={category}
-                  onChangeCategory={setFoodAuther}
-                  data={foodCategories.map((i) => i.label)}
-                  heading={"Filter By Category"}
-                />
-                {foodAuthors.length > 0 && (
-                  <CategoryFilter
-                    currentSelection={foodAuther}
-                    onChangeCategory={setCategory}
-                    data={foodAuthors.sort()}
-                    heading={" Filter By Food Auther"}
-                  />
-                )}
-              </li>
+              {[
+                "My Profile",
+                "Settings",
+                "Logout",
+                "Help",
+                "Terms & Conditions",
+              ].map((item, key) => (
+                <li
+                  key={key}
+                  className="text-md hover:text-amber-400 w-fit cursor-pointer mb-2"
+                >
+                  {item}
+                </li>
+              ))}
             </ul>
+            <div className="text-justify text-md mt-4 font-semibold">
+              Developed by
+              <br />
+              <a
+                target="_blank"
+                className="text-blue-400 hover:underline"
+                href="http://github.com/the-gd-dev"
+              >
+                the-gd-dev
+              </a>
+            </div>
           </div>
         </div>
         {children}

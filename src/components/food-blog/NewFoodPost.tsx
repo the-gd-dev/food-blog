@@ -49,7 +49,7 @@ export const NewFoodPost = () => {
       <form
         onSubmit={createNewFoodItem}
         ref={formRef}
-        className="flex flex-col my-4 bg-gray-400 shadow-md rounded-xl p-4"
+        className="flex flex-col bg-gray-400 shadow-md rounded-xl p-4"
       >
         <div className="flex items-center gap-2 mb-4">
           <div className="w-1/2">
