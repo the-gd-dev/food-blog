@@ -19,7 +19,7 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputType>(
         placeholder={placeholder}
         className={
           classNames ??
-          `focus:outline-0 h-10 px-2 w-full bg-white rounded-md file:h-10 file:bg-amber-300`
+          `focus:outline-0 h-9 px-2 w-full bg-white rounded-md file:h-10 file:bg-amber-300`
         }
       />
     );

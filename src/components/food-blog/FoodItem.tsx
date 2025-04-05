@@ -1,15 +1,15 @@
 import { FoodItem } from "@/data/food-blogs";
 import moment from "moment";
 import Image from "next/image";
-import { UserDetails } from "./UserDetails";
 import { FoodPreference } from "./FoodPreference";
+import { UserDetails } from "../UserDetails";
 import Link from "next/link";
 
 export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
   return (
     <Link href={`/blog/${item.id}`}>
       <div
-        className={`w-full border-1 border-gray-200 mb-4 rounded-2xl overflow-hidden cursor-pointer hover:shadow-md transition-all`}
+        className={`w-9/10 border-1 border-gray-200 mb-4 rounded-2xl overflow-hidden cursor-pointer hover:shadow-md transition-all`}
       >
         <div className="flex">
           <div
@@ -58,6 +58,7 @@ export const FoodPost: React.FC<{ item: FoodItem }> = ({ item }) => {
             <div className="w-1/2 h-50 relative">
               <Image
                 fill
+                priority
                 sizes="100vw 100vh"
                 src={`/upload/${item.imageUrl}`}
                 alt={item.title || "Image"}

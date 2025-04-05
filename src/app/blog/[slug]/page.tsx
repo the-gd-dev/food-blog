@@ -6,8 +6,9 @@ import { useParams, useRouter } from "next/navigation";
 import { comments } from "../../../data/comments";
 import { useEffect, useMemo } from "react";
 import { useStore } from "@/store";
-import { SingleComment, FoodPreference, UserDetails } from "@/components";
+import { UserComment, FoodPreference, UserDetails, Button } from "@/components";
 import { foodCategories } from "@/data/categories";
+import { PencilIcon, TrashIcon } from "@/assets/icons";
 
 export default function Page() {
   const route = useRouter();
@@ -31,14 +32,16 @@ export default function Page() {
   return (
     <div className="max-w-3xl mx-auto p-4 w-4/7">
       {/* Post Card */}
-      <div className="w-full py-4">
-        <button
-          onClick={() => route.back()}
-          className="bg-amber-500 py-1 rounded-md text-black cursor-pointer w-20"
-          type="button"
-        >
-          Back
-        </button>
+      <div className="w-full py-4 flex justify-between">
+        <Button text="Back" onClick={() => route.back()} />
+        <div className="flex w-fit gap-2">
+          <Button variant="info" text="Edit" height="w-fit px-4">
+            <PencilIcon height={16} width={16} />
+          </Button>
+          <Button variant="danger" text="Delete" height="w-fit px-4">
+            <TrashIcon height={16} width={16} />
+          </Button>
+        </div>
       </div>
       <div className="border relative border-gray-300 overflow-hidden rounded-2xl shadow-md">
         {/* Ensure parent has height */}
@@ -103,7 +106,7 @@ export default function Page() {
         </form>
         <div id="comments" className="mt-4">
           {comments.map((comment) => (
-            <SingleComment comment={comment} key={comment.id} />
+            <UserComment comment={comment} key={comment.id} />
           ))}
         </div>
       </div>

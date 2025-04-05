@@ -1,6 +1,8 @@
 import { months } from "@/constants/months";
 import { useStore } from "@/store";
 import React, { useEffect, useState } from "react";
+import { FoodPostsTimelineSkeleton } from "../skeleton-loaders";
+import { useHyderation } from "@/hooks";
 
 interface TimelineType {
   [y: string]: string[];
@@ -10,33 +12,49 @@ export const FoodPostsTimeline = () => {
   const { foodItems } = useStore();
   const [timeline, setTimeline] = useState<TimelineType>({});
   const [timelineFilter, setTimelineFilter] = useState("");
+  const { hydrated } = useHyderation();
 
   useEffect(() => {
-    const years = [...new Set(foodItems.map((i) => i.datePosted.split("-")[0]))]
-      .sort()
-      .reverse();
-    const blogTimelines: TimelineType = {};
+    if (foodItems.length > 0) {
+      const years = [
+        ...new Set(foodItems.map((i) => i.datePosted.split("-")[0])),
+      ]
+        .sort()
+        .reverse();
+      const blogTimelines: TimelineType = {};
 
-    years.forEach((y) => {
-      const months = [
-        ...new Set(
-          foodItems
-            .filter((m) => m.datePosted.split("-")[0] === String(y))
-            .map((m) => m.datePosted.split("-")[1])
-        ),
-      ].sort();
+      years.forEach((y) => {
+        const months = [
+          ...new Set(
+            foodItems
+              .filter((m) => m.datePosted.split("-")[0] === String(y))
+              .map((m) => m.datePosted.split("-")[1])
+          ),
+        ].sort();
 
-      blogTimelines[y] = months;
-    });
+        blogTimelines[y] = months;
+      });
 
-    setTimeline(blogTimelines);
+      setTimeline(blogTimelines);
+    }
   }, [foodItems]);
+
+  if (!hydrated) {
+    return <FoodPostsTimelineSkeleton />;
+  }
+
+  if (Object.keys(timeline).length == 0) {
+    return (
+      <div className="mt-4">
+        <h1 className="text-lg font-bold ">Blog Timeline</h1>
+        <p className="text-gray-600">No Timeline found.</p>
+      </div>
+    );
+  }
 
   return (
     <div>
-      {Object.keys(timeline).length > 0 && (
-        <h1 className="text-lg font-bold ">Blog Timeline</h1>
-      )}
+      <h1 className="text-lg font-bold">Blog Timeline</h1>
       <ul className="mt-4">
         {Object.keys(timeline).map((key) => (
           <li className="mt-2" key={key}>

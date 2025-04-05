@@ -1,10 +1,9 @@
 import { CommentType } from "@/data/comments";
 import moment from "moment";
-import Image from "next/image";
 import { useState } from "react";
-import { UserDetails } from "./UserDetails";
+import { UserDetails } from "@/components";
 
-export const SingleComment = ({ comment }: { comment: CommentType }) => {
+export const UserComment = ({ comment }: { comment: CommentType }) => {
   const [showOptions, setShowOptions] = useState(false);
   return (
     <div className="border border-gray-200 p-3 rounded-lg mb-4 shadow-sm">

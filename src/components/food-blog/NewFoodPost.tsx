@@ -1,8 +1,9 @@
 import { foodCategories } from "@/data/categories";
 import { useStore } from "@/store";
 import { FormEvent, useRef } from "react";
-import { FormInput } from "./form-components/FormInput";
-import { FormSelect } from "./form-components/FormSelect";
+import { FormInput } from "../form-components/FormInput";
+import { FormSelect } from "../form-components/FormSelect";
+import { Button } from "../Button";
 
 export const NewFoodPost = () => {
   const formRef = useRef<HTMLFormElement>(null);
@@ -48,7 +49,7 @@ export const NewFoodPost = () => {
       <form
         onSubmit={createNewFoodItem}
         ref={formRef}
-        className="flex flex-col my-4 bg-amber-500 rounded-xl p-3"
+        className="flex flex-col my-4 bg-gray-400 shadow-md rounded-xl p-4"
       >
         <div className="flex items-center gap-2 mb-4">
           <div className="w-1/2">
@@ -75,8 +76,8 @@ export const NewFoodPost = () => {
         <textarea
           required
           name="description"
-          placeholder="Write a new blog post..."
-          className="focus:outline-0 resize-none h-25 p-2 bg-white rounded-md mb-2"
+          placeholder="Post Description"
+          className="focus:outline-0 resize-none h-20 p-2 bg-white rounded-md mb-5"
         ></textarea>
         <div className="flex items-center gap-2 mb-4">
           <div className="w-1/2">
@@ -84,7 +85,7 @@ export const NewFoodPost = () => {
               required
               name="fileUpload"
               type="file"
-              classNames="file:bg-amber-200 file:px-2 w-full focus:outline-0 resize-none file:h-8 bg-white rounded-md"
+              classNames="file:bg-gray-500 file:px-2 file:text-white w-full focus:outline-0 resize-none file:h-9 bg-white rounded-md"
             />
           </div>
           <div className="w-1/2">
@@ -92,20 +93,14 @@ export const NewFoodPost = () => {
           </div>
         </div>
 
-        <div className="flex justify-end py-2">
-          <button
+        <div className="flex justify-end py-2 gap-2">
+          <Button
             onClick={toggleCreatePost}
             type="button"
-            className="bg-white text-gray-600 text-sm px-4 py-1 rounded-md cursor-pointer mr-3"
-          >
-            Discard
-          </button>
-          <button
-            type="submit"
-            className="bg-amber-400 hover:bg-amber-600 text-white text-sm px-4 py-1 rounded-md cursor-pointer "
-          >
-            Submit
-          </button>
+            variant="secondary"
+            text="Discard"
+          />
+          <Button type="submit" variant="primary" text="Create" />
         </div>
       </form>
     </div>

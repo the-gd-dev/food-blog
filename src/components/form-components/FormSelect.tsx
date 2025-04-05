@@ -37,7 +37,7 @@ export const FormSelect: React.FC<FormSelectType> = ({
     <select
       required={required}
       name={name}
-      className="focus:outline-0 resize-none h-8 w-full px-2 bg-white rounded-md"
+      className="focus:outline-0 resize-none h-9 w-full px-2 bg-white rounded-md"
     >
       {items.map((item, idx) => (
         <option value={item.value} key={`${item.label}-${idx}`}>
