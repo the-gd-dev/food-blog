@@ -57,7 +57,9 @@ export const NewFoodPost = () => {
         });
 
         formRef.current.reset();
-        toggleCreatePost();
+        setTimeout(() => {
+          toggleCreatePost();
+        }, 100);
       } catch (err) {
         console.error("Upload failed", err);
       }
@@ -65,14 +67,15 @@ export const NewFoodPost = () => {
   };
 
   return (
-    <div id="new-post" className="sticky top-0 z-30">
+    <div className="absolute h-full w-full z-30 flex justify-center items-center">
+      <div className="overlay" onClick={toggleCreatePost} />
       <form
         onSubmit={createNewFoodItem}
         ref={formRef}
-        className="flex flex-col bg-gray-400 shadow-md rounded-xl p-4"
+        className="relative z-20 flex flex-col bg-gray-400 shadow-md rounded-xl p-4 w-3/4 md:w-1/2 lg:w-1/3"
       >
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-1/2">
+        <div className="flex flex-col sm:flex-row items-center gap-2 mb-4">
+          <div className="w-full sm:w-1/2">
             <FormInput
               required
               type="text"
@@ -80,7 +83,7 @@ export const NewFoodPost = () => {
               placeholder="Post Title"
             />
           </div>
-          <div className="w-1/2">
+          <div className="w-full sm:w-1/2">
             <FormSelect
               required
               name="food_preference"
@@ -100,8 +103,8 @@ export const NewFoodPost = () => {
           placeholder="Post Description"
           className="focus:outline-0 resize-none h-20 p-2 bg-white rounded-md mb-5"
         ></textarea>
-        <div className="flex items-center gap-2 mb-4">
-          <div className="w-1/2">
+        <div className="flex flex-col md:flex-row items-center gap-2 mb-4">
+          <div className="w-full md:w-1/2">
             <FormInput
               required
               name="image"
@@ -109,7 +112,7 @@ export const NewFoodPost = () => {
               classNames="file:bg-gray-500 file:px-2 file:text-white w-full focus:outline-0 resize-none file:h-9 bg-white rounded-md"
             />
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <FormSelect required name="category" data={foodCategories} />
           </div>
         </div>

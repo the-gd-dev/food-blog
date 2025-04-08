@@ -99,15 +99,10 @@ export default function BlogLayout({
             </div>
           </div>
         </div>
-        {createPost && (
-          <div className="absolute h-full w-full flex items-center justify-center">
-            <div className="overlay" onClick={toggleCreatePost} />
-            <NewFoodPost />
-          </div>
-        )}
 
         {children}
       </div>
+      {createPost && <NewFoodPost />}
     </div>
   );
 }
