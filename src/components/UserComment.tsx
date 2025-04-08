@@ -3,7 +3,17 @@ import moment from "moment";
 import { useState } from "react";
 import { UserDetails } from "@/components";
 
-export const UserComment = ({ comment }: { comment: CommentType }) => {
+interface UserCommentPropsType {
+  comment: CommentType;
+  onEdit?: (id: number) => void;
+  onDelete?: (id: number) => void;
+}
+
+export const UserComment: React.FC<UserCommentPropsType> = ({
+  comment,
+  onEdit = () => {},
+  onDelete = () => {},
+}) => {
   const [showOptions, setShowOptions] = useState(false);
   return (
     <div className="border border-gray-200 p-3 rounded-lg mb-4 shadow-sm">
@@ -26,10 +36,16 @@ export const UserComment = ({ comment }: { comment: CommentType }) => {
             {showOptions && (
               <div className="absolute bg-white border border-gray-300 right-2 rounded-sm py-2 shadow-md">
                 <ul>
-                  <li className="hover:bg-gray-200 cursor-pointer px-4 py-1">
+                  <li
+                    onClick={() => onEdit(comment?.id)}
+                    className="hover:bg-gray-200 cursor-pointer px-4 py-1"
+                  >
                     Edit
                   </li>
-                  <li className="hover:bg-gray-200 cursor-pointer px-4 py-1">
+                  <li
+                    onClick={() => onDelete(comment?.id)}
+                    className="hover:bg-gray-200 cursor-pointer px-4 py-1"
+                  >
                     Delete
                   </li>
                 </ul>

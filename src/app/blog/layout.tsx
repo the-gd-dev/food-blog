@@ -1,21 +1,13 @@
 "use client";
-import { useMemo, useState } from "react";
-import { Button, CategoryFilter } from "@/components";
+import { Button, NewFoodPost } from "@/components";
 import { useStore } from "@/store";
-import { foodCategories } from "@/data/categories";
 
 export default function BlogLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { toggleCreatePost, foodItems } = useStore();
-  const [category, setCategory] = useState("American");
-  const [foodAuther, setFoodAuther] = useState("");
-  const foodAuthors = useMemo(
-    () => [...new Set(foodItems.map((i) => i.postedBy))],
-    [foodItems]
-  );
+  const { toggleCreatePost, createPost } = useStore();
   return (
     <div className="flex flex-col items-center">
       <div className="flex w-full xl:w-4/5 justify-between pt-2 relative">
@@ -25,11 +17,9 @@ export default function BlogLayout({
             <h3 className="text-amber-500 text-4xl font-semibold mb-4">
               Food Blog
             </h3>
-            <Button
-              height="h-10 w-full"
-              text="Write New Blog"
-              onClick={toggleCreatePost}
-            />
+            <Button className="cursor-pointer" onClick={toggleCreatePost}>
+              Write New Blog
+            </Button>
           </div>
           <div className="rounded-xl p-4 bg-gray-100 shadow border-1 border-gray-200">
             <ul className="list-none">
@@ -61,6 +51,13 @@ export default function BlogLayout({
             </div>
           </div>
         </div>
+        {createPost && (
+          <div className="absolute h-full w-full flex items-center justify-center">
+            <div className="overlay" onClick={toggleCreatePost} />
+            <NewFoodPost />
+          </div>
+        )}
+
         {children}
       </div>
     </div>

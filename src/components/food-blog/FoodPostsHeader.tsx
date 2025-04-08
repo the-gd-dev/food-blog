@@ -26,14 +26,7 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
       <div className="flex items-center justify-between">
         <h1 className="font-semibold text-xl py-4">Food Posts</h1>
         <div className="flex gap-2">
-          <Button
-            onClick={onItemsLayoutChange}
-            type="button"
-            variant="secondary"
-            height={`w-9 h-9 flex justify-center items-center px-0 ${
-              itemsLayout === "grid" ? "bg-gray-300" : ""
-            }`}
-          >
+          <Button onClick={onItemsLayoutChange} variant="secondary">
             {itemsLayout === "grid" ? (
               <GridIcon height={24} width={24} />
             ) : (
@@ -43,9 +36,7 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
 
           <Button
             onClick={() => setShowFilter(!showFilter)}
-            type="button"
             variant="secondary"
-            height="w-9 h-9 flex justify-center items-center px-0"
           >
             {showFilter ? (
               <FilterClearIcon height={24} width={24} />

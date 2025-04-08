@@ -1,35 +1,39 @@
 import React from "react";
 
-const colors = {
-  primary: "bg-amber-500 hover:bg-amber-600 transition text-white",
-  secondary: "bg-gray-200 hover:bg-gray-300 transition text-gray-600",
-  danger: "bg-rose-500 hover:bg-rose-600 transition text-white",
-  info: "bg-blue-500 hover:bg-blue-600 transition text-white",
+interface ButtonProps {
+  children?: React.ReactNode;
+  onClick?: () => void;
+  type?: "button" | "submit";
+  variant?: "primary" | "secondary" | "danger" | "outline";
+  className?: string;
+  disabled?: boolean;
+}
+
+const baseStyles = `cursor-pointer inline-flex items-center justify-center px-5 py-2.5 rounded-md text-sm font-medium transition-all duration-200 ease-in-out shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60`;
+
+const variants: { [key in NonNullable<ButtonProps["variant"]>]: string } = {
+  primary: `bg-amber-500 text-white hover:bg-amber-600 active:bg-amber-700 focus-visible:ring-amber-500`,
+  secondary: `bg-gray-100 text-gray-800 hover:bg-gray-200 active:bg-gray-300 focus-visible:ring-gray-400`,
+  danger: `bg-red-500 text-white hover:bg-red-600 active:bg-red-700 focus-visible:ring-red-500`,
+  outline: `border border-gray-300 bg-transparent text-gray-800 hover:bg-gray-100 active:bg-gray-200 focus-visible:ring-gray-400`,
 };
 
-interface ButtonPropTypes {
-  text?: string;
-  type?: "button" | "submit";
-  variant?: "primary" | "secondary" | "danger" | "info";
-  onClick?: () => void;
-  height?: string;
-  children?: React.ReactNode;
-}
-export const Button: React.FC<ButtonPropTypes> = ({
-  height = "h-9",
-  text = "Title",
-  type = "button",
-  variant = "primary",
+export const Button: React.FC<ButtonProps> = ({
   children,
   onClick,
+  type = "button",
+  variant = "primary",
+  className = "",
+  disabled = false,
 }) => {
   return (
     <button
-      onClick={onClick}
       type={type}
-      className={`${colors[variant]} ${height} text-sm min-w-1/5 rounded-md cursor-pointer`}
+      onClick={onClick}
+      disabled={disabled}
+      className={`${baseStyles} ${variants[variant]} ${className}`}
     >
-      {children ? children : text}
+      {children}
     </button>
   );
 };

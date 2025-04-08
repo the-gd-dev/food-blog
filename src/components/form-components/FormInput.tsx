@@ -1,27 +1,30 @@
 import React from "react";
 
-interface FormInputType {
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: "text" | "file" | "date" | "datetime-local";
   placeholder?: string;
   name?: string;
   classNames?: string;
-  required: boolean;
+  required?: boolean;
 }
 
-export const FormInput = React.forwardRef<HTMLInputElement, FormInputType>(
-  ({ type, placeholder, name, classNames, required = false }, ref) => {
+export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
+  ({ type, placeholder, name, classNames, required = false, ...rest }, ref) => {
     return (
       <input
-        required={required}
         ref={ref}
         type={type}
         name={name}
         placeholder={placeholder}
+        required={required}
         className={
           classNames ??
           `focus:outline-0 h-9 px-2 w-full bg-white rounded-md file:h-10 file:bg-amber-300`
         }
+        {...rest}
       />
     );
   }
 );
+
+FormInput.displayName = "FormInput";

@@ -16,7 +16,7 @@ export const NewFoodPost = () => {
       const title = formData.get("title") as string;
       const description = formData.get("description") as string;
       const category = formData.get("category") as string;
-      const food_preference = formData.get("food_preference") as String;
+      const food_preference = formData.get("food_preference") as string;
 
       fetch("/api/upload", {
         method: "POST",
@@ -95,13 +95,12 @@ export const NewFoodPost = () => {
         </div>
 
         <div className="flex justify-end py-2 gap-2">
-          <Button
-            onClick={toggleCreatePost}
-            type="button"
-            variant="secondary"
-            text="Discard"
-          />
-          <Button type="submit" variant="primary" text="Create" />
+          <Button onClick={toggleCreatePost} variant="secondary">
+            Discard
+          </Button>
+          <Button type="submit" variant="primary">
+            New Post
+          </Button>
         </div>
       </form>
     </div>

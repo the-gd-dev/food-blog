@@ -1,5 +1,6 @@
 import { useStore } from "@/store";
 import React from "react";
+import { Button } from "../Button";
 
 export const NoFoodPosts = () => {
   const { toggleCreatePost } = useStore();
@@ -9,13 +10,7 @@ export const NoFoodPosts = () => {
       <p className="text-lg font-light mt-2 text-gray-600">
         It looks like there are no posts yet. Why not create one?
       </p>
-      <button
-        onClick={toggleCreatePost}
-        type="button"
-        className="mt-4 px-4 py-2 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition"
-      >
-        Create A New Post
-      </button>
+      <Button onClick={toggleCreatePost}>Create A New Post</Button>
     </div>
   );
 };

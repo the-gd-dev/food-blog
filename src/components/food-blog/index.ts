@@ -4,3 +4,4 @@ export * from "./FoodPostsTimeline";
 export * from "./FoodPreference";
 export * from "./NewFoodPost";
 export * from "./NoFoodPosts";
+export * from "./NewComment";

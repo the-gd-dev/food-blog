@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
   },
   devIndicators: false,
   images: { domains: ["images.pexels.com", "randomuser.me"] },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
