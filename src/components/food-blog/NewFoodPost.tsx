@@ -1,6 +1,6 @@
 import { foodCategories } from "@/data/categories";
 import { useStore } from "@/store";
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { FormInput } from "../form-components/FormInput";
 import { FormSelect } from "../form-components/FormSelect";
 import { Button } from "../Button";
@@ -12,9 +12,10 @@ const { uploadFiles } = generateReactHelpers<OurFileRouter>();
 
 export const NewFoodPost = () => {
   const formRef = useRef<HTMLFormElement>(null);
+  const [loading, setLoading] = useState<boolean>(false);
   const { foodItems, toggleCreatePost, createFoodItem } = useStore();
-
   const createNewFoodItem = async (e: FormEvent) => {
+    setLoading(true);
     e.preventDefault();
 
     if (formRef.current) {
@@ -55,12 +56,14 @@ export const NewFoodPost = () => {
           foodCategory: String(category),
           food_preference: String(food_preference),
         });
+        setLoading(false);
 
         formRef.current.reset();
         setTimeout(() => {
           toggleCreatePost();
         }, 100);
       } catch (err) {
+        setLoading(false);
         console.error("Upload failed", err);
       }
     }
@@ -78,6 +81,7 @@ export const NewFoodPost = () => {
           <div className="w-full sm:w-1/2">
             <FormInput
               required
+              disabled={loading}
               type="text"
               name="title"
               placeholder="Post Title"
@@ -86,6 +90,7 @@ export const NewFoodPost = () => {
           <div className="w-full sm:w-1/2">
             <FormSelect
               required
+              disabled={loading}
               name="food_preference"
               data={[
                 { id: 1, label: "Vegetarian", value: "veg" },
@@ -100,12 +105,14 @@ export const NewFoodPost = () => {
           required
           maxLength={300}
           name="description"
+          disabled={loading}
           placeholder="Post Description"
           className="focus:outline-0 resize-none h-20 p-2 bg-white rounded-md mb-5"
         ></textarea>
         <div className="flex flex-col md:flex-row items-center gap-2 mb-4">
           <div className="w-full md:w-1/2">
             <FormInput
+              disabled={loading}
               required
               name="image"
               type="file"
@@ -113,7 +120,12 @@ export const NewFoodPost = () => {
             />
           </div>
           <div className="w-full md:w-1/2">
-            <FormSelect required name="category" data={foodCategories} />
+            <FormSelect
+              disabled={loading}
+              required
+              name="category"
+              data={foodCategories}
+            />
           </div>
         </div>
 
@@ -121,7 +133,12 @@ export const NewFoodPost = () => {
           <Button onClick={toggleCreatePost} variant="secondary">
             Discard
           </Button>
-          <Button type="submit" variant="primary">
+          <Button
+            disabled={loading}
+            type="submit"
+            variant="primary"
+            loader={loading}
+          >
             New Post
           </Button>
         </div>

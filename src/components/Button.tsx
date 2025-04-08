@@ -7,6 +7,7 @@ interface ButtonProps {
   variant?: "primary" | "secondary" | "danger" | "outline";
   className?: string;
   disabled?: boolean;
+  loader?: boolean;
 }
 
 const baseStyles = `cursor-pointer inline-flex items-center justify-center px-3 py-2 rounded-md text-xs md:text-sm font-medium transition-all duration-200 ease-in-out shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60`;
@@ -25,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "primary",
   className = "",
   disabled = false,
+  loader = false,
 }) => {
   return (
     <button
@@ -33,6 +35,9 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       className={`${baseStyles} ${variants[variant]} ${className}`}
     >
+      {loader && (
+        <div className="h-5 w-5 animate-spin mr-2 border-amber-400 border-l-3 border-l-white border-3 rounded-full relative"></div>
+      )}
       {children}
     </button>
   );

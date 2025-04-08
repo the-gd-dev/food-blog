@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 
 interface SelectOptionItem {
   id: number;
@@ -11,6 +11,7 @@ interface FormSelectType {
   name?: string;
   data?: SelectOptionItem[] | (string | number)[];
   placeholder?: string;
+  disabled?: boolean;
 }
 
 export const FormSelect: React.FC<FormSelectType> = ({
@@ -18,6 +19,7 @@ export const FormSelect: React.FC<FormSelectType> = ({
   data = [],
   required = false,
   placeholder = "Select an option",
+  disabled = false,
 }) => {
   const items = useMemo(() => {
     if (!data) return [];
@@ -39,6 +41,7 @@ export const FormSelect: React.FC<FormSelectType> = ({
       name={name}
       aria-label={name || "form-select"}
       className="focus:outline-0 resize-none h-9 w-full px-2 bg-gray-100 rounded-md"
+      disabled={disabled}
     >
       <option value="" disabled>
         {placeholder}
