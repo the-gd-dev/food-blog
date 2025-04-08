@@ -47,7 +47,7 @@ export default function Page() {
 
   if (!post) {
     return (
-      <div className="max-w-3xl mx-auto p-4 w-4/7 h-100 flex flex-col justify-center items-center">
+      <div className="max-w-3xl mx-auto p-4 w-full md:w-4/7 h-100 flex flex-col justify-center items-center">
         <h2 className="text-2xl font-semibold mb-4">Post Not Found</h2>
         <p className="text-gray-600 mb-4">
           Sorry, the post you are looking for does not exist or has been
@@ -75,9 +75,9 @@ export default function Page() {
   };
 
   return (
-    <div className="px-8 mx-auto w-full md:w-4/5">
-      <div className="w-full flex flex-col md:flex-row mt-4 gap-2">
-        <div className="w-full md:w-1/2">
+    <div className="mx-auto w-full md:w-3/5 lg:w-4/5 md:pl-8">
+      <div className="w-full flex flex-col xl:flex-row mt-4 gap-2">
+        <div className="w-full xl:w-1/2">
           <div className="w-full pb-4 flex justify-between items-center">
             <Button onClick={() => route.back()}>Back</Button>
             <div className="flex w-fit gap-2">
@@ -133,8 +133,8 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="w-full md:w-1/2">
-          <div className="mt-4 md:mt-0 md:px-4">
+        <div className="w-full xl:w-1/2">
+          <div className="mt-4 xl:mt-0 xl:px-4">
             <NewComment
               comment={newComment}
               onChangeText={(v) => setNewComment(v)}

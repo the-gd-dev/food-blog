@@ -1,11 +1,8 @@
 "use client";
-import { useStore } from "@/store";
+import { FoodItemsList, FoodPostsTimeline } from "@/components";
 import { useEffect } from "react";
-import { FoodPostsTimeline, NewFoodPost, FoodItemsList } from "@/components";
 
 export default function Blog() {
-  const { createPost, toggleCreatePost } = useStore();
-
   useEffect(() => {
     document.title = "Food App";
   }, []);

@@ -32,7 +32,10 @@ export default function BlogLayout({
           !sideMenuOpen ? "-translate-x-50" : ""
         }`}
       >
-        <div className="overlay" onClick={toggleSideMenu}></div>
+        <div
+          className={`overlay ${!sideMenuOpen ? "hidden" : ""}`}
+          onClick={toggleSideMenu}
+        ></div>
         <div className="h-full w-50 p-4 bg-gray-100 shadow border-1 border-gray-200 z-20 relative">
           <ul className="list-none">
             {[
