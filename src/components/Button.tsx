@@ -9,7 +9,7 @@ interface ButtonProps {
   disabled?: boolean;
 }
 
-const baseStyles = `cursor-pointer inline-flex items-center justify-center px-5 py-2.5 rounded-md text-sm font-medium transition-all duration-200 ease-in-out shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60`;
+const baseStyles = `cursor-pointer inline-flex items-center justify-center px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ease-in-out shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60`;
 
 const variants: { [key in NonNullable<ButtonProps["variant"]>]: string } = {
   primary: `bg-amber-500 text-white hover:bg-amber-600 active:bg-amber-700 focus-visible:ring-amber-500`,

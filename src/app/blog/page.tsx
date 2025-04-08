@@ -12,10 +12,10 @@ export default function Blog() {
 
   return (
     <>
-      <div className="h-full rounded-2xl w-3/6 px-4">
+      <div className="h-full w-full rounded-2xl lg:w-3/4 md:px-6 mt-3 md:mt-0">
         <FoodItemsList />
       </div>
-      <div className="w-1/6 h-full py-1 sticky top-0">
+      <div className="hidden lg:flex flex-col md:w-1/6 lg:1/4 h-full py-1 sticky top-0">
         <FoodPostsTimeline />
       </div>
     </>

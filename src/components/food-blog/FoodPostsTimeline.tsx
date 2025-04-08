@@ -45,8 +45,8 @@ export const FoodPostsTimeline = () => {
 
   if (Object.keys(timeline).length == 0) {
     return (
-      <div className="">
-        <h1 className="text-lg font-bold ">Blog Timeline</h1>
+      <div>
+        <h1 className="text-md font-bold ">Blog Timeline</h1>
         <p className="text-gray-600">No Timeline found.</p>
       </div>
     );
@@ -54,7 +54,7 @@ export const FoodPostsTimeline = () => {
 
   return (
     <div>
-      <h1 className="text-lg font-bold">Blog Timeline</h1>
+      <h1 className="text-md font-bold">Blog Timeline</h1>
       <ul>
         {Object.keys(timeline).map((key) => (
           <li className="mt-2" key={key}>

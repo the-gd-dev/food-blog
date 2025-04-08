@@ -75,9 +75,9 @@ export default function Page() {
   };
 
   return (
-    <div className="px-8 mx-auto w-4/5">
-      <div className="w-full flex mt-4 gap-2">
-        <div className="w-1/2">
+    <div className="px-8 mx-auto w-full md:w-4/5">
+      <div className="w-full flex flex-col md:flex-row mt-4 gap-2">
+        <div className="w-full md:w-1/2">
           <div className="w-full pb-4 flex justify-between items-center">
             <Button onClick={() => route.back()}>Back</Button>
             <div className="flex w-fit gap-2">
@@ -91,7 +91,7 @@ export default function Page() {
               <Image
                 fill
                 sizes="100vw 100vh"
-                src={`/upload/${post?.imageUrl}`}
+                src={`${post?.imageUrl}`}
                 alt={post?.title ?? ""}
                 className="object-cover"
               />
@@ -133,8 +133,8 @@ export default function Page() {
             </div>
           </div>
         </div>
-        <div className="w-1/2">
-          <div className="px-4">
+        <div className="w-full md:w-1/2">
+          <div className="mt-4 md:mt-0 md:px-4">
             <NewComment
               comment={newComment}
               onChangeText={(v) => setNewComment(v)}

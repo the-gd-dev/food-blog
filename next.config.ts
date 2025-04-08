@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     ];
   },
   devIndicators: false,
-  images: { domains: ["images.pexels.com", "randomuser.me"] },
+  images: { domains: ["randomuser.me", "utfs.io"] },
   eslint: {
     ignoreDuringBuilds: true,
   },

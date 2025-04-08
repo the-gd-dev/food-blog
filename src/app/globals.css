@@ -38,3 +38,7 @@ body {
 .food-link:hover .food-bg-image {
   transform: scale(1.2);
 }
+
+@theme {
+  --breakpoint-xs: 30rem;
+}

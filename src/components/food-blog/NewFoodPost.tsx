@@ -4,46 +4,66 @@ import { FormEvent, useRef } from "react";
 import { FormInput } from "../form-components/FormInput";
 import { FormSelect } from "../form-components/FormSelect";
 import { Button } from "../Button";
+import { generateReactHelpers } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import imageCompression from "browser-image-compression";
+
+const { uploadFiles } = generateReactHelpers<OurFileRouter>();
 
 export const NewFoodPost = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const { foodItems, toggleCreatePost, createFoodItem } = useStore();
 
-  const createNewFoodItem = (e: FormEvent) => {
+  const createNewFoodItem = async (e: FormEvent) => {
     e.preventDefault();
+
     if (formRef.current) {
       const formData = new FormData(formRef.current);
+
       const title = formData.get("title") as string;
       const description = formData.get("description") as string;
       const category = formData.get("category") as string;
       const food_preference = formData.get("food_preference") as string;
+      const fileInput = formData.get("image") as File;
 
-      fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          createFoodItem({
-            id: foodItems.length + 1,
-            title: title || "",
-            imageUrl: data.fileName || "",
-            description: description || "",
-            likes: 100,
-            comments: 100,
-            postedBy: "John Doe",
-            datePosted: new Date().toISOString(),
-            foodCategory: String(category),
-            food_preference: String(food_preference),
-          });
-          formRef?.current?.reset();
-          toggleCreatePost();
-        })
-        .catch((err) => {
-          console.log(err);
+      if (!fileInput || fileInput.size === 0) {
+        console.error("No image file selected");
+        return;
+      }
+
+      try {
+        const compressedFile = await imageCompression(fileInput, {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1024,
         });
+        const uploaded = await uploadFiles("foodImageUploader", {
+          files: [compressedFile],
+        });
+
+        const imageUrl = uploaded?.[0]?.url ?? "";
+
+        // Create food item with uploaded image URL
+        createFoodItem({
+          id: foodItems.length + 1,
+          title: title || "",
+          imageUrl,
+          description: description || "",
+          likes: 100,
+          comments: 100,
+          postedBy: "John Doe",
+          datePosted: new Date().toISOString(),
+          foodCategory: String(category),
+          food_preference: String(food_preference),
+        });
+
+        formRef.current.reset();
+        toggleCreatePost();
+      } catch (err) {
+        console.error("Upload failed", err);
+      }
     }
   };
+
   return (
     <div id="new-post" className="sticky top-0 z-30">
       <form
@@ -84,7 +104,7 @@ export const NewFoodPost = () => {
           <div className="w-1/2">
             <FormInput
               required
-              name="fileUpload"
+              name="image"
               type="file"
               classNames="file:bg-gray-500 file:px-2 file:text-white w-full focus:outline-0 resize-none file:h-9 bg-white rounded-md"
             />

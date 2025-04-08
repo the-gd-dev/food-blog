@@ -23,14 +23,14 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
   const { foodItems } = useStore();
   return (
     <>
-      <div className="flex items-center justify-between">
-        <h1 className="font-semibold text-xl py-4">Food Posts</h1>
+      <div className="flex items-center justify-between pb-4">
+        <h1 className="font-semibold text-lg">Food Posts</h1>
         <div className="flex gap-2">
           <Button onClick={onItemsLayoutChange} variant="secondary">
             {itemsLayout === "grid" ? (
-              <GridIcon height={24} width={24} />
+              <GridIcon height={16} width={16} />
             ) : (
-              <ListIcon height={24} width={24} />
+              <ListIcon height={16} width={16} />
             )}
           </Button>
 
@@ -39,9 +39,9 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
             variant="secondary"
           >
             {showFilter ? (
-              <FilterClearIcon height={24} width={24} />
+              <FilterClearIcon height={16} width={16} />
             ) : (
-              <FilterIcon height={24} width={24} />
+              <FilterIcon height={16} width={16} />
             )}
           </Button>
         </div>

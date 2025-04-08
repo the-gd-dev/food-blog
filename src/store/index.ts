@@ -3,6 +3,8 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface StoreState {
+  sideMenuOpen?: boolean;
+  toggleSideMenu: () => void;
   foodItems: FoodItem[];
   createPost: boolean;
   updateFoodItem: (foodItemId: number, foodItem: FoodItem) => void;
@@ -14,8 +16,13 @@ interface StoreState {
 export const useStore = create<StoreState>()(
   persist(
     (set) => ({
+      sideMenuOpen: false,
       foodItems: [],
       createPost: false,
+      toggleSideMenu: () =>
+        set((state) => ({
+          sideMenuOpen: !state.sideMenuOpen,
+        })),
       createFoodItem: (foodItem: FoodItem) =>
         set((state) => ({
           foodItems: [foodItem, ...state.foodItems],
