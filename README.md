@@ -4,6 +4,8 @@ A beautiful, responsive **Food Blog** built with **Next.js**, where you can expl
 
 ---
 
+🌐 **Live Demo**: [https://cozy-travesseiro-12bf92.netlify.app](https://cozy-travesseiro-12bf92.netlify.app)
+
 ## 🔥 Features
 
 - ✅ Built with **Next.js 14 (App Router)**
