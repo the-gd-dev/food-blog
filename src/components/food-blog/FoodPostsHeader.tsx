@@ -40,7 +40,7 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
             onChange={(e) => onSearch(e.target?.value)}
             placeholder="Search anything about food..."
             type="text"
-            className="border-gray-200 border-1 rounded-none mb-3"
+            className="border-gray-200 border-1 rounded-sm mb-3"
           />
         </div>
         <div className="flex items-center justify-between pb-4">

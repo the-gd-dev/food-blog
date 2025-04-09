@@ -3,7 +3,7 @@
 import moment from "moment";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
-import { CommentType } from "../../../data/comments";
+import { CommentType } from "@/data/comments";
 import { useEffect, useMemo, useState } from "react";
 import { useStore } from "@/store";
 import {
