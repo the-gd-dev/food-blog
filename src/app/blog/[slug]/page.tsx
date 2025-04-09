@@ -14,7 +14,7 @@ import {
   NewComment,
 } from "@/components";
 import { foodCategories } from "@/data/categories";
-import { TrashIcon } from "@/assets/icons";
+import { CommentSolidIcon, HeartSolid, TrashIcon } from "@/assets/icons";
 
 export default function Page() {
   const route = useRouter();
@@ -123,8 +123,14 @@ export default function Page() {
               <p className="py-3 text-gray-700">{post.description}</p>
               <div className="flex w-full justify-between items-center">
                 <ul className="flex gap-4 text-sm text-gray-600">
-                  <li>{post?.likes} likes</li>
-                  <li>{post?.comments} comments</li>
+                  <li className="flex gap-1">
+                    <HeartSolid fill={"#6a6a6a"} height={16} width={16} />
+                    {post?.likes} likes
+                  </li>
+                  <li className="flex gap-1">
+                    <CommentSolidIcon fill={"#6a6a6a"} height={16} width={16} />
+                    {post?.comments} comments
+                  </li>
                 </ul>
                 <div className="text-gray-500 text-sm">
                   {moment(post?.datePosted).format("ddd, D MMM YYYY")}

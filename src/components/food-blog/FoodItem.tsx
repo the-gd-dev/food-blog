@@ -2,11 +2,12 @@ import { FoodItem } from "@/data/food-blogs";
 import moment from "moment";
 import Link from "next/link";
 import { FoodPreference } from "./FoodPreference";
+import { CommentSolidIcon, HeartOutline } from "@/assets/icons";
 
 const baseClasses = `relative rounded-2xl overflow-hidden  cursor-pointer`;
 const layoutClasses = {
   grid: `${baseClasses} food-link flex items-end w-full h-60 lg:h-75 border-1 border-gray-200 hover:shadow-md`,
-  list: `${baseClasses} w-full h-28 lg:h-30 border-gray-200 border-1 hover:bg-gray-100 hover:border-gray-100`,
+  list: `${baseClasses} w-full h-28 lg:h-30 border-gray-200 border-1 hover:bg-gray-100 hover:border-gray-100 hover:shadow-md`,
 };
 
 export const FoodPost: React.FC<{
@@ -64,8 +65,22 @@ export const FoodPost: React.FC<{
             <div>
               <div className="flex flex-col">
                 <ul className="flex gap-2">
-                  <li className="text-xs">{item.likes} likes</li>
-                  <li className="text-xs">{item.comments} comments</li>
+                  <li className="text-xs flex items-center gap-1">
+                    <HeartOutline
+                      fill={isGrid ? "#FFFFFF" : "#6a6a6a"}
+                      height={16}
+                      width={16}
+                    />
+                    <div>{item.likes} likes</div>
+                  </li>
+                  <li className="text-xs flex items-center gap-1">
+                    <CommentSolidIcon
+                      fill={isGrid ? "#FFFFFF" : "#6a6a6a"}
+                      height={16}
+                      width={16}
+                    />
+                    {item.comments} comments
+                  </li>
                 </ul>
                 <small className="text-xs">
                   {moment(item.datePosted).format("ddd, D MMM YYYY")}

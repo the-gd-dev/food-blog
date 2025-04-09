@@ -59,7 +59,7 @@ export const FoodItemsList = () => {
     return (
       <div>
         <FoodPostsHeaderSkeleton />
-        <div className="grid xs:grid-cols-2 sm:grid-cols-3  lg:grid-cols-2 xl:grid-cols-3 w-full gap-2 flex-wrap">
+        <div className="grid xs:grid-cols-2 sm:grid-cols-3  lg:grid-cols-2 xl:grid-cols-3 w-full gap-3 flex-wrap">
           {Array.from({ length: 4 }).map((_, idx) => (
             <FoodItemSkeleton key={idx} />
           ))}
