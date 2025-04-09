@@ -4,7 +4,7 @@ import { useStore } from "@/store";
 
 const WriteNewBlog = ({ onClick }: { onClick: () => void }) => (
   <Button className="cursor-pointer md:mt-2" onClick={onClick}>
-    Write New Blog
+    <div>Write New Blog</div>
   </Button>
 );
 

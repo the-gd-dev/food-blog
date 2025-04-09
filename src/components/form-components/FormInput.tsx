@@ -1,15 +1,23 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: "text" | "file" | "date" | "datetime-local";
   placeholder?: string;
   name?: string;
-  classNames?: string;
+  className?: string;
   required?: boolean;
 }
 
-export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
-  ({ type, placeholder, name, classNames, required = false, ...rest }, ref) => {
+const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
+  (
+    { type, placeholder, name, className = "", required = false, ...rest },
+    ref
+  ) => {
+    const baseClasses =
+      "focus:outline-0 h-9 px-2 w-full bg-white rounded-md file:h-10 file:bg-amber-300";
+
+    const combinedClasses = `${baseClasses} ${className}`.trim();
+
     return (
       <input
         ref={ref}
@@ -17,10 +25,7 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
         name={name}
         placeholder={placeholder}
         required={required}
-        className={
-          classNames ??
-          `focus:outline-0 h-9 px-2 w-full bg-white rounded-md file:h-10 file:bg-amber-300`
-        }
+        className={combinedClasses}
         {...rest}
       />
     );
@@ -28,3 +33,5 @@ export const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(
 );
 
 FormInput.displayName = "FormInput";
+
+export { FormInput };

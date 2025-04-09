@@ -75,9 +75,9 @@ export const NewFoodPost = () => {
       <form
         onSubmit={createNewFoodItem}
         ref={formRef}
-        className="relative z-20 flex flex-col bg-gray-400 shadow-md rounded-xl p-4 w-3/4 md:w-1/2 lg:w-1/3"
+        className="relative z-20 flex flex-col bg-gray-400 shadow-md rounded-xl p-4 w-90 md:w-1/2 lg:w-1/3"
       >
-        <div className="flex flex-col sm:flex-row items-center gap-2 mb-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2 mb-3">
           <div className="w-full sm:w-1/2">
             <FormInput
               required
@@ -107,19 +107,19 @@ export const NewFoodPost = () => {
           name="description"
           disabled={loading}
           placeholder="Post Description"
-          className="focus:outline-0 resize-none h-20 p-2 bg-white rounded-md mb-5"
+          className="focus:outline-0 resize-none h-20 p-2 bg-white rounded-md mb-3"
         ></textarea>
-        <div className="flex flex-col md:flex-row items-center gap-2 mb-4">
+        <div className="flex flex-col md:flex-row items-center gap-2 mb-3">
           <div className="w-full md:w-1/2">
             <FormInput
               disabled={loading}
               required
               name="image"
               type="file"
-              classNames="file:bg-gray-500 file:px-2 file:text-white w-full focus:outline-0 resize-none file:h-9 bg-white rounded-md"
+              className="file:bg-gray-500 file:px-2 pl-0 file:text-white w-full focus:outline-0 resize-none file:h-9 bg-white rounded-md"
             />
           </div>
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2 mt-1 md:mt-0">
             <FormSelect
               disabled={loading}
               required
@@ -129,7 +129,7 @@ export const NewFoodPost = () => {
           </div>
         </div>
 
-        <div className="flex justify-end py-2 gap-2">
+        <div className="flex justify-end gap-2">
           <Button onClick={toggleCreatePost} variant="secondary">
             Discard
           </Button>

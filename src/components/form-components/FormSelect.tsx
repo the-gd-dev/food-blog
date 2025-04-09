@@ -12,45 +12,65 @@ interface FormSelectType {
   data?: SelectOptionItem[] | (string | number)[];
   placeholder?: string;
   disabled?: boolean;
+  onSelect?: (v: string | number) => void;
+  tranformValue?: boolean;
+  className?: string;
 }
 
-export const FormSelect: React.FC<FormSelectType> = ({
-  name,
-  data = [],
-  required = false,
-  placeholder = "Select an option",
-  disabled = false,
-}) => {
-  const items = useMemo(() => {
-    if (!data) return [];
-    return data.map((v, k) => {
-      if (typeof v !== "object") {
-        return {
-          id: k + 1,
-          label: String(v),
-          value: String(v).replace(/\s+/g, "-").toLowerCase(),
-        };
-      }
-      return v as SelectOptionItem;
-    });
-  }, [data]);
+export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectType>(
+  (
+    {
+      name,
+      data = [],
+      required = false,
+      placeholder = "Select an option",
+      disabled = false,
+      tranformValue = true,
+      onSelect,
+      className,
+      ...rest
+    },
+    ref
+  ) => {
+    const baseClass = `focus:outline-amber-400 resize-none h-9 px-2 bg-gray-100 rounded-md`;
+    const defaultClasses = `w-full`;
 
-  return (
-    <select
-      required={required}
-      name={name}
-      aria-label={name || "form-select"}
-      className="focus:outline-0 resize-none h-9 w-full px-2 bg-gray-100 rounded-md"
-      disabled={disabled}
-    >
-      <option value="" disabled>
-        {placeholder}
-      </option>
-      {items.map((item) => (
-        <option value={item.value} key={item.id}>
-          {item.label}
-        </option>
-      ))}
-    </select>
-  );
-};
+    const items = useMemo(() => {
+      if (!data) return [];
+      return data.map((v, k) => {
+        if (typeof v !== "object") {
+          return {
+            id: k + 1,
+            label: String(v),
+            value: tranformValue
+              ? String(v).replace(/\s+/g, "-").toLowerCase()
+              : String(v),
+          };
+        }
+        return v as SelectOptionItem;
+      });
+    }, [data]);
+
+    return (
+      <select
+        ref={ref}
+        required={required}
+        name={name}
+        aria-label={name || "form-select"}
+        className={`${baseClass} ${className || defaultClasses}`}
+        disabled={disabled}
+        onChange={(e) => onSelect && onSelect(e.target.value)}
+        {...rest}
+      >
+        <option value="">{placeholder}</option>
+        {items.map((item) => (
+          <option value={item.value} key={item.id}>
+            {item.label}
+          </option>
+        ))}
+      </select>
+    );
+  }
+);
+
+FormSelect.displayName = "FormSelect";
