@@ -1,5 +1,5 @@
 import React, { FormEvent } from "react";
-import { Button } from "../Button";
+import { Button } from "@/components";
 
 interface NewCommentPropTypes {
   onSubmit: () => void;

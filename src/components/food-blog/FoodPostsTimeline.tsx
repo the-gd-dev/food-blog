@@ -3,13 +3,15 @@ import { useStore } from "@/store";
 import React, { useEffect, useState } from "react";
 import { FoodPostsTimelineSkeleton } from "../skeleton-loaders";
 import { useHyderation } from "@/hooks";
+import { CrossIcon } from "@/assets/icons";
+import { Button } from "@/components";
 
 interface TimelineType {
   [y: string]: string[];
 }
 
 export const FoodPostsTimeline = () => {
-  const { foodItems } = useStore();
+  const { foodItems, toggleShowTimeline, showTimeline } = useStore();
   const [timeline, setTimeline] = useState<TimelineType>({});
   const [timelineFilter, setTimelineFilter] = useState("");
   const { hydrated } = useHyderation();
@@ -54,14 +56,24 @@ export const FoodPostsTimeline = () => {
 
   return (
     <div>
-      <h1 className="text-md font-bold">Blog Timeline</h1>
+      <div className="flex flex-col justify-start">
+        <Button
+          variant="none"
+          onClick={toggleShowTimeline}
+          className="bg-transparent shadow-none outline-0 h-fit w-fit border-none -ml-1 mb-2 lg:hidden"
+        >
+          <CrossIcon height={30} width={30} />
+        </Button>
+        <h1 className="text-md font-bold">Blog Timeline</h1>
+      </div>
+
       <ul>
         {Object.keys(timeline).map((key) => (
           <li className="mt-2" key={key}>
             <h1 className="font-bold text-gray-700">{key}</h1>
             <ul className="list-none flex flex-col flex-wrap">
               {timeline[key]?.map((m: string) => (
-                <li key={`${key}-${m}`} className="text-gray-500">
+                <li key={`${key}-${m}`} className="text-gray-500 pl-3">
                   <div
                     className={`cursor-pointer max-w-fit hover:text-amber-500 ${
                       `${key}-${m}` === timelineFilter ? "text-amber-500" : ""

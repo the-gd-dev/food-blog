@@ -1,9 +1,7 @@
 import { foodCategories } from "@/data/categories";
 import { useStore } from "@/store";
 import { FormEvent, useRef, useState } from "react";
-import { FormInput } from "../form-components/FormInput";
-import { FormSelect } from "../form-components/FormSelect";
-import { Button } from "../Button";
+import { Button, FormInput, FormSelect } from "@/components";
 import { generateReactHelpers } from "@uploadthing/react";
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
 import imageCompression from "browser-image-compression";

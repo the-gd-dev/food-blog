@@ -71,7 +71,7 @@ export const FoodPost: React.FC<{
                       height={16}
                       width={16}
                     />
-                    <div>{item.likes} likes</div>
+                    <div>{item.likes} </div>
                   </li>
                   <li className="text-xs flex items-center gap-1">
                     <CommentSolidIcon
@@ -79,7 +79,7 @@ export const FoodPost: React.FC<{
                       height={16}
                       width={16}
                     />
-                    {item.comments} comments
+                    {item.comments}
                   </li>
                 </ul>
                 <small className="text-xs">

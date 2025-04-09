@@ -147,3 +147,27 @@ export const CommentSolidIcon: React.FC<SVGTypes> = (props) => (
     <path d="M2 3a1 1 0 0 0-1 1v16.586a.5.5 0 0 0 .854.354L6.414 18H21a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H2z" />
   </svg>
 );
+
+export const TimelineIcon: React.FC<SVGTypes> = (props) => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <line x1="4" y1="12" x2="20" y2="12" />
+      <circle cx="4" cy="12" r="2" />
+      <circle cx="12" cy="12" r="2" />
+      <circle cx="20" cy="12" r="2" />
+    </svg>
+  );
+};
+
+export const CrossIcon: React.FC<SVGTypes> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+    <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 1 0-1.41 1.41L10.59 12l-4.89 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z" />
+  </svg>
+);

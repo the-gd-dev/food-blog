@@ -62,7 +62,7 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectType>(
         onChange={(e) => onSelect && onSelect(e.target.value)}
         {...rest}
       >
-        <option value="">{placeholder}</option>
+        <option value="" disabled>{placeholder}</option>
         {items.map((item) => (
           <option value={item.value} key={item.id}>
             {item.label}

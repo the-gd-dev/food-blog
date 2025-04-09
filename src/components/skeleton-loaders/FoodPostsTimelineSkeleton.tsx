@@ -1,6 +1,6 @@
 export const FoodPostsTimelineSkeleton: React.FC = () => {
   return (
-    <div className="animate-pulse mt-4">
+    <div className="animate-pulse">
       <div className="h-4 w-30 bg-gray-400 rounded mb-2"></div>
       {/* Skeleton for Timeline Items */}
       <ul className="mt-4">

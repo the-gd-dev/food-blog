@@ -1,15 +1,15 @@
-import { foodCategories } from "@/data/categories";
-import React, { FormEvent } from "react";
-import { FormInput, FormSelect } from "../form-components";
-import { Button } from "../Button";
 import {
   FilterClearIcon,
   FilterIcon,
   GridIcon,
   ListIcon,
+  TimelineIcon,
 } from "@/assets/icons";
-import { useStore } from "@/store";
+import { Button, FormInput, FormSelect } from "@/components";
+import { foodCategories } from "@/data/categories";
 import { FoodItem } from "@/data/food-blogs";
+import { useStore } from "@/store";
+import React from "react";
 
 interface FoodPostsHeaderPropTypes {
   itemsLayout: "grid" | "list";
@@ -21,16 +21,16 @@ interface FoodPostsHeaderPropTypes {
   onFilter?: (key: keyof FoodItem, value: string | number) => void;
 }
 
-const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
+export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
   itemsLayout = "grid",
   filterVisible = false,
-  searchQuery,
+  searchQuery = "",
   onItemsLayoutChange,
   onFilter = () => {},
   toggleFilter = () => {},
   onSearch = () => {},
 }) => {
-  const { foodItems } = useStore();
+  const { foodItems, toggleShowTimeline } = useStore();
   return (
     <>
       <div className="flex flex-col">
@@ -40,31 +40,44 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
             onChange={(e) => onSearch(e.target?.value)}
             placeholder="Search anything about food..."
             type="text"
-            className="border-gray-200 border-1 rounded-sm mb-3"
+            className="border-gray-200 border-1 rounded-xl mb-3 h-12 px-4"
           />
         </div>
-        <div className="flex items-center justify-between pb-4">
+        <div className="flex items-center justify-between pb-2">
           <h1 className="font-semibold text-lg">Food Posts</h1>
           <div className="flex gap-2">
             <Button onClick={onItemsLayoutChange} variant="secondary">
               {itemsLayout === "grid" ? (
-                <GridIcon height={16} width={16} />
+                <GridIcon height={20} width={20} />
               ) : (
-                <ListIcon height={16} width={16} />
+                <ListIcon height={20} width={20} />
               )}
             </Button>
 
             <Button onClick={toggleFilter} variant="secondary">
               {filterVisible ? (
-                <FilterClearIcon height={16} width={16} />
+                <FilterClearIcon height={20} width={20} />
               ) : (
-                <FilterIcon height={16} width={16} />
+                <FilterIcon height={20} width={20} />
               )}
+            </Button>
+
+            <Button
+              variant="secondary"
+              className="lg:hidden"
+              onClick={toggleShowTimeline}
+            >
+              <TimelineIcon
+                height={20}
+                width={20}
+                stroke="#333"
+                fill={"#f1f1f1"}
+              />
             </Button>
           </div>
         </div>
         {filterVisible && (
-          <div className="flex w-full py-2 gap-4 mb-4">
+          <div className="flex w-full gap-4 mb-4">
             <FormSelect
               className="w-1/2 sm:w-1/3 xl:w-1/4"
               onSelect={(val: string | number) => onFilter("foodCategory", val)}
@@ -82,5 +95,3 @@ const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
     </>
   );
 };
-
-export default FoodPostsHeader;

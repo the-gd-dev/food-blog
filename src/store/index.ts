@@ -3,14 +3,16 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface StoreState {
+  showTimeline?: boolean;
   sideMenuOpen?: boolean;
-  toggleSideMenu: () => void;
   foodItems: FoodItem[];
   createPost: boolean;
   updateFoodItem: (foodItemId: number, foodItem: FoodItem) => void;
   deleteFoodItem: (foodId: number) => void;
   createFoodItem: (foodItem: FoodItem) => void;
   toggleCreatePost: () => void;
+  toggleSideMenu: () => void;
+  toggleShowTimeline: () => void;
 }
 
 export const useStore = create<StoreState>()(
@@ -19,6 +21,10 @@ export const useStore = create<StoreState>()(
       sideMenuOpen: false,
       foodItems: [],
       createPost: false,
+      toggleShowTimeline: () =>
+        set((state) => ({
+          showTimeline: !state.showTimeline,
+        })),
       toggleSideMenu: () =>
         set((state) => ({
           sideMenuOpen: !state.sideMenuOpen,

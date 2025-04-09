@@ -4,4 +4,3 @@ export * from "./skeleton-loaders";
 export * from "./CategoryFilter";
 export * from "./UserComment";
 export * from "./UserDetails";
-export * from "./Button";

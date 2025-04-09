@@ -3,12 +3,12 @@ import {
   FoodPost,
   FoodPostsHeaderSkeleton,
   NoFoodPosts,
+  FoodPostsHeader,
 } from "@/components";
+import { FoodItem } from "@/data/food-blogs";
 import { useHyderation } from "@/hooks";
 import { useStore } from "@/store";
-import FoodPostsHeader from "./FoodPostsHeader";
 import { useEffect, useState } from "react";
-import { FoodItem, foodItemKeys } from "@/data/food-blogs";
 
 const layoutClasses = {
   grid: `grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 w-full gap-2 flex-wrap`,
