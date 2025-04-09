@@ -26,8 +26,8 @@ export const FoodPost: React.FC<{
       />
       <div
         className={`flex flex-col ${
-          isGrid ? "items-end" : "center"
-        } w-full h-full relative z-20`}
+          isGrid ? "items-end" : "center h-full"
+        } w-full  relative z-20`}
       >
         <div
           className={`w-full px-3 py-2 ${
