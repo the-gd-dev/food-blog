@@ -1,4 +1,4 @@
-import { CategoryFilterSkeleton } from "./skeleton-loaders";
+import { CategoryFilterSkeleton } from "../skeleton-loaders";
 
 export const CategoryFilter: React.FC<{
   data: string[];

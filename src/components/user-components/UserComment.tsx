@@ -1,7 +1,7 @@
 import { CommentType } from "@/data/comments";
 import moment from "moment";
 import { useState } from "react";
-import { UserDetails } from "@/components";
+import { UserDetails } from "./UserDetails";
 
 interface UserCommentPropsType {
   comment: CommentType;
