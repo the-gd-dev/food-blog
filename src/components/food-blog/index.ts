@@ -8,3 +8,4 @@ export * from "./NewComment";
 export * from "./FoodBlogLogo";
 export * from "./HamburgerMenu";
 export * from "./FoodPostsHeader";
+export * from "./SideMenuItems";

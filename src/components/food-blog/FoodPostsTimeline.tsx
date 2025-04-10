@@ -66,28 +66,29 @@ export const FoodPostsTimeline = () => {
         </Button>
         <h1 className="text-md font-bold">Blog Timeline</h1>
       </div>
-
-      <ul>
-        {Object.keys(timeline).map((key) => (
-          <li className="mt-2" key={key}>
-            <h1 className="font-bold text-gray-700">{key}</h1>
-            <ul className="list-none flex flex-col flex-wrap">
-              {timeline[key]?.map((m: string) => (
-                <li key={`${key}-${m}`} className="text-gray-500 pl-3">
-                  <div
-                    className={`cursor-pointer max-w-fit hover:text-amber-500 ${
-                      `${key}-${m}` === timelineFilter ? "text-amber-500" : ""
-                    }`}
-                    onClick={() => setTimelineFilter(`${key}-${m}`)}
-                  >
-                    {months[parseInt(m, 10) - 1] || m}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
-      </ul>
+      <div className="h-full overflow-auto">
+        <ul>
+          {Object.keys(timeline).map((key) => (
+            <li className="mt-2" key={key}>
+              <h1 className="font-bold text-gray-700">{key}</h1>
+              <ul className="list-none flex flex-col flex-wrap">
+                {timeline[key]?.map((m: string) => (
+                  <li key={`${key}-${m}`} className="text-gray-500 pl-3">
+                    <div
+                      className={`cursor-pointer max-w-fit hover:text-amber-500 ${
+                        `${key}-${m}` === timelineFilter ? "text-amber-500" : ""
+                      }`}
+                      onClick={() => setTimelineFilter(`${key}-${m}`)}
+                    >
+                      {months[parseInt(m, 10) - 1] || m}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
