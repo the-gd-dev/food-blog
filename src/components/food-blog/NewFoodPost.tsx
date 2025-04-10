@@ -1,3 +1,4 @@
+'use client'
 import { foodCategories } from "@/data/categories";
 import { useStore } from "@/store";
 import { FormEvent, useRef, useState } from "react";

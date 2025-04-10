@@ -1,3 +1,4 @@
+'use client'
 import { months } from "@/constants/months";
 import { useStore } from "@/store";
 import React, { useEffect, useState } from "react";

@@ -3,9 +3,10 @@ export const SideMenuItems: React.FC<{
   data?: string[];
   onClickMenuItem?: () => void;
 }> = ({ data = [], onClickMenuItem = () => {}, variant = "desktop" }) => {
+  const baseClass = ` h-full p-4 border-1 border-gray-200 flex flex-col justify-between`;
   const containerClass = {
-    mobile: `h-full w-50 p-4 bg-white shadow border-1 border-gray-200 z-20 relative flex flex-col justify-between`,
-    desktop: `h-100 rounded-xl p-4 border-1 border-gray-200 flex flex-col justify-between`,
+    mobile: `${baseClass} w-50 bg-white shadow z-20 relative`,
+    desktop: `${baseClass} rounded-xl`,
   };
   return (
     <div className={containerClass[variant]}>
@@ -14,13 +15,13 @@ export const SideMenuItems: React.FC<{
           <li
             onClick={onClickMenuItem}
             key={key}
-            className="text-md font-semibold text-gray-800 hover:text-amber-400 w-fit cursor-pointer mb-2"
+            className="text-xs sm:text-base font-semibold text-gray-800 hover:text-amber-400 w-fit cursor-pointer mb-2"
           >
             {item}
           </li>
         ))}
       </ul>
-      <div className="text-justify text-sm mt-4 font-semibold">
+      <div className="flex text-justify text-xs gap-1 mt-4 font-semibold">
         <p>Developed by</p>
         <a
           target="_blank"
