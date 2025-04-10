@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { CommentType } from "@/data/comments";
 import moment from "moment";
 import { useState } from "react";
