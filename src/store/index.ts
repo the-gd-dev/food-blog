@@ -1,8 +1,15 @@
 import { FoodItem } from "@/data/food-blogs";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-
+interface UserType {
+  username: string;
+  email: string;
+  password: string;
+  profilePicture?: string;
+}
 interface StoreState {
+  isAuthenticated?: boolean;
+  user?: UserType;
   showTimeline?: boolean;
   sideMenuOpen?: boolean;
   foodItems: FoodItem[];
@@ -13,14 +20,21 @@ interface StoreState {
   toggleCreatePost: () => void;
   toggleSideMenu: () => void;
   toggleShowTimeline: () => void;
+  setAuthenticationStatus: (v: boolean) => void;
+  setAuthUser: (u: UserType) => void;
+  logoutUser: () => void;
 }
 
 export const useStore = create<StoreState>()(
   persist(
     (set) => ({
+      isAuthenticated: false,
       sideMenuOpen: false,
       foodItems: [],
       createPost: false,
+      logoutUser: () => set((state) => ({ isAuthenticated: false })),
+      setAuthUser: (user: UserType) => set((state) => ({ user: user })),
+      setAuthenticationStatus: (v) => set((state) => ({ isAuthenticated: v })),
       toggleShowTimeline: () =>
         set((state) => ({
           showTimeline: !state.showTimeline,

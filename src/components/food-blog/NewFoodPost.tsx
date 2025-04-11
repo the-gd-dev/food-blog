@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { foodCategories } from "@/data/categories";
 import { useStore } from "@/store";
 import { FormEvent, useRef, useState } from "react";
@@ -12,7 +12,7 @@ const { uploadFiles } = generateReactHelpers<OurFileRouter>();
 export const NewFoodPost = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const { foodItems, toggleCreatePost, createFoodItem } = useStore();
+  const { foodItems, toggleCreatePost, createFoodItem, user } = useStore();
   const createNewFoodItem = async (e: FormEvent) => {
     setLoading(true);
     e.preventDefault();
@@ -48,9 +48,9 @@ export const NewFoodPost = () => {
           title: title || "",
           imageUrl,
           description: description || "",
-          likes: 100,
-          comments: 100,
-          postedBy: "John Doe",
+          likes: 0,
+          comments: 0,
+          postedBy: String(user?.username ?? ""),
           datePosted: new Date().toISOString(),
           foodCategory: String(category),
           food_preference: String(food_preference),
@@ -84,6 +84,7 @@ export const NewFoodPost = () => {
               type="text"
               name="title"
               placeholder="Post Title"
+              className="border-none"
             />
           </div>
           <div className="w-full sm:w-1/2">
@@ -115,7 +116,7 @@ export const NewFoodPost = () => {
               required
               name="image"
               type="file"
-              className="file:bg-gray-500 file:px-2 pl-0 file:text-white w-full focus:outline-0 resize-none file:h-9 bg-white rounded-md"
+              className="file:bg-gray-500 file:h-9 py-0 file:px-2 pl-0 file:text-white w-full focus:outline-0 resize-none bg-white rounded-md border-none"
             />
           </div>
           <div className="w-full md:w-1/2 mt-1 md:mt-0">

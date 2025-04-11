@@ -1,79 +1,97 @@
 "use client";
+
 import "./globals.css";
 import {
-  Button,
   FoodBlogLogo,
-  HamburgerMenu,
+  MobileSideBar,
   NewFoodPost,
   SideMenuItems,
+  WriteNewBlog,
 } from "@/components";
 import { useStore } from "@/store";
+import { usePathname } from "next/navigation";
+import { useMemo } from "react";
 
-const WriteNewBlog = ({ onClick }: { onClick: () => void }) => (
-  <Button className="cursor-pointer md:mt-2" onClick={onClick}>
-    <div>Write New Blog</div>
-  </Button>
-);
-
-const sideMenuItems = [
-  "Dashboard",
-  "My Profile",
-  "Settings",
-  "Notifications",
-  "Help Center",
-  "FAQs",
-  "Terms & Conditions",
-  "Privacy Policy",
-  "Contact Support",
-  "About",
-  "Feedback",
-  "Logout",
+const helpRoutes = [
+  { id: 30, name: "Privacy Policy", path: "/privacy" },
+  { id: 41, name: "Terms & Conditions", path: "/terms" },
+  { id: 52, name: "Help Center", path: "/help-center" },
+  { id: 63, name: "Feedback", path: "/feedback" },
+  { id: 76, name: "FAQs", path: "/faqs" },
 ];
+
+const authenticatedRoutes = [
+  { id: 1, name: "Dashboard", path: "/dashboard" },
+  { id: 2, name: "My Profile", path: "/profile" },
+  { id: 3, name: "Settings", path: "/settings" },
+  { id: 4, name: "Notifications", path: "/notifications" },
+  ...helpRoutes,
+];
+
+const guestRoutes = [
+  { id: 1, name: "SignIn", path: "/auth/signin" },
+  { id: 2, name: "SignUp", path: "/auth/signup" },
+  ...helpRoutes,
+];
+
+const getMenuItems = (isAuth: boolean) =>
+  isAuth ? authenticatedRoutes : guestRoutes;
 
 export default function BlogLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const { toggleCreatePost, createPost, sideMenuOpen, toggleSideMenu } =
-    useStore();
+}) {
+  const pathname = usePathname();
+  const isAuthPath = useMemo(
+    () => (pathname ? pathname.startsWith("/auth") : false),
+    [pathname]
+  );
+
+  const {
+    toggleCreatePost,
+    isAuthenticated,
+    createPost,
+    sideMenuOpen,
+    toggleSideMenu,
+  } = useStore();
+
+  if (isAuthPath) {
+    return (
+      <html>
+        <body>{children}</body>
+      </html>
+    );
+  }
+
   return (
     <html>
       <body>
         <div className="flex flex-col items-center">
-          <div className="w-full md:hidden py-2 px-4 flex items-center justify-between shadow sticky top-0 z-40 bg-white">
-            <div className="flex items-center justify-center gap-4">
-              <HamburgerMenu />
-              <FoodBlogLogo variant="mobile" />
-            </div>
+          <MobileSideBar
+            sideMenuOpen={sideMenuOpen}
+            toggleSideMenu={toggleSideMenu}
+            isAuthenticated={isAuthenticated}
+            toggleCreatePost={toggleCreatePost}
+            menuItems={getMenuItems(!!isAuthenticated)}
+          />
 
-            <div>
-              <WriteNewBlog onClick={toggleCreatePost} />
-            </div>
-          </div>
-          <div
-            className={`fixed md:hidden top-12 h-full left-0 z-30 transition-all ${
-              !sideMenuOpen ? "-translate-x-50" : ""
-            }`}
-          >
-            <div
-              className={`overlay ${!sideMenuOpen ? "hidden" : ""}`}
-              onClick={toggleSideMenu}
-            ></div>
-            <SideMenuItems variant="mobile" data={sideMenuItems} />
-          </div>
           <div className="flex w-full px-4 xl:px-0 lg:w-4/5 justify-between md:pt-4 relative">
-            <div className="hidden md:flex flex-col w-1/3 xl:w-1/5 sticky top-0 h-full">
+            <aside className="hidden md:flex flex-col w-1/3 xl:w-1/5 sticky top-0 h-full">
               <div className="flex justify-center flex-col pb-4">
                 <FoodBlogLogo variant="desktop" />
-                <WriteNewBlog onClick={toggleCreatePost} />
+                <WriteNewBlog
+                  isAuth={!!isAuthenticated}
+                  onClick={toggleCreatePost}
+                />
               </div>
-              <SideMenuItems data={sideMenuItems} />
-            </div>
+              <SideMenuItems data={getMenuItems(!!isAuthenticated)} />
+            </aside>
 
             {children}
           </div>
-          {createPost && <NewFoodPost />}
+
+          {!!isAuthenticated && createPost && <NewFoodPost />}
         </div>
       </body>
     </html>

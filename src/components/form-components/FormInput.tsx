@@ -1,7 +1,8 @@
 import React, { forwardRef } from "react";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  type: "text" | "file" | "date" | "datetime-local";
+  isInvalid?: boolean;
+  type: "text" | "file" | "date" | "datetime-local" | "email" | "password";
   placeholder?: string;
   name?: string;
   className?: string;
@@ -10,13 +11,22 @@ interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
   (
-    { type, placeholder, name, className = "", required = false, ...rest },
+    {
+      type,
+      placeholder,
+      isInvalid = false,
+      name,
+      className = "",
+      required = false,
+    },
     ref
   ) => {
-    const baseClasses =
-      "focus:outline-0 h-9 px-2 w-full bg-white rounded-md file:h-10 file:bg-amber-300";
-
-    const combinedClasses = `${baseClasses} ${className}`.trim();
+    const baseClasses = `block w-full p-2 border-2 bg-white rounded-md  focus:outline-none`;
+    const validInput = `border-gray-200 focus:ring-amber-500 focus:border-amber-500`;
+    const invalidInput = `border-red-700 focus:ring-red-500 focus:border-red-500`;
+    const combinedClasses = `${baseClasses} ${className} ${
+      isInvalid ? invalidInput : validInput
+    }`.trim();
 
     return (
       <input
@@ -26,7 +36,6 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         placeholder={placeholder}
         required={required}
         className={combinedClasses}
-        {...rest}
       />
     );
   }
