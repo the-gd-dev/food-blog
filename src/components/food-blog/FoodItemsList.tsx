@@ -54,7 +54,7 @@ export const FoodItemsList = () => {
       });
       setFoodPosts(finalFilteredItems);
     }
-  }, [appliedFilters, search]);
+  }, [appliedFilters, search, foodItems]);
 
   if (!hydrated) {
     return (

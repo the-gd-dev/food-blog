@@ -32,9 +32,9 @@ export const useStore = create<StoreState>()(
       sideMenuOpen: false,
       foodItems: [],
       createPost: false,
-      logoutUser: () => set((state) => ({ isAuthenticated: false })),
-      setAuthUser: (user: UserType) => set((state) => ({ user: user })),
-      setAuthenticationStatus: (v) => set((state) => ({ isAuthenticated: v })),
+      logoutUser: () => set(() => ({ isAuthenticated: false })),
+      setAuthUser: (user: UserType) => set(() => ({ user: user })),
+      setAuthenticationStatus: (v) => set(() => ({ isAuthenticated: v })),
       toggleShowTimeline: () =>
         set((state) => ({
           showTimeline: !state.showTimeline,

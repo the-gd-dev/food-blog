@@ -1,8 +1,7 @@
 "use client";
-import { CrossIcon } from "@/assets/icons";
 import { FoodItemsList, FoodPostsTimeline } from "@/components";
 import { useStore } from "@/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const { showTimeline, toggleShowTimeline } = useStore();

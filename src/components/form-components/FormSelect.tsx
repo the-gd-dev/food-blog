@@ -13,7 +13,7 @@ interface FormSelectType {
   placeholder?: string;
   disabled?: boolean;
   onSelect?: (v: string | number) => void;
-  tranformValue?: boolean;
+  transformValue?: boolean;
   className?: string;
 }
 
@@ -25,7 +25,7 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectType>(
       required = false,
       placeholder = "Select an option",
       disabled = false,
-      tranformValue = true,
+      transformValue = true,
       onSelect,
       className,
       ...rest
@@ -42,14 +42,14 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectType>(
           return {
             id: k + 1,
             label: String(v),
-            value: tranformValue
+            value: transformValue
               ? String(v).replace(/\s+/g, "-").toLowerCase()
               : String(v),
           };
         }
         return v as SelectOptionItem;
       });
-    }, [data]);
+    }, [data, transformValue]);
 
     return (
       <select

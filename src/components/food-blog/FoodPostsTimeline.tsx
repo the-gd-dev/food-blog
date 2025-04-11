@@ -12,7 +12,7 @@ interface TimelineType {
 }
 
 export const FoodPostsTimeline = () => {
-  const { foodItems, toggleShowTimeline, showTimeline } = useStore();
+  const { foodItems, toggleShowTimeline } = useStore();
   const [timeline, setTimeline] = useState<TimelineType>({});
   const [timelineFilter, setTimelineFilter] = useState("");
   const { hydrated } = useHyderation();

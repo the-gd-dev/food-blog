@@ -1,4 +1,3 @@
-import { CommentType } from "@/data/comments";
 import Image from "next/image";
 import React from "react";
 

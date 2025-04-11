@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { FoodBlogLogo, HamburgerMenu } from "../food-blog";
 import { Button } from "../form-components";
 import { SideMenuItems } from "./SideMenuItems";
@@ -8,7 +7,7 @@ interface MobileSidebarPropsTypes {
   isAuthenticated?: boolean;
   toggleCreatePost?: () => void;
   sideMenuOpen?: boolean;
-  menuItems?: Array<any>;
+  menuItems?: Array<{ id: number; name: string; path: string }>;
   toggleSideMenu?: () => void;
 }
 

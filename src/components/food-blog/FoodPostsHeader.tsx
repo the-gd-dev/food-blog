@@ -85,7 +85,7 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
             />
             <FormSelect
               className="w-1/2 sm:w-1/3 xl:w-1/4"
-              tranformValue={false}
+              transformValue={false}
               onSelect={(val: string | number) => onFilter("postedBy", val)}
               data={[...new Set(foodItems.map((f) => f.postedBy))]}
             />
