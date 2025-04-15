@@ -22,10 +22,11 @@ const helpRoutes = [
 ];
 
 const authenticatedRoutes = [
-  { id: 1, name: "Dashboard", path: "/dashboard" },
-  { id: 2, name: "My Profile", path: "/profile" },
-  { id: 3, name: "Settings", path: "/settings" },
-  { id: 4, name: "Notifications", path: "/notifications" },
+  { id: 1, name: "Blog", path: "/" },
+  { id: 2, name: "Dashboard", path: "/dashboard" },
+  { id: 3, name: "My Profile", path: "/profile" },
+  { id: 4, name: "Settings", path: "/settings" },
+  { id: 5, name: "Notifications", path: "/notifications" },
   ...helpRoutes,
 ];
 
@@ -79,7 +80,7 @@ export default function BlogLayout({
           />
 
           <div className="flex w-full px-4 xl:px-0 lg:w-4/5 justify-between md:pt-4 relative">
-            <aside className="hidden md:flex flex-col w-1/3 xl:w-1/5 sticky top-0 h-full">
+            <aside className="hidden md:flex flex-col w-1/3 xl:w-1/5 sticky top-5 h-full">
               <div className="flex justify-center flex-col pb-4">
                 <FoodBlogLogo variant="desktop" />
                 <WriteNewBlog
