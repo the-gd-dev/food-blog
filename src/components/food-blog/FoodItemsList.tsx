@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   FoodItemSkeleton,
   FoodPost,
@@ -75,14 +75,16 @@ export const FoodItemsList = () => {
       setFoodPosts(foodItems);
     }
   };
+
   if (foodItems.length === 0) return <NoFoodPosts />;
+
   return (
     <div>
       <FoodPostsHeader
         searchQuery={search}
         onSearch={(s) => {
-          setAppliedFilters({});
           setSearch(s);
+          setAppliedFilters({});
         }}
         itemsLayout={itemsLayout}
         filterVisible={showFilter}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useHyderation } from "@/hooks";
 import "./globals.css";
 import {
   FoodBlogLogo,
@@ -42,6 +43,7 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const { hydrated } = useHyderation();
   const pathname = usePathname();
   const isAuthPath = useMemo(
     () => (pathname ? pathname.startsWith("/auth") : false),
@@ -81,6 +83,7 @@ export default function BlogLayout({
               <div className="flex justify-center flex-col pb-4">
                 <FoodBlogLogo variant="desktop" />
                 <WriteNewBlog
+                  hyderated={hydrated}
                   isAuth={!!isAuthenticated}
                   onClick={toggleCreatePost}
                 />

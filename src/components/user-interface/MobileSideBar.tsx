@@ -49,7 +49,7 @@ export const MobileSideBar: React.FC<MobileSidebarPropsTypes> = ({
           className={`overlay ${!sideMenuOpen ? "hidden" : ""}`}
           onClick={toggleSideMenu}
         />
-        <SideMenuItems variant="mobile" data={menuItems.slice(2)} />
+        <SideMenuItems variant="mobile" data={menuItems} />
       </div>
     </>
   );

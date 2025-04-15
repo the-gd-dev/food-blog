@@ -1,3 +1,4 @@
+"use client";
 import {
   FilterClearIcon,
   FilterIcon,
@@ -9,7 +10,8 @@ import { Button, FormInput, FormSelect } from "@/components";
 import { foodCategories } from "@/data/categories";
 import { FoodItem } from "@/data/food-blogs";
 import { useStore } from "@/store";
-import React from "react";
+import Link from "next/link";
+import React, { useEffect, useMemo } from "react";
 
 interface FoodPostsHeaderPropTypes {
   itemsLayout: "grid" | "list";
@@ -31,10 +33,22 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
   onSearch = () => {},
 }) => {
   const { foodItems, toggleShowTimeline } = useStore();
+
+  const suggestions = useMemo(() => {
+    if (searchQuery) {
+      return foodItems.filter(
+        (food) =>
+          food.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          food.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return [];
+  }, [searchQuery]);
+
   return (
     <>
       <div className="flex flex-col">
-        <div className="w-full">
+        <div className="w-full relative">
           <FormInput
             value={searchQuery}
             onChange={(e) => onSearch(e.target?.value)}
@@ -42,6 +56,26 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
             type="text"
             className="border-gray-200 border-1 rounded-xl mb-3 h-12 px-4"
           />
+          <div
+            className={`absolute ${
+              !!searchQuery && suggestions.length > 0
+                ? "opacity-100 top-13 max-h-40"
+                : "opacity-0 -top-13 max-h-0"
+            }  z-30 bg-gray-50 border-1 border-gray-200 w-full rounded-xl py-2 px-4  overflow-y-auto transition-all`}
+          >
+            <ul className="flex flex-col">
+              {suggestions.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    href={`/${item.id}`}
+                    className="text-gray-500 mb-1 w-fit hover:text-amber-500 cursor-pointer"
+                  >
+                    <div className="">{item.title}</div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
         <div className="flex items-center justify-between pb-2">
           <h1 className="font-semibold text-lg">Food Posts</h1>

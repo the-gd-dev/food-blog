@@ -18,6 +18,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       name,
       className = "",
       required = false,
+      ...props
     },
     ref
   ) => {
@@ -36,6 +37,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
         placeholder={placeholder}
         required={required}
         className={combinedClasses}
+        {...props}
       />
     );
   }

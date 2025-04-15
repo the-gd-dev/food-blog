@@ -48,12 +48,14 @@ export default function Page() {
   if (!post) {
     return (
       <div className="max-w-3xl mx-auto p-4 w-full md:w-4/7 h-100 flex flex-col justify-center items-center">
-        <h2 className="text-2xl font-semibold mb-4">Post Not Found</h2>
+        <h2 className="text-2xl font-semibold mb-4">404 - Not Found</h2>
         <p className="text-gray-600 mb-4">
-          Sorry, the post you are looking for does not exist or has been
+          Sorry, the page you are looking for does not exist or has been
           removed.
         </p>
-        <Button onClick={() => route.back()}>Go Back</Button>
+        <Button onClick={() => route.push('/')} className="px-4">
+          Go To Home
+        </Button>
       </div>
     );
   }
