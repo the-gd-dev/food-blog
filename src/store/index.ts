@@ -1,12 +1,25 @@
 import { FoodItem } from "@/data/food-blogs";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-interface UserType {
+export interface UserType {
   username: string;
+  name?: string;
   email: string;
-  password: string;
+  password?: string;
   profilePicture?: string;
+  bio?: string;
+  niche?: string;
+  location?: string;
+  website?: string;
+  social?: {
+    instagram?: string;
+    youtube?: string;
+    twitter?: string;
+  };
+  recipesCount?: number;
+  joinedDate?: string;
 }
+
 interface StoreState {
   isAuthenticated?: boolean;
   user?: UserType;

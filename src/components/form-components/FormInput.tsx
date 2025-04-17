@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isInvalid?: boolean;
-  type: "text" | "file" | "date" | "datetime-local" | "email" | "password";
+  type: "text" | "file" | "date" | "datetime-local" | "email" | "password" | "url";
   placeholder?: string;
   name?: string;
   className?: string;
@@ -22,7 +22,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     },
     ref
   ) => {
-    const baseClasses = `block w-full p-2 border-2 bg-white rounded-md  focus:outline-none`;
+    const baseClasses = `block w-full p-2 border-2 bg-white rounded-md  focus:outline-none transition-all`;
     const validInput = `border-gray-200 focus:ring-amber-500 focus:border-amber-500`;
     const invalidInput = `border-red-700 focus:ring-red-500 focus:border-red-500`;
     const combinedClasses = `${baseClasses} ${className} ${

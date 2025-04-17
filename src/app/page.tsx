@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="h-full w-full rounded-2xl lg:w-3/4 md:px-6 mt-3 md:mt-0">
+      <div className="h-full w-full px-4 rounded-2xl lg:w-3/4 md:px-6 mt-3 md:mt-0">
         <FoodItemsList />
       </div>
       <div className="hidden lg:flex flex-col md:w-1/6 lg:1/4 h-full sticky top-0">

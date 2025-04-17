@@ -79,8 +79,8 @@ export default function BlogLayout({
             menuItems={getMenuItems(!!isAuthenticated)}
           />
 
-          <div className="flex w-full px-4 xl:px-0 lg:w-4/5 justify-between md:pt-4 relative">
-            <aside className="hidden md:flex flex-col w-1/3 xl:w-1/5 sticky top-5 h-full">
+          <div className="flex w-full lg:w-4/5 justify-between md:pt-4 relative">
+            <aside className="hidden md:flex pl-4 xl:pl-0 flex-col w-1/3 xl:w-1/5 sticky top-5 h-full">
               <div className="flex justify-center flex-col pb-4">
                 <FoodBlogLogo variant="desktop" />
                 <WriteNewBlog
