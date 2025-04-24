@@ -1,15 +1,15 @@
 import React, { useMemo } from "react";
 
 interface SelectOptionItem {
-  id: number;
-  label: string;
-  value: string;
+  id?: number;
+  label?: string;
+  value?: string;
 }
 
 interface FormSelectType {
   required?: boolean;
   name?: string;
-  data?: SelectOptionItem[] | (string | number)[];
+  data?: (SelectOptionItem | string | number | undefined)[];
   placeholder?: string;
   disabled?: boolean;
   onSelect?: (v: string | number) => void;
@@ -37,18 +37,20 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectType>(
 
     const items = useMemo(() => {
       if (!data) return [];
-      return data.map((v, k) => {
-        if (typeof v !== "object") {
-          return {
-            id: k + 1,
-            label: String(v),
-            value: transformValue
-              ? String(v).replace(/\s+/g, "-").toLowerCase()
-              : String(v),
-          };
-        }
-        return v as SelectOptionItem;
-      });
+      return data
+        .filter((v): v is string | number | SelectOptionItem => v !== undefined)
+        .map((v, k) => {
+          if (typeof v !== "object") {
+            return {
+              id: k + 1,
+              label: String(v),
+              value: transformValue
+                ? String(v).replace(/\s+/g, "-").toLowerCase()
+                : String(v),
+            };
+          }
+          return v as SelectOptionItem;
+        });
     }, [data, transformValue]);
 
     return (
@@ -62,7 +64,9 @@ export const FormSelect = React.forwardRef<HTMLSelectElement, FormSelectType>(
         onChange={(e) => onSelect && onSelect(e.target.value)}
         {...rest}
       >
-        <option value="" disabled>{placeholder}</option>
+        <option value="" disabled>
+          {placeholder}
+        </option>
         {items.map((item) => (
           <option value={item.value} key={item.id}>
             {item.label}
