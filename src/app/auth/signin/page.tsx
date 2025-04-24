@@ -1,6 +1,7 @@
 "use client";
 import { Button, FormControl, FormInput } from "@/components";
 import { useStore } from "@/store/zustland-store";
+import { FormErrors } from "@/types";
 import { httpClient } from "@/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
