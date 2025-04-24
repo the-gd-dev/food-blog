@@ -1,17 +1,25 @@
+import { httpClient } from "@/utils";
+import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const GUEST_ROUTES = ["/auth/signin", "/auth/signup"];
 
-export function middleware(request: NextRequest) {
-  const isAuth = Boolean(request.cookies.get("token")?.value != "");
-
+export async function middleware(request: NextRequest) {
+  const authToken = request?.cookies?.get("token")?.value ?? "";
   const pathname = request.nextUrl.pathname;
-
   const isGuestRoute = GUEST_ROUTES.some((route) => pathname.startsWith(route));
 
-  if (isAuth && isGuestRoute) {
-    return NextResponse.redirect(new URL("/", request.url));
+  if (!!authToken && isGuestRoute) {
+    const raw = await httpClient({
+      apiUrl: "/verify",
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
+    if (raw.ok) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
   }
 
   return NextResponse.next();

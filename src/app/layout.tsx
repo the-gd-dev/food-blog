@@ -9,7 +9,7 @@ import {
   SideMenuItems,
   WriteNewBlog,
 } from "@/components";
-import { useStore } from "@/store";
+import { useStore } from "@/store/zustland-store";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
 

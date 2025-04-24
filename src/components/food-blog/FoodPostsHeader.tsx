@@ -8,10 +8,10 @@ import {
 } from "@/assets/icons";
 import { Button, FormInput, FormSelect } from "@/components";
 import { foodCategories } from "@/data/categories";
-import { FoodItem } from "@/data/food-blogs";
-import { useStore } from "@/store";
+import { FoodItem } from "@/types";
+import { useStore } from "@/store/zustland-store";
 import Link from "next/link";
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 
 interface FoodPostsHeaderPropTypes {
   itemsLayout: "grid" | "list";

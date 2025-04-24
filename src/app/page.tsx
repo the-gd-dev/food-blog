@@ -1,18 +1,35 @@
 "use client";
 import { FoodItemsList, FoodPostsTimeline } from "@/components";
-import { useStore } from "@/store";
-import { useEffect } from "react";
+import { FoodItem } from "@/types";
+import { useStore } from "@/store/zustland-store";
+import { httpClient } from "@/utils";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [foodPosts, setFoodPosts] = useState<FoodItem[]>();
   const { showTimeline, toggleShowTimeline } = useStore();
   useEffect(() => {
-    document.title = "Food App";
+    async function getFoodPosts() {
+      const raw = await httpClient({ apiUrl: "/food-posts" });
+      if (raw.ok) {
+        const res = await raw.json();
+        setFoodPosts(
+          res.food_posts.map((f: any) => {
+            if (f._id) {
+              f.id = f._id;
+              delete f._id;
+            }
+            return f;
+          })
+        );
+      }
+    }
+    getFoodPosts();
   }, []);
-
   return (
     <>
       <div className="h-full w-full px-4 rounded-2xl lg:w-3/4 md:px-6 mt-3 md:mt-0">
-        <FoodItemsList />
+        <FoodItemsList foodItems={foodPosts} />
       </div>
       <div className="hidden lg:flex flex-col md:w-1/6 lg:1/4 h-full sticky top-0">
         <FoodPostsTimeline />

@@ -1,14 +1,14 @@
 export interface FoodItem {
-  id: number;
+  id?: number;
   title: string;
   imageUrl: string;
   description: string;
-  likes: number;
-  comments: number;
-  postedBy: string;
-  datePosted: string;
-  foodCategory: string;
-  food_preference: string;
+  likes?: number;
+  comments?: number;
+  postedBy?: string;
+  datePosted?: string;
+  foodCategory?: string;
+  foodPreference?: string;
 }
 
 export const foodItemKeys = Object.keys({
@@ -21,5 +21,5 @@ export const foodItemKeys = Object.keys({
   postedBy: "",
   datePosted: "",
   foodCategory: "",
-  food_preference: "",
+  foodPreference: "",
 }) as Array<keyof FoodItem>;

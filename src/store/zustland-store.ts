@@ -1,24 +1,6 @@
-import { FoodItem } from "@/data/food-blogs";
+import { UserType, FoodItem } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-export interface UserType {
-  username: string;
-  name?: string;
-  email: string;
-  password?: string;
-  profilePicture?: string;
-  bio?: string;
-  niche?: string;
-  location?: string;
-  website?: string;
-  social?: {
-    instagram?: string;
-    youtube?: string;
-    twitter?: string;
-  };
-  recipesCount?: number;
-  joinedDate?: string;
-}
 
 interface StoreState {
   isAuthenticated?: boolean;
@@ -45,7 +27,7 @@ export const useStore = create<StoreState>()(
       sideMenuOpen: false,
       foodItems: [],
       createPost: false,
-      logoutUser: () => set(() => ({ isAuthenticated: false })),
+      logoutUser: () => set(() => ({ isAuthenticated: false, user: {} })),
       setAuthUser: (user: UserType) => set(() => ({ user: user })),
       setAuthenticationStatus: (v) => set(() => ({ isAuthenticated: v })),
       toggleShowTimeline: () =>

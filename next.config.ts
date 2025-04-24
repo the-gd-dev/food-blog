@@ -6,6 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/(.*)",
+
         headers: [
           {
             key: "Cache-Control",
@@ -16,7 +17,7 @@ const nextConfig: NextConfig = {
     ];
   },
   devIndicators: false,
-  images: { domains: ["randomuser.me", "utfs.io", 'img.freepik.com'] },
+  images: { domains: ["randomuser.me", "utfs.io", "img.freepik.com"] },
 };
 
 export default nextConfig;

@@ -1,4 +1,4 @@
-import { FoodItem } from "@/data/food-blogs";
+import { FoodItem } from "@/types";
 import moment from "moment";
 import Link from "next/link";
 import { FoodPreference } from "./FoodPreference";
@@ -40,7 +40,7 @@ export const FoodPost: React.FC<{
           <div className={`"flex flex-col justify-between`}>
             <div className="flex items-center gap-1">
               <FoodPreference
-                foodPreference={item.food_preference}
+                foodPreference={item.foodPreference ?? ""}
                 textVisibility="hidden"
               />
               <h3

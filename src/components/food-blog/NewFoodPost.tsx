@@ -1,24 +1,25 @@
 "use client";
-import { foodCategories } from "@/data/categories";
-import { useStore } from "@/store";
-import { FormEvent, useRef, useState } from "react";
-import { Button, FormInput, FormSelect } from "@/components";
-import { generateReactHelpers } from "@uploadthing/react";
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
+import { Button, FormInput, FormSelect } from "@/components";
+import { foodCategories } from "@/data/categories";
+import { FoodItem } from "@/data/food-blogs";
+import { useStore } from "@/store/zustland-store";
+import { httpClient } from "@/utils";
+import { generateReactHelpers } from "@uploadthing/react";
 import imageCompression from "browser-image-compression";
+import { FormEvent, useState } from "react";
 
 const { uploadFiles } = generateReactHelpers<OurFileRouter>();
 
 export const NewFoodPost = () => {
-  const formRef = useRef<HTMLFormElement>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const { foodItems, toggleCreatePost, createFoodItem, user } = useStore();
-  const createNewFoodItem = async (e: FormEvent) => {
+  const { toggleCreatePost, createFoodItem } = useStore();
+  const createNewFoodItem = async (e: FormEvent<HTMLFormElement>) => {
     setLoading(true);
     e.preventDefault();
-
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
+    const form = e.currentTarget;
+    if (e.currentTarget) {
+      const formData = new FormData(form);
 
       const title = formData.get("title") as string;
       const description = formData.get("description") as string;
@@ -28,6 +29,7 @@ export const NewFoodPost = () => {
 
       if (!fileInput || fileInput.size === 0) {
         console.error("No image file selected");
+        setLoading(false);
         return;
       }
 
@@ -40,30 +42,45 @@ export const NewFoodPost = () => {
           files: [compressedFile],
         });
 
-        const imageUrl = uploaded?.[0]?.url ?? "";
+        const imageUrl = uploaded?.[0]?.ufsUrl ?? "";
+        if (!imageUrl) {
+          console.error("Image upload failed");
+          setLoading(false);
+          return;
+        }
 
-        // Create food item with uploaded image URL
-        createFoodItem({
-          id: foodItems.length + 1,
+        const payload: FoodItem = {
           title: title || "",
           imageUrl,
           description: description || "",
           likes: 0,
           comments: 0,
-          postedBy: String(user?.username ?? ""),
           datePosted: new Date().toISOString(),
           foodCategory: String(category),
-          food_preference: String(food_preference),
-        });
-        setLoading(false);
+          foodPreference: String(food_preference),
+        };
 
-        formRef.current.reset();
-        setTimeout(() => {
-          toggleCreatePost();
-        }, 100);
+        const raw = await httpClient({
+          apiUrl: "/food-posts/create",
+          method: "POST",
+          data: payload,
+          isPrivate: true,
+        });
+
+        if (raw.ok) {
+          const res = await raw.json();
+          createFoodItem(payload);
+          form.reset();
+          setTimeout(() => {
+            toggleCreatePost();
+          }, 100);
+        } else {
+          console.error("Failed to create food post");
+        }
       } catch (err) {
-        setLoading(false);
         console.error("Upload failed", err);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -73,7 +90,6 @@ export const NewFoodPost = () => {
       <div className="overlay" onClick={toggleCreatePost} />
       <form
         onSubmit={createNewFoodItem}
-        ref={formRef}
         className="relative z-20 flex flex-col bg-gray-400 shadow-md rounded-xl p-4 w-90 md:w-1/2 lg:w-1/3"
       >
         <div className="flex flex-col sm:flex-row items-center gap-2 mb-3">

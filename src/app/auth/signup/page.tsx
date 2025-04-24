@@ -4,9 +4,9 @@ import Link from "next/link";
 import bcrypt from "bcryptjs";
 
 import { FormEvent, useEffect, useRef } from "react";
-import { useStore } from "@/store";
+import { useStore } from "@/store/zustland-store";
 import { redirect } from "next/navigation";
-import { generateHashedToken, getRandomProfilePicture } from "@/utils";
+import { getRandomProfilePicture } from "@/utils";
 
 export default function Signup() {
   const formRef = useRef(null);
@@ -23,14 +23,12 @@ export default function Signup() {
         String(formData.get("password") ?? ""),
         10
       );
-      const hashedToken = (await generateHashedToken()).hashedToken;
       setAuthUser({
         username: String(formData.get("name") ?? ""),
         email: String(formData.get("email") ?? ""),
         password: hashPass,
         profilePicture: getRandomProfilePicture(),
       });
-      document.cookie = `token=${hashedToken}; path=/; max-age=86400`;
       setAuthenticationStatus(true);
       redirect("/");
     }

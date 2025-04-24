@@ -1,8 +1,9 @@
 "use client";
 import { useHyderation } from "@/hooks";
-import { useStore } from "@/store";
+import { useStore } from "@/store/zustland-store";
+import { httpClient } from "@/utils";
 import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { SideMenuItemsSkeleton } from "../skeleton-loaders";
 
 export const SideMenuItems: React.FC<{
@@ -20,11 +21,15 @@ export const SideMenuItems: React.FC<{
     desktop: `${baseClass} rounded-xl`,
   };
 
-  const logoutHandler = () => {
+  const logoutHandler = async () => {
     if (confirm("Are you sure you want to logout?")) {
+      await httpClient({
+        apiUrl: `/logout`,
+        method: "POST",
+        isPrivate: true,
+      });
       document.cookie = `token=; path=/; expires=${new Date().toLocaleDateString()}`;
       logoutUser();
-      redirect("/auth/signin");
     }
   };
 
