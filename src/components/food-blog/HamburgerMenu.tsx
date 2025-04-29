@@ -1,6 +1,6 @@
 "use client";
 
-import { useStore } from "@/store";
+import { useStore } from "@/store/zustland-store";
 
 export const HamburgerMenu = () => {
   const { sideMenuOpen, toggleSideMenu } = useStore();

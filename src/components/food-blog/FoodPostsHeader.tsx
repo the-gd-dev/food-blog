@@ -65,9 +65,9 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
           >
             <ul className="flex flex-col">
               {suggestions.map((item) => (
-                <li key={item.id}>
+                <li key={item._id}>
                   <Link
-                    href={`/${item.id}`}
+                    href={`/${item._id}`}
                     className="text-gray-500 mb-1 w-fit hover:text-amber-500 cursor-pointer"
                   >
                     <div className="">{item.title}</div>

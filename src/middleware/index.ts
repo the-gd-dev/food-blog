@@ -1,7 +1,6 @@
 import { httpClient } from "@/utils";
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 const GUEST_ROUTES = ["/auth/signin", "/auth/signup"];
 
@@ -16,6 +15,7 @@ export async function middleware(request: NextRequest) {
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
+      isPrivate: true,
     });
     if (raw.ok) {
       return NextResponse.redirect(new URL("/", request.url));

@@ -1,14 +1,16 @@
 "use client";
 import { Button, FormControl, FormInput } from "@/components";
-import { useStore } from "@/store/zustland-store";
+import { AppDispatch } from "@/store";
+import { setAuth } from "@/store/common/reducer";
 import { FormErrors } from "@/types";
 import { httpClient } from "@/utils";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
-  const { setAuthenticationStatus } = useStore();
+  const dispatch = useDispatch<AppDispatch>();
   const [errors, setErrors] = useState<FormErrors>({});
   const [alertMessage, setAlertMessage] = useState<string>("");
   useEffect(() => {
@@ -18,7 +20,7 @@ export default function Login() {
   const signInHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const res = await httpClient({
+    const response: Record<string, any> = await httpClient({
       apiUrl: `/login`,
       method: "POST",
       data: {
@@ -26,14 +28,13 @@ export default function Login() {
         password: formData.get("password"),
       },
     });
-    const response = await res.json();
-    if (response.code === 200) {
+    if (response.ok) {
       const maxAge =
         new Date(response.data.expiresIn).getTime() - new Date().getTime();
       document.cookie = `token=${response.data.token}; path=/; max-age=${
         maxAge / 1000
       }`;
-      setAuthenticationStatus(true);
+      dispatch(setAuth({ payload: true }));
       redirect("/");
     } else if (response.code === 404) {
       setAlertMessage(response.message);

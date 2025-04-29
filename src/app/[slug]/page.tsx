@@ -1,28 +1,30 @@
 "use client";
-
-import moment from "moment";
-import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
-import { CommentType } from "@/data/comments";
-import { useEffect, useMemo, useState } from "react";
-import { useStore } from "@/store";
+import { CommentSolidIcon, HeartSolid, TrashIcon } from "@/assets/icons";
 import {
-  UserComment,
-  FoodPreference,
-  UserDetails,
   Button,
+  FoodPreference,
   NewComment,
+  UserComment,
+  UserDetails,
 } from "@/components";
 import { foodCategories } from "@/data/categories";
-import { CommentSolidIcon, HeartSolid, TrashIcon } from "@/assets/icons";
+import { AppDispatch, RootState } from "@/store";
+import { deleteFoodItem } from "@/store/food-list/slice";
+import { CommentType, FoodItem } from "@/types";
+import { httpClient } from "@/utils";
+import moment from "moment";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Page() {
   const route = useRouter();
   const params = useParams();
   const [comments, setComments] = useState<CommentType[]>([]);
   const [newComment, setNewComment] = useState("");
-  const { foodItems, deleteFoodItem } = useStore();
-  const post = foodItems.find((fp) => fp.id === Number(params?.slug)) ?? null;
+  const [post, setPost] = useState<FoodItem | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated } = useSelector((state: RootState) => state.common);
 
   const category = useMemo(
     () => foodCategories.find((i) => i.value === post?.foodCategory)?.label,
@@ -30,17 +32,26 @@ export default function Page() {
   );
 
   useEffect(() => {
-    document.title = post
-      ? `${post?.title || "No Post Found"} | Food App`
-      : "Food App";
-  }, [post]);
+    async function initialize() {
+      const { ok, data } = await httpClient({
+        apiUrl: `/food-posts/${params?.slug}`,
+      });
+      if (ok) {
+        setPost(data as FoodItem);
+        document.title = data?.title
+          ? `${data?.title || "No Post Found"} | Food App`
+          : "Food App";
+      }
+    }
+    initialize();
+  }, []);
 
   const onDeleteItem = async () => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this post?"
     );
     if (confirmDelete) {
-      await deleteFoodItem(post!.id);
+      dispatch(deleteFoodItem(post?._id));
       route.back();
     }
   };
@@ -53,7 +64,7 @@ export default function Page() {
           Sorry, the page you are looking for does not exist or has been
           removed.
         </p>
-        <Button onClick={() => route.push('/')} className="px-4">
+        <Button onClick={() => route.push("/")} className="px-4">
           Go To Home
         </Button>
       </div>
@@ -83,19 +94,22 @@ export default function Page() {
           <div className="w-full pb-4 flex justify-between items-center">
             <Button onClick={() => route.back()}>Back</Button>
             <div className="flex w-fit gap-2">
-              <Button variant="danger" onClick={onDeleteItem}>
-                <TrashIcon height={16} width={16} />
-              </Button>
+              {isAuthenticated && (
+                <Button variant="danger" onClick={onDeleteItem}>
+                  <TrashIcon height={16} width={16} />
+                </Button>
+              )}
             </div>
           </div>
           <div className="border relative border-gray-300 overflow-hidden rounded-2xl shadow-md">
             <div className="relative w-full h-75">
-              <Image
-                fill
-                sizes="100vw 100vh"
-                src={`${post?.imageUrl}`}
-                alt={post?.title ?? ""}
-                className="object-cover"
+              <div
+                className={`food-bg-image absolute h-full w-full z-10 transition-all`}
+                style={{
+                  background: `url(${post?.imageUrl}) no-repeat`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }}
               />
             </div>
 
@@ -103,8 +117,10 @@ export default function Page() {
               <div className="flex items-center gap-2 mb-2">
                 <UserDetails
                   profile={{
-                    profile_pic: `https://randomuser.me/api/portraits/men/1.jpg`,
-                    username: post?.postedBy ?? "Anonymous",
+                    profile_pic:
+                      (post?.postedBy as any)?.profilePicture ??
+                      `https://randomuser.me/api/portraits/men/1.jpg`,
+                    username: (post?.postedBy as any)?.name ?? "Anonymous",
                   }}
                   textClasses="font-normal text-sm text-slate-800"
                   classes="w-5 h-5"
@@ -117,7 +133,7 @@ export default function Page() {
                   <span className="text-gray-500">({category})</span>
                 </h1>
                 <FoodPreference
-                  foodPreference={post?.food_preference || "Unknown"}
+                  foodPreference={post?.foodPreference || "Unknown"}
                   textVisibility="visible"
                 />
               </div>

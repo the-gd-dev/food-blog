@@ -1,12 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   async headers() {
     return [
       {
         source: "/(.*)",
-
         headers: [
           {
             key: "Cache-Control",
@@ -17,7 +15,9 @@ const nextConfig: NextConfig = {
     ];
   },
   devIndicators: false,
-  images: { domains: ["randomuser.me", "utfs.io", "img.freepik.com"] },
+  images: {
+    domains: ["randomuser.me", "utfs.sh", "img.freepik.com"],
+  },
 };
 
 export default nextConfig;

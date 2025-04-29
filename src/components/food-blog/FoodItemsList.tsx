@@ -40,7 +40,6 @@ export const FoodItemsList: React.FC<{ foodItems?: FoodItem[] }> = ({
   const toggleFilterHandler = () => {
     setShowFilter(!showFilter);
   };
-
   if (foodItems.length === 0) return <NoFoodPosts />;
 
   return (
@@ -70,7 +69,7 @@ export const FoodItemsList: React.FC<{ foodItems?: FoodItem[] }> = ({
 
       <div id="food-items" className={layoutClasses[itemsLayout]}>
         {foodItems.map((fp) => (
-          <FoodPost item={fp} key={fp.id} layout={itemsLayout} />
+          <FoodPost item={fp} key={fp._id} layout={itemsLayout} />
         ))}
       </div>
 

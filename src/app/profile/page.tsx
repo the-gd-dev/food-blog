@@ -2,7 +2,7 @@
 
 import { CameraIcon, PencilIcon } from "@/assets/icons";
 import { FormControl, FormInput, FormTextArea } from "@/components";
-import { useStore } from "@/store";
+import { useStore } from "@/store/zustland-store";
 import Image from "next/image";
 
 export default function Profile() {

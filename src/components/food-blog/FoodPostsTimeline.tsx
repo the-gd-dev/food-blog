@@ -1,6 +1,6 @@
-'use client'
+"use client";
 import { months } from "@/constants/months";
-import { useStore } from "@/store";
+import { useStore } from "@/store/zustland-store";
 import React, { useEffect, useState } from "react";
 import { FoodPostsTimelineSkeleton } from "../skeleton-loaders";
 import { useHyderation } from "@/hooks";
@@ -20,7 +20,7 @@ export const FoodPostsTimeline = () => {
   useEffect(() => {
     if (foodItems.length > 0) {
       const years = [
-        ...new Set(foodItems.map((i) => i.datePosted.split("-")[0])),
+        ...new Set(foodItems.map((i: any) => i.datePosted.split("-")[0])),
       ]
         .sort()
         .reverse();
@@ -30,8 +30,8 @@ export const FoodPostsTimeline = () => {
         const months = [
           ...new Set(
             foodItems
-              .filter((m) => m.datePosted.split("-")[0] === String(y))
-              .map((m) => m.datePosted.split("-")[1])
+              .filter((m: any) => m.datePosted.split("-")[0] === String(y))
+              .map((m: any) => m.datePosted.split("-")[1])
           ),
         ].sort();
 

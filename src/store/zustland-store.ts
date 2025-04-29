@@ -44,12 +44,12 @@ export const useStore = create<StoreState>()(
         })),
       deleteFoodItem: (food_id: number) =>
         set((state) => ({
-          foodItems: state.foodItems.filter((f) => f.id !== food_id),
+          foodItems: state.foodItems.filter((f) => f._id !== food_id),
         })),
       updateFoodItem: (foodItemId: number, foodItem: FoodItem) =>
         set((state) => ({
           foodItems: state.foodItems.map((f: FoodItem) => {
-            if (f.id === foodItemId) return foodItem;
+            if (f._id === foodItemId) return foodItem;
             return f;
           }),
         })),

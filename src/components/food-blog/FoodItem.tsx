@@ -16,7 +16,7 @@ export const FoodPost: React.FC<{
 }> = ({ item, layout }) => {
   const isGrid = layout === "grid";
   return (
-    <Link href={`/${item.id}`} className={`${layoutClasses[layout]}`}>
+    <Link href={`/${item._id}`} className={`${layoutClasses[layout]}`}>
       <div
         className={`food-bg-image absolute h-full w-full z-10 transition-all`}
         style={{

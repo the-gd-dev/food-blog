@@ -1,7 +1,7 @@
 export interface FoodItem {
-  id?: number;
+  _id?: number | string;
   title: string;
-  imageUrl: string;
+  imageUrl: string | File;
   description: string;
   likes?: number;
   comments?: number;
@@ -50,3 +50,29 @@ export type FormErrors = {
 export type AppliedFilters = {
   [key in keyof FoodItem]?: string | number;
 };
+
+export interface CommentType {
+  id: number;
+  user: {
+    name: string;
+    profile_pic?: string;
+  };
+  text?: string;
+  createdAt?: string;
+  likes?: number;
+}
+
+export interface HttpClientOptions {
+  apiUrl: string;
+  method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
+  data?: Record<string, any> | FormData;
+  headers?: Record<string, string>;
+  isPrivate?: boolean;
+}
+
+export interface HttpClientResponse {
+  ok?: boolean;
+  data?: Record<string, any>;
+  message?: string;
+  code?: number;
+}

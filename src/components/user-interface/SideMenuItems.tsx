@@ -1,10 +1,12 @@
 "use client";
 import { useHyderation } from "@/hooks";
-import { useStore } from "@/store/zustland-store";
-import { httpClient } from "@/utils";
+import { AppDispatch, RootState } from "@/store";
+import { logout } from "@/store/auth/slice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
 import { SideMenuItemsSkeleton } from "../skeleton-loaders";
+import { resetCookie } from "@/utils";
 
 export const SideMenuItems: React.FC<{
   variant?: "desktop" | "mobile";
@@ -13,7 +15,8 @@ export const SideMenuItems: React.FC<{
 }> = ({ data = [], onClickMenuItem = () => {}, variant = "desktop" }) => {
   const pathname = usePathname();
   const { hydrated } = useHyderation();
-  const { logoutUser, isAuthenticated } = useStore();
+  const dispatch = useDispatch<AppDispatch>();
+  const { isAuthenticated } = useSelector((state: RootState) => state.common);
   const baseClass = ` h-full p-4 border-1 border-gray-200 flex flex-col justify-between`;
 
   const containerClass = {
@@ -23,13 +26,8 @@ export const SideMenuItems: React.FC<{
 
   const logoutHandler = async () => {
     if (confirm("Are you sure you want to logout?")) {
-      await httpClient({
-        apiUrl: `/logout`,
-        method: "POST",
-        isPrivate: true,
-      });
-      document.cookie = `token=; path=/; expires=${new Date().toLocaleDateString()}`;
-      logoutUser();
+      resetCookie("token");
+      dispatch(logout());
     }
   };
 

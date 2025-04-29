@@ -1,7 +1,5 @@
 "use client";
 
-import { useHyderation } from "@/hooks";
-import "./globals.css";
 import {
   FoodBlogLogo,
   MobileSideBar,
@@ -9,9 +7,14 @@ import {
   SideMenuItems,
   WriteNewBlog,
 } from "@/components";
-import { useStore } from "@/store/zustland-store";
+import { useHyderation } from "@/hooks";
+import { AppDispatch, RootState, store } from "@/store";
+import { toggleFoodForm, setAuth } from "@/store/common/reducer";
+import { getToken } from "@/utils";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import "./globals.css";
 
 const helpRoutes = [
   { id: 30, name: "Privacy Policy", path: "/privacy" },
@@ -39,64 +42,71 @@ const guestRoutes = [
 const getMenuItems = (isAuth: boolean) =>
   isAuth ? authenticatedRoutes : guestRoutes;
 
-export default function BlogLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { hydrated } = useHyderation();
+  const dispatch = useDispatch<AppDispatch>();
+  const { foodFormVisible, isAuthenticated } = useSelector(
+    (state: RootState) => state.common
+  );
+
   const pathname = usePathname();
   const isAuthPath = useMemo(
     () => (pathname ? pathname.startsWith("/auth") : false),
     [pathname]
   );
 
-  const {
-    toggleCreatePost,
-    isAuthenticated,
-    createPost,
-    sideMenuOpen,
-    toggleSideMenu,
-  } = useStore();
+  const toggleCreatePost = () => {
+    dispatch(toggleFoodForm());
+  };
 
-  if (isAuthPath) {
-    return (
-      <html>
-        <body>{children}</body>
-      </html>
-    );
-  }
+  useEffect(() => {
+    dispatch(setAuth(!!getToken("token")));
+  });
 
+  if (isAuthPath) return <>{children}</>;
+
+  return (
+    <div className="flex flex-col items-center">
+      <MobileSideBar
+        sideMenuOpen={false}
+        toggleSideMenu={() => {}}
+        isAuthenticated={isAuthenticated}
+        toggleCreatePost={toggleCreatePost}
+        menuItems={getMenuItems(!!isAuthenticated)}
+      />
+
+      <div className="flex w-full lg:w-4/5 justify-between md:pt-4 relative">
+        <aside className="hidden md:flex pl-4 xl:pl-0 flex-col w-1/3 xl:w-1/5 sticky top-5 h-full">
+          <div className="flex justify-center flex-col pb-4">
+            <FoodBlogLogo variant="desktop" />
+            <WriteNewBlog
+              hyderated={hydrated}
+              isAuth={!!isAuthenticated}
+              onClick={toggleCreatePost}
+            />
+          </div>
+          <SideMenuItems data={getMenuItems(!!isAuthenticated)} />
+        </aside>
+
+        {children}
+      </div>
+
+      {!!isAuthenticated && foodFormVisible && <NewFoodPost />}
+    </div>
+  );
+};
+
+export default function BlogLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html>
       <body>
-        <div className="flex flex-col items-center">
-          <MobileSideBar
-            sideMenuOpen={sideMenuOpen}
-            toggleSideMenu={toggleSideMenu}
-            isAuthenticated={isAuthenticated}
-            toggleCreatePost={toggleCreatePost}
-            menuItems={getMenuItems(!!isAuthenticated)}
-          />
-
-          <div className="flex w-full lg:w-4/5 justify-between md:pt-4 relative">
-            <aside className="hidden md:flex pl-4 xl:pl-0 flex-col w-1/3 xl:w-1/5 sticky top-5 h-full">
-              <div className="flex justify-center flex-col pb-4">
-                <FoodBlogLogo variant="desktop" />
-                <WriteNewBlog
-                  hyderated={hydrated}
-                  isAuth={!!isAuthenticated}
-                  onClick={toggleCreatePost}
-                />
-              </div>
-              <SideMenuItems data={getMenuItems(!!isAuthenticated)} />
-            </aside>
-
-            {children}
-          </div>
-
-          {!!isAuthenticated && createPost && <NewFoodPost />}
-        </div>
+        <Provider store={store}>
+          <Content>{children}</Content>
+        </Provider>
       </body>
     </html>
   );
