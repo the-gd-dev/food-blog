@@ -1,13 +1,15 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface initialStateType {
   foodFormVisible: boolean;
   isAuthenticated: boolean;
+  foodTimelineVisible: boolean;
 }
 
 const initialState: initialStateType = {
   foodFormVisible: false,
   isAuthenticated: false,
+  foodTimelineVisible: false,
 };
 
 const commonSlice = createSlice({
@@ -20,11 +22,14 @@ const commonSlice = createSlice({
     ) => {
       state.isAuthenticated = !!action.payload;
     },
+    toggleFoodTimeline: (state) => {
+      state.foodTimelineVisible = !state.foodTimelineVisible;
+    },
     toggleFoodForm: (state) => {
       state.foodFormVisible = !state.foodFormVisible;
     },
   },
 });
 
-export const { toggleFoodForm, setAuth } = commonSlice.actions;
+export const { toggleFoodForm, setAuth, toggleFoodTimeline } = commonSlice.actions;
 export default commonSlice.reducer;

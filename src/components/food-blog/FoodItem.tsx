@@ -52,8 +52,8 @@ export const FoodPost: React.FC<{
               </h3>
             </div>
             <div
-              className={`w-full text-sm my-2 ${
-                !isGrid ? "text-gray-500" : ""
+              className={`w-full text-sm my-1 ${
+                !isGrid ? "text-gray-500  xl:w-60" : ""
               }`}
             >
               <p>

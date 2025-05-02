@@ -187,3 +187,11 @@ export const CrossIcon: React.FC<SVGTypes> = (props) => (
     <path d="M18.3 5.71a1 1 0 0 0-1.41 0L12 10.59 7.11 5.7a1 1 0 1 0-1.41 1.41L10.59 12l-4.89 4.89a1 1 0 1 0 1.41 1.41L12 13.41l4.89 4.89a1 1 0 0 0 1.41-1.41L13.41 12l4.89-4.89a1 1 0 0 0 0-1.4z" />
   </svg>
 );
+
+export const DefaultProfilePic: React.FC<SVGTypes> = (props) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
+    <circle cx="12" cy="12" r="12" fill="#d1d5db" />
+    <circle cx="12" cy="9" r="3.5" fill="#9ca3af" />
+    <path d="M6.5 18c1.5-2.5 4-3.5 5.5-3.5s4 1 5.5 3.5" fill="#9ca3af" />
+  </svg>
+);

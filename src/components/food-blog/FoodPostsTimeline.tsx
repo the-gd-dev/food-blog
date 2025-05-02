@@ -1,26 +1,29 @@
 "use client";
 import { months } from "@/constants/months";
-import { useStore } from "@/store/zustland-store";
+import { AppDispatch, RootState } from "@/store";
 import React, { useEffect, useState } from "react";
 import { FoodPostsTimelineSkeleton } from "../skeleton-loaders";
 import { useHyderation } from "@/hooks";
 import { CrossIcon } from "@/assets/icons";
 import { Button } from "@/components";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFoodTimeline } from "@/store/common/reducer";
 
 interface TimelineType {
   [y: string]: string[];
 }
 
 export const FoodPostsTimeline = () => {
-  const { foodItems, toggleShowTimeline } = useStore();
+  const dispatch = useDispatch<AppDispatch>();
+  const { items } = useSelector((state: RootState) => state.foodPosts);
   const [timeline, setTimeline] = useState<TimelineType>({});
   const [timelineFilter, setTimelineFilter] = useState("");
   const { hydrated } = useHyderation();
 
   useEffect(() => {
-    if (foodItems.length > 0) {
+    if (items.length > 0) {
       const years = [
-        ...new Set(foodItems.map((i: any) => i.datePosted.split("-")[0])),
+        ...new Set(items.map((i: any) => i.datePosted.split("-")[0])),
       ]
         .sort()
         .reverse();
@@ -29,7 +32,7 @@ export const FoodPostsTimeline = () => {
       years.forEach((y) => {
         const months = [
           ...new Set(
-            foodItems
+            items
               .filter((m: any) => m.datePosted.split("-")[0] === String(y))
               .map((m: any) => m.datePosted.split("-")[1])
           ),
@@ -40,7 +43,7 @@ export const FoodPostsTimeline = () => {
 
       setTimeline(blogTimelines);
     }
-  }, [foodItems]);
+  }, [items]);
 
   if (!hydrated) {
     return <FoodPostsTimelineSkeleton />;
@@ -60,7 +63,9 @@ export const FoodPostsTimeline = () => {
       <div className="flex flex-col justify-start">
         <Button
           variant="none"
-          onClick={toggleShowTimeline}
+          onClick={() => {
+            dispatch(toggleFoodTimeline());
+          }}
           className="bg-transparent shadow-none outline-0 h-fit w-fit border-none -ml-1 mb-2 lg:hidden"
         >
           <CrossIcon height={30} width={30} />

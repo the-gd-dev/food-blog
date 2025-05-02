@@ -12,12 +12,11 @@ export interface FoodItem {
 }
 
 export interface CommentType {
-  id: number;
-  user: {
-    name: string;
-    profile_pic?: string;
-  };
+  _id?: number | string;
   text?: string;
+  image?: string;
+  userId?: Record<string, any> | undefined;
+  postId: string | undefined;
   createdAt?: string;
   likes?: number;
 }
@@ -50,17 +49,6 @@ export type FormErrors = {
 export type AppliedFilters = {
   [key in keyof FoodItem]?: string | number;
 };
-
-export interface CommentType {
-  id: number;
-  user: {
-    name: string;
-    profile_pic?: string;
-  };
-  text?: string;
-  createdAt?: string;
-  likes?: number;
-}
 
 export interface HttpClientOptions {
   apiUrl: string;

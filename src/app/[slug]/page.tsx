@@ -1,14 +1,20 @@
 "use client";
-import { CommentSolidIcon, HeartSolid, TrashIcon } from "@/assets/icons";
+import {
+  CommentSolidIcon,
+  HeartOutline,
+  HeartSolid,
+  TrashIcon,
+} from "@/assets/icons";
 import {
   Button,
+  Comments,
   FoodPreference,
   NewComment,
-  UserComment,
   UserDetails,
 } from "@/components";
 import { foodCategories } from "@/data/categories";
 import { AppDispatch, RootState } from "@/store";
+import { createComment, getComments } from "@/store/comments/slice";
 import { deleteFoodItem } from "@/store/food-list/slice";
 import { CommentType, FoodItem } from "@/types";
 import { httpClient } from "@/utils";
@@ -20,11 +26,13 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Page() {
   const route = useRouter();
   const params = useParams();
-  const [comments, setComments] = useState<CommentType[]>([]);
   const [newComment, setNewComment] = useState("");
   const [post, setPost] = useState<FoodItem | null>(null);
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.common);
+  const { comments, loading: commentsLoading } = useSelector(
+    (state: RootState) => state.comments
+  );
 
   const category = useMemo(
     () => foodCategories.find((i) => i.value === post?.foodCategory)?.label,
@@ -43,6 +51,7 @@ export default function Page() {
           : "Food App";
       }
     }
+    dispatch(getComments({ postId: params?.slug as string }));
     initialize();
   }, []);
 
@@ -54,6 +63,20 @@ export default function Page() {
       dispatch(deleteFoodItem(post?._id));
       route.back();
     }
+  };
+
+  const newCommentHandler = () => {
+    if (!newComment) return;
+    if (post) {
+      dispatch(
+        createComment({ text: newComment, postId: post?._id } as CommentType)
+      );
+      setPost({
+        ...post,
+        comments: post?.comments ? post?.comments + 1 : 0,
+      });
+    }
+    setNewComment("");
   };
 
   if (!post) {
@@ -71,31 +94,17 @@ export default function Page() {
     );
   }
 
-  const newCommentHandler = () => {
-    if (!newComment) return;
-    const newComm: CommentType = {
-      id: comments.length + 1,
-      user: {
-        name: "John Doe",
-        profile_pic: "https://randomuser.me/api/portraits/men/1.jpg",
-      },
-      text: newComment,
-      createdAt: new Date().toISOString(),
-      likes: 10,
-    };
-    setComments([newComm, ...comments]);
-    setNewComment("");
-  };
-
   return (
-    <div className="mx-auto w-full md:w-3/5 lg:w-4/5 md:pl-8">
+    <div className="mx-auto w-full md:w-3/5 lg:w-4/5 p-4 md:p-0 md:pl-8">
       <div className="w-full flex flex-col xl:flex-row mt-4 gap-2">
-        <div className="w-full xl:w-1/2">
-          <div className="w-full pb-4 flex justify-between items-center">
-            <Button onClick={() => route.back()}>Back</Button>
+        <div className="w-full xl:w-1/2 relative">
+          <div className="w-full pb-4 flex justify-between items-center absolute z-20 p-3">
+            <Button variant="secondary" onClick={() => route.back()}>
+              Back
+            </Button>
             <div className="flex w-fit gap-2">
               {isAuthenticated && (
-                <Button variant="danger" onClick={onDeleteItem}>
+                <Button isRounded variant="danger" onClick={onDeleteItem}>
                   <TrashIcon height={16} width={16} />
                 </Button>
               )}
@@ -117,10 +126,8 @@ export default function Page() {
               <div className="flex items-center gap-2 mb-2">
                 <UserDetails
                   profile={{
-                    profile_pic:
-                      (post?.postedBy as any)?.profilePicture ??
-                      `https://randomuser.me/api/portraits/men/1.jpg`,
-                    username: (post?.postedBy as any)?.name ?? "Anonymous",
+                    profile_pic: (post?.postedBy as any)?.profilePicture,
+                    username: (post?.postedBy as any)?.name,
                   }}
                   textClasses="font-normal text-sm text-slate-800"
                   classes="w-5 h-5"
@@ -128,7 +135,7 @@ export default function Page() {
               </div>
 
               <div className="flex justify-between items-center">
-                <h1 className="text-xl font-bold">
+                <h1 className="text-xl font-bold text-gray-800">
                   {post?.title}{" "}
                   <span className="text-gray-500">({category})</span>
                 </h1>
@@ -138,15 +145,20 @@ export default function Page() {
                 />
               </div>
 
-              <p className="py-3 text-gray-700">{post.description}</p>
+              <p className="py-3 text-gray-700">{post?.description}</p>
               <div className="flex w-full justify-between items-center">
-                <ul className="flex gap-4 text-sm text-gray-600">
-                  <li className="flex gap-1">
-                    <HeartSolid fill={"#6a6a6a"} height={16} width={16} />
+                <ul className="flex gap-4 text-normal text-gray-600">
+                  <li className="flex gap-1 items-center">
+                    <HeartOutline
+                      fill="transparent"
+                      stroke="#000"
+                      height={24}
+                      width={24}
+                    />
                     {post?.likes} likes
                   </li>
-                  <li className="flex gap-1">
-                    <CommentSolidIcon fill={"#6a6a6a"} height={16} width={16} />
+                  <li className="flex gap-1 items-center">
+                    <CommentSolidIcon fill={"#6a6a6a"} height={24} width={24} />
                     {post?.comments} comments
                   </li>
                 </ul>
@@ -164,23 +176,7 @@ export default function Page() {
               onChangeText={(v) => setNewComment(v)}
               onSubmit={newCommentHandler}
             />
-            <div className="h-0.25 bg-gray-300 my-4 rounded-2xl"></div>
-            <h2 className="pb-2 font-semibold text-lg">
-              Comments ({comments.length})
-            </h2>
-            <div className="mt-4 max-h-100 overflow-y-auto space-y-4">
-              {comments.map((comment) => (
-                <UserComment
-                  onDelete={(id) => {
-                    if (confirm("Are you sure to delete this comment ?")) {
-                      setComments(comments.filter((c) => c.id !== id));
-                    }
-                  }}
-                  comment={comment}
-                  key={comment.id}
-                />
-              ))}
-            </div>
+            {comments.length > 0 && <Comments items={comments} />}
           </div>
         </div>
       </div>

@@ -11,6 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   loader?: boolean;
   href?: string;
+  isRounded?: boolean;
 }
 
 type LinkButtonProps = ButtonProps & { role: "link"; href: string };
@@ -30,6 +31,7 @@ const variants: { [key in NonNullable<ButtonProps["variant"]>]: string } = {
 export const Button: React.FC<CombinedButtonProps> = ({
   children,
   onClick,
+  isRounded = false,
   type = "button",
   variant = "primary",
   className = "",
@@ -38,7 +40,7 @@ export const Button: React.FC<CombinedButtonProps> = ({
   role,
   href = "#",
 }) => {
-  const combinedClasses = `${baseStyles} ${variants[variant]} ${className}`;
+  const combinedClasses = `${baseStyles} ${variants[variant]} ${className} ${isRounded ? 'rounded-full' : ''}`;
 
   if (role == "link") {
     return (

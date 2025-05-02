@@ -1,13 +1,13 @@
 "use client";
-import { CommentType } from "@/data/comments";
+import { CommentType } from "@/types";
 import moment from "moment";
 import { useState } from "react";
 import { UserDetails } from "./UserDetails";
 
 interface UserCommentPropsType {
   comment: CommentType;
-  onEdit?: (id: number) => void;
-  onDelete?: (id: number) => void;
+  onEdit?: (id: string) => void;
+  onDelete?: (id: string) => void;
 }
 
 export const UserComment: React.FC<UserCommentPropsType> = ({
@@ -22,9 +22,10 @@ export const UserComment: React.FC<UserCommentPropsType> = ({
         <div className="w-full flex justify-between">
           <UserDetails
             profile={{
-              profile_pic: comment.user.profile_pic || "",
-              username: comment?.user.name,
+              profile_pic: comment?.userId?.profile_pic || "",
+              username: comment?.userId?.name,
             }}
+            textClasses="text-normal font-bold text-gray-800"
             classes="h-8 w-8"
           />
           <div className="relative">
@@ -38,13 +39,13 @@ export const UserComment: React.FC<UserCommentPropsType> = ({
               <div className="absolute bg-white border border-gray-300 right-2 rounded-sm py-2 shadow-md">
                 <ul>
                   <li
-                    onClick={() => onEdit(comment?.id)}
+                    onClick={() => onEdit(comment?._id as string)}
                     className="hover:bg-gray-200 cursor-pointer px-4 py-1"
                   >
                     Edit
                   </li>
                   <li
-                    onClick={() => onDelete(comment?.id)}
+                    onClick={() => onDelete(comment?._id as string)}
                     className="hover:bg-gray-200 cursor-pointer px-4 py-1"
                   >
                     Delete
