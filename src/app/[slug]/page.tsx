@@ -14,7 +14,12 @@ import {
 } from "@/components";
 import { foodCategories } from "@/data/categories";
 import { AppDispatch, RootState } from "@/store";
-import { createComment, getComments } from "@/store/comments/slice";
+import {
+  createComment,
+  deleteComment,
+  getComments,
+  updateComment,
+} from "@/store/comments/slice";
 import { deleteFoodItem } from "@/store/food-list/slice";
 import { CommentType, FoodItem } from "@/types";
 import { httpClient } from "@/utils";
@@ -26,8 +31,9 @@ import { useDispatch, useSelector } from "react-redux";
 export default function Page() {
   const route = useRouter();
   const params = useParams();
+  const [commentId, setCommentId] = useState("");
   const [newComment, setNewComment] = useState("");
-  const [post, setPost] = useState<FoodItem | null>(null);
+  const [post, setPost] = useState<FoodItem>();
   const dispatch = useDispatch<AppDispatch>();
   const { isAuthenticated } = useSelector((state: RootState) => state.common);
   const { comments, loading: commentsLoading } = useSelector(
@@ -65,15 +71,49 @@ export default function Page() {
     }
   };
 
+  const editCommentHandler = (item: CommentType) => {
+    setCommentId(item._id!);
+    setNewComment(item.text!);
+  };
+
+  const deleteCommentHandler = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (confirmDelete) {
+      dispatch(deleteComment({ id: id }));
+      setPost((prevPost) => {
+        if (!prevPost) return prevPost; // Handle undefined case
+        return {
+          ...prevPost,
+          comments: comments.length - 1,
+        };
+      });
+    }
+  };
+
   const newCommentHandler = () => {
     if (!newComment) return;
     if (post) {
-      dispatch(
-        createComment({ text: newComment, postId: post?._id } as CommentType)
-      );
+      if (commentId) {
+        dispatch(
+          updateComment({
+            text: newComment,
+            _id: commentId,
+            postId: post?._id as string,
+          })
+        );
+        dispatch(getComments({ postId: post?._id as string }));
+        setCommentId("");
+      } else {
+        dispatch(
+          createComment({ text: newComment, postId: post?._id } as CommentType)
+        );
+      }
+
       setPost({
         ...post,
-        comments: post?.comments ? post?.comments + 1 : 0,
+        comments: comments.length + 1,
       });
     }
     setNewComment("");
@@ -172,11 +212,18 @@ export default function Page() {
         <div className="w-full xl:w-1/2">
           <div className="mt-4 xl:mt-0 xl:px-4">
             <NewComment
+              commentPosting={commentsLoading}
               comment={newComment}
               onChangeText={(v) => setNewComment(v)}
               onSubmit={newCommentHandler}
             />
-            {comments.length > 0 && <Comments items={comments} />}
+            {comments.length > 0 && (
+              <Comments
+                onEditComment={editCommentHandler}
+                onDeleteComment={deleteCommentHandler}
+                items={comments}
+              />
+            )}
           </div>
         </div>
       </div>

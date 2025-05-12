@@ -6,7 +6,7 @@ import { UserDetails } from "./UserDetails";
 
 interface UserCommentPropsType {
   comment: CommentType;
-  onEdit?: (id: string) => void;
+  onEdit?: (item: CommentType) => void;
   onDelete?: (id: string) => void;
 }
 
@@ -39,13 +39,19 @@ export const UserComment: React.FC<UserCommentPropsType> = ({
               <div className="absolute bg-white border border-gray-300 right-2 rounded-sm py-2 shadow-md">
                 <ul>
                   <li
-                    onClick={() => onEdit(comment?._id as string)}
+                    onClick={() => {
+                      setShowOptions(false);
+                      onEdit(comment as CommentType);
+                    }}
                     className="hover:bg-gray-200 cursor-pointer px-4 py-1"
                   >
                     Edit
                   </li>
                   <li
-                    onClick={() => onDelete(comment?._id as string)}
+                    onClick={() => {
+                      setShowOptions(false);
+                      onDelete(comment?._id as string);
+                    }}
                     className="hover:bg-gray-200 cursor-pointer px-4 py-1"
                   >
                     Delete

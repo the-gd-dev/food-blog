@@ -3,7 +3,11 @@ import { CommentType } from "@/types";
 import React from "react";
 import { UserComment } from "../user-components";
 
-export const Comments: React.FC<{ items: CommentType[] }> = ({ items }) => {
+export const Comments: React.FC<{
+  items: CommentType[];
+  onEditComment: (item: CommentType) => void;
+  onDeleteComment: (id: string) => void;
+}> = ({ items, onDeleteComment, onEditComment }) => {
   return (
     <div>
       <div className="h-0.25 bg-gray-300 my-4 rounded-2xl" />
@@ -13,9 +17,10 @@ export const Comments: React.FC<{ items: CommentType[] }> = ({ items }) => {
       <div className="mt-4 max-h-100 overflow-y-auto space-y-4">
         {items.map((comment) => (
           <UserComment
-            onDelete={(id) => {}}
+            onEdit={onEditComment}
+            onDelete={onDeleteComment}
             comment={comment}
-            key={comment._id as string}
+            key={comment?._id}
           />
         ))}
       </div>

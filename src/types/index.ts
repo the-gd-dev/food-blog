@@ -12,11 +12,11 @@ export interface FoodItem {
 }
 
 export interface CommentType {
-  _id?: number | string;
+  _id?: string;
   text?: string;
   image?: string;
   userId?: Record<string, any> | undefined;
-  postId: string | undefined;
+  postId?: string | undefined;
   createdAt?: string;
   likes?: number;
 }

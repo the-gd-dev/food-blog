@@ -6,6 +6,7 @@ interface NewCommentPropTypes {
   comment?: string;
   onChangeText?: (txt: string) => void;
   maxCommentLength?: number;
+  commentPosting?: boolean;
 }
 
 export const NewComment: React.FC<NewCommentPropTypes> = ({
@@ -13,6 +14,7 @@ export const NewComment: React.FC<NewCommentPropTypes> = ({
   maxCommentLength = 200,
   onChangeText,
   comment = "",
+  commentPosting = false,
 }) => {
   return (
     <div className="w-full">
@@ -26,7 +28,9 @@ export const NewComment: React.FC<NewCommentPropTypes> = ({
         placeholder="Write a comment..."
       ></textarea>
       <div className="flex justify-end mt-2">
-        <Button onClick={onSubmit}>Comment</Button>
+        <Button loader={commentPosting} onClick={onSubmit}>
+          Comment
+        </Button>
       </div>
     </div>
   );
