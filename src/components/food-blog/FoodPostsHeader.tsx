@@ -1,17 +1,13 @@
 "use client";
-import {
-  FilterClearIcon,
-  FilterIcon,
-  GridIcon,
-  ListIcon,
-  TimelineIcon,
-} from "@/assets/icons";
+import { FilterClearIcon, FilterIcon, GridIcon, ListIcon, TimelineIcon } from "@/assets/icons";
 import { Button, FormInput, FormSelect } from "@/components";
 import { foodCategories } from "@/data/categories";
+import { AppDispatch, RootState } from "@/store";
+import { toggleFoodTimeline } from "@/store/common/reducer";
 import { FoodItem } from "@/types";
-import { useStore } from "@/store/zustland-store";
 import Link from "next/link";
 import React, { useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 interface FoodPostsHeaderPropTypes {
   itemsLayout: "grid" | "list";
@@ -32,8 +28,8 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
   toggleFilter = () => {},
   onSearch = () => {},
 }) => {
-  const { foodItems, toggleShowTimeline } = useStore();
-
+  const dispatch = useDispatch<AppDispatch>();
+  const { items: foodItems } = useSelector((state: RootState) => state.foodPosts);
   const suggestions = useMemo(() => {
     if (searchQuery) {
       return foodItems.filter(
@@ -44,6 +40,13 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
     }
     return [];
   }, [searchQuery]);
+
+  const authors = useMemo(() => {
+    if (foodItems.length > 0) {
+      return [...new Set(foodItems.map((f) => f.postedBy?.name))];
+    }
+    return [];
+  }, [foodItems]);
 
   return (
     <>
@@ -99,14 +102,9 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
             <Button
               variant="secondary"
               className="lg:hidden"
-              onClick={toggleShowTimeline}
+              onClick={() => dispatch(toggleFoodTimeline())}
             >
-              <TimelineIcon
-                height={20}
-                width={20}
-                stroke="#333"
-                fill={"#f1f1f1"}
-              />
+              <TimelineIcon height={20} width={20} stroke="#333" fill={"#f1f1f1"} />
             </Button>
           </div>
         </div>
@@ -121,7 +119,7 @@ export const FoodPostsHeader: React.FC<FoodPostsHeaderPropTypes> = ({
               className="w-1/2 sm:w-1/3 xl:w-1/4"
               transformValue={false}
               onSelect={(val: string | number) => onFilter("postedBy", val)}
-              data={[...new Set(foodItems.map((f) => f.postedBy))]}
+              data={authors}
             />
           </div>
         )}

@@ -5,7 +5,11 @@ export interface FoodItem {
   description: string;
   likes?: number;
   comments?: number;
-  postedBy?: string;
+  postedBy?: {
+    name?: string;
+    profilePicture?: string | null;
+    _id?: string;
+  };
   datePosted?: string;
   foodCategory?: string;
   foodPreference?: string;
@@ -64,3 +68,5 @@ export interface HttpClientResponse {
   message?: string;
   code?: number;
 }
+
+export type LayoutTypes = "grid" | "list";

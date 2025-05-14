@@ -9,7 +9,7 @@ import {
 } from "@/components";
 import { useHyderation } from "@/hooks";
 import { AppDispatch, RootState, store } from "@/store";
-import { toggleFoodForm, setAuth } from "@/store/common/reducer";
+import { toggleFoodForm, setAuth, toggleSidebar } from "@/store/common/reducer";
 import { getToken } from "@/utils";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo } from "react";
@@ -39,21 +39,16 @@ const guestRoutes = [
   ...helpRoutes,
 ];
 
-const getMenuItems = (isAuth: boolean) =>
-  isAuth ? authenticatedRoutes : guestRoutes;
+const getMenuItems = (isAuth: boolean) => (isAuth ? authenticatedRoutes : guestRoutes);
 
 const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { hydrated } = useHyderation();
   const dispatch = useDispatch<AppDispatch>();
-  const { foodFormVisible, isAuthenticated } = useSelector(
-    (state: RootState) => state.common
-  );
+  const { foodFormVisible, isAuthenticated } = useSelector((state: RootState) => state.common);
+  const { sidebarVisible } = useSelector((state: RootState) => state.common);
 
   const pathname = usePathname();
-  const isAuthPath = useMemo(
-    () => (pathname ? pathname.startsWith("/auth") : false),
-    [pathname]
-  );
+  const isAuthPath = useMemo(() => (pathname ? pathname.startsWith("/auth") : false), [pathname]);
 
   const toggleCreatePost = () => {
     dispatch(toggleFoodForm());
@@ -68,8 +63,8 @@ const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className="flex flex-col items-center">
       <MobileSideBar
-        sideMenuOpen={false}
-        toggleSideMenu={() => {}}
+        sideMenuOpen={sidebarVisible}
+        toggleSideMenu={() => dispatch(toggleSidebar())}
         isAuthenticated={isAuthenticated}
         toggleCreatePost={toggleCreatePost}
         menuItems={getMenuItems(!!isAuthenticated)}
@@ -96,11 +91,7 @@ const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-export default function BlogLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return (
     <html>
       <body>

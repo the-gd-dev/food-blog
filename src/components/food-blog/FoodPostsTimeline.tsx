@@ -22,25 +22,22 @@ export const FoodPostsTimeline = () => {
 
   useEffect(() => {
     if (items.length > 0) {
-      const years = [
-        ...new Set(items.map((i: any) => i.datePosted.split("-")[0])),
-      ]
+      const years = [...new Set(items.map((i: any) => i.datePosted.split("T")[0].split("-")[0]))]
         .sort()
         .reverse();
+
       const blogTimelines: TimelineType = {};
 
       years.forEach((y) => {
         const months = [
           ...new Set(
             items
-              .filter((m: any) => m.datePosted.split("-")[0] === String(y))
-              .map((m: any) => m.datePosted.split("-")[1])
+              .filter((m: any) => m.datePosted.split("T")[0].split("-")[0] === String(y))
+              .map((m: any) => m.datePosted.split("T")[0].split("-")[1])
           ),
         ].sort();
-
         blogTimelines[y] = months;
       });
-
       setTimeline(blogTimelines);
     }
   }, [items]);
@@ -86,7 +83,7 @@ export const FoodPostsTimeline = () => {
                       }`}
                       onClick={() => setTimelineFilter(`${key}-${m}`)}
                     >
-                      {months[parseInt(m, 10) - 1] || m}
+                      {months[parseInt(m)]}
                     </div>
                   </li>
                 ))}
