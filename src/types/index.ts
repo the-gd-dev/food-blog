@@ -46,8 +46,11 @@ export interface UserType {
 }
 
 export type FormErrors = {
+  name?: string;
   email?: string;
+  username?: string;
   password?: string;
+  confirm_password?: string;
   general?: string;
 };
 

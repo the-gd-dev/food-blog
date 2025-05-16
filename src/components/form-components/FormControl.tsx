@@ -14,7 +14,7 @@ export const FormControl: React.FC<FormControlProps> = ({
   children,
 }) => {
   return (
-    <div className="flex flex-col w-full">
+    <div className="flex flex-col w-full mb-2">
       {label && (
         <label className="block text-sm font-semibold text-gray-700 mb-1">
           {label}

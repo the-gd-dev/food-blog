@@ -2,6 +2,7 @@ import React, { forwardRef } from "react";
 
 interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   isInvalid?: boolean;
+  errMessage?: string;
   type: "text" | "file" | "date" | "datetime-local" | "email" | "password" | "url";
   placeholder?: string;
   name?: string;
@@ -17,6 +18,7 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
       isInvalid = false,
       name,
       className = "",
+      errMessage = "",
       required = false,
       ...props
     },
@@ -30,15 +32,18 @@ const FormInput = forwardRef<HTMLInputElement, FormInputProps>(
     }`.trim();
 
     return (
-      <input
-        ref={ref}
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        required={required}
-        className={combinedClasses}
-        {...props}
-      />
+      <>
+        <input
+          ref={ref}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          required={required}
+          className={combinedClasses}
+          {...props}
+        />
+        {errMessage && <div className="text-sm text-red-500 mt-1">{errMessage}</div>}
+      </>
     );
   }
 );

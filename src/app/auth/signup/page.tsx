@@ -1,37 +1,53 @@
 "use client";
 import { Button, FormControl, FormInput } from "@/components";
 import Link from "next/link";
-import bcrypt from "bcryptjs";
 
-import { FormEvent, useEffect, useRef } from "react";
-import { useStore } from "@/store/zustland-store";
+import { AppDispatch } from "@/store";
+import { setAuth } from "@/store/common/reducer";
+import { FormErrors } from "@/types";
+import { httpClient } from "@/utils";
 import { redirect } from "next/navigation";
-import { getRandomProfilePicture } from "@/utils";
+import { FormEvent, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 export default function Signup() {
-  const formRef = useRef(null);
-  const { setAuthenticationStatus, setAuthUser } = useStore();
+  const dispatch = useDispatch<AppDispatch>();
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [alertMessage, setAlertMessage] = useState<string>("");
+
   useEffect(() => {
-    document.title = "SignUp | Food Blog";
+    document.title = "SignIn | Food Blog";
   }, []);
 
-  const onSignup = async (e: FormEvent) => {
+  const onSignup = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      const hashPass = await bcrypt.hash(
-        String(formData.get("password") ?? ""),
-        10
-      );
-      setAuthUser({
-        username: String(formData.get("name") ?? ""),
-        email: String(formData.get("email") ?? ""),
-        password: hashPass,
-        profilePicture: getRandomProfilePicture(),
-      });
-      setAuthenticationStatus(true);
-      redirect("/");
+    const formData = new FormData(e.currentTarget);
+    const response: Record<string, any> = await httpClient({
+      apiUrl: `/register`,
+      method: "POST",
+      data: {
+        name: formData.get("name"),
+        username: formData.get("username"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+        confirm_password: formData.get("confirm_password"),
+      },
+    });
+    if (response.ok) {
+      // const maxAge = new Date(response.data.expiresIn).getTime() - new Date().getTime();
+      // document.cookie = `token=${response.data.token}; path=/; max-age=${maxAge / 1000}`;
+      // dispatch(setAuth({ payload: true }));
+      // redirect("/");
+    } else if (response.code === 404) {
+      setAlertMessage(response.message);
+    } else {
+      setErrors(response.errors);
     }
+  };
+
+  const resetEverything = () => {
+    setAlertMessage("");
+    setErrors({});
   };
 
   return (
@@ -47,15 +63,56 @@ export default function Signup() {
             Here.
           </p>
         </div>
-        <form id="signupForm" onSubmit={onSignup} ref={formRef}>
+        <form id="signupForm" onSubmit={onSignup}>
           <FormControl label="Name">
-            <FormInput type="text" required name="name" />
+            <FormInput
+              onChange={() => resetEverything()}
+              isInvalid={!!(alertMessage || errors?.general || errors.name)}
+              errMessage={alertMessage || errors?.general || errors.name}
+              type="text"
+              required
+              name="name"
+            />
+          </FormControl>
+          <FormControl label="Username">
+            <FormInput
+              onChange={() => resetEverything()}
+              isInvalid={!!(alertMessage || errors?.general || errors.username)}
+              errMessage={alertMessage || errors?.general || errors.username}
+              type="text"
+              required
+              name="username"
+            />
           </FormControl>
           <FormControl label="Email Address">
-            <FormInput type="email" required name="email" />
+            <FormInput
+              onChange={() => resetEverything()}
+              isInvalid={!!(alertMessage || errors?.general || errors.email)}
+              errMessage={alertMessage || errors?.general || errors.email}
+              type="email"
+              required
+              name="email"
+            />
           </FormControl>
           <FormControl label="Password">
-            <FormInput type="password" required name="password" />
+            <FormInput
+              onChange={() => resetEverything()}
+              isInvalid={!!(alertMessage || errors?.general || errors.password)}
+              errMessage={alertMessage || errors?.general || errors.password}
+              type="password"
+              required
+              name="password"
+            />
+          </FormControl>
+          <FormControl label="Confirm Password">
+            <FormInput
+              onChange={() => resetEverything()}
+              isInvalid={!!(alertMessage || errors?.general || errors.confirm_password)}
+              errMessage={alertMessage || errors?.general || errors.confirm_password}
+              type="password"
+              required
+              name="confirm_password"
+            />
           </FormControl>
           <div className="mt-8">
             <Button className="w-full" type="submit">
