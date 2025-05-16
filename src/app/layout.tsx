@@ -15,6 +15,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import "./globals.css";
+import { getAuthUser } from "@/store/auth/slice";
 
 const helpRoutes = [
   { id: 30, name: "Privacy Policy", path: "/privacy" },
@@ -55,6 +56,7 @@ const Content: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   useEffect(() => {
+    dispatch(getAuthUser());
     dispatch(setAuth(!!getToken("token")));
   });
 

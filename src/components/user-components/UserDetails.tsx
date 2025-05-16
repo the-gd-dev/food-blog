@@ -4,8 +4,8 @@ import React from "react";
 
 interface UserDetailsType {
   profile: {
-    profile_pic: string;
-    username: string;
+    profile_pic?: string;
+    username?: string;
   };
   classes?: string;
   textClasses?: string;
@@ -26,7 +26,7 @@ export const UserDetails: React.FC<UserDetailsType> = ({
           height={100}
           width={100}
           src={profile.profile_pic ?? ""}
-          alt={profile.username}
+          alt={profile.username ?? ""}
           className={`${classes} rounded-full object-cover`}
         />
       )}

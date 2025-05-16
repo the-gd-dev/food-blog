@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
   },
   devIndicators: false,
   images: {
-    domains: ["randomuser.me", "utfs.sh", "img.freepik.com"],
+    domains: ["localhost"],
   },
 };
 

@@ -31,6 +31,7 @@ export interface UserType {
   email?: string;
   password?: string;
   profilePicture?: string;
+  cover?: string;
   bio?: string;
   niche?: string;
   location?: string;

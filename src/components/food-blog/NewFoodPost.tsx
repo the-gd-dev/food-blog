@@ -1,6 +1,7 @@
 "use client";
 import { Button, FormInput, FormSelect } from "@/components";
 import { foodCategories } from "@/data/categories";
+import { imageUploadService } from "@/services/upload.service";
 import { AppDispatch } from "@/store";
 import { toggleFoodForm } from "@/store/common/reducer";
 import { createFoodItem } from "@/store/food-list/slice";
@@ -35,21 +36,7 @@ export const NewFoodPost = () => {
           setLoading(false);
           return;
         }
-
-        const uploadResponse = await httpClient({
-          apiUrl: "/food-posts/image/upload",
-          method: "POST",
-          data: formFile,
-          isPrivate: true,
-        });
-
-        const imageUrl = uploadResponse?.data?.url;
-        if (!imageUrl) {
-          console.error("Image upload failed");
-          setLoading(false);
-          return;
-        }
-
+        const imageUrl = await imageUploadService(formFile);
         const payload: FoodItem = {
           title: title || "",
           imageUrl: imageUrl,
@@ -76,7 +63,7 @@ export const NewFoodPost = () => {
       <div className="overlay" onClick={toggleFoodPostForm} />
       <form
         onSubmit={createNewFoodItem}
-        className="relative z-20 flex flex-col bg-gray-400 shadow-md rounded-xl p-4 w-90 md:w-1/2 lg:w-1/3"
+        className="relative z-20 flex flex-col bg-gray-800 shadow-md rounded-xl p-4 w-90 md:w-1/2 lg:w-1/3"
       >
         <div className="flex flex-col sm:flex-row items-center gap-2 mb-3">
           <div className="w-full sm:w-1/2">
@@ -122,12 +109,7 @@ export const NewFoodPost = () => {
             />
           </div>
           <div className="w-full md:w-1/2 mt-1 md:mt-0">
-            <FormSelect
-              disabled={loading}
-              required
-              name="category"
-              data={foodCategories}
-            />
+            <FormSelect disabled={loading} required name="category" data={foodCategories} />
           </div>
         </div>
 
@@ -135,12 +117,7 @@ export const NewFoodPost = () => {
           <Button onClick={toggleFoodPostForm} variant="secondary">
             Discard
           </Button>
-          <Button
-            disabled={loading}
-            type="submit"
-            variant="primary"
-            loader={loading}
-          >
+          <Button disabled={loading} type="submit" variant="primary" loader={loading}>
             New Post
           </Button>
         </div>
